@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Vazirmatn", sans-serif;
+    line-height: 1.2 !important;
+}
+
+html,
+body {
+    height: 100%;
+    scroll-behavior: smooth;
+    background-color: #EFEFEF;
+    color: #352631;
+}
+
+/* Input number */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Shadows */
+
+.primary-shadow {
+    box-shadow: 0px 2px 8px 0px #0000004D;
+}
+
+.orange-shadow {
+    box-shadow: 0px 0px 4px 0px #F44B1066;
+}
+
+/* Scrollbar */
+.custom-scrollbar {
+    overflow-y: auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 3px;
+}
