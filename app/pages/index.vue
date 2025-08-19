@@ -5,9 +5,7 @@
         <HomeMarcas />
         <HomeServicios />
         <HomeReviews />
-        // Mapa
-        // Hacer Menu
-        // Formulario de contacto
+        <HomeUbicaciones />
         <HomeContacto />
     </DefaultMain>
 </template>

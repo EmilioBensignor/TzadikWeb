@@ -1,0 +1,183 @@
+<template>
+    <DefaultSection class="px-5 pb-8">
+        <div class="flex flex-col items-center text-center gap-2">
+            <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
+            <p class="text-xs">
+                Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites.
+            </p>
+        </div>
+        <div class="w-full h-80 border-2 border-dark rounded-[32px] relative overflow-hidden">
+            <ClientOnly>
+                <div ref="mapContainer" class="w-full h-full rounded-[30px]">
+                </div>
+                <template #fallback>
+                    <div class="w-full h-full bg-gray-100 rounded-[30px] flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                            <p class="text-sm text-dark">Cargando mapa...</p>
+                        </div>
+                    </div>
+                </template>
+            </ClientOnly>
+        </div>
+        <div class="w-full flex flex-col gap-6 mt-3">
+            <div v-for="(ubicacion, index) in ubicaciones" :key="index" @click="selectUbicacion(index)"
+                class="flex items-center gap-3 cursor-pointer transition-colors duration-200 pb-1">
+                <Icon name="tabler:map-pin" class="w-4 h-4 text-primary flex-shrink-0" />
+                <div :class="selectedUbicacion === index ? ' border-primary' : 'border-transparent'" class="border-b">
+                    <p class="text-sm">{{ ubicacion.texto }}</p>
+                </div>
+            </div>
+        </div>
+    </DefaultSection>
+</template>
+
+<script setup>
+import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
+
+const mapContainer = ref(null)
+const selectedUbicacion = ref(0)
+
+let map = null
+let markers = []
+
+const ubicaciones = [
+    {
+        texto: "Resistencia, Chaco.",
+        direccion: ROUTE_NAMES.UBICACION,
+        lat: -27.418540879713515,
+        lng: -59.11149044705953
+    },
+    {
+        texto: "Corrientes, Capital.",
+        direccion: ROUTE_NAMES.UBICACION,
+        lat: -27.4697,
+        lng: -58.8306
+    },
+    {
+        texto: "Pcia. Roque Sáenz Peña, Chaco.",
+        direccion: ROUTE_NAMES.UBICACION,
+        lat: -26.7854,
+        lng: -60.4389
+    },
+    {
+        texto: "Villa Ángela, Chaco.",
+        direccion: ROUTE_NAMES.UBICACION,
+        lat: -27.5713,
+        lng: -60.7143
+    },
+    {
+        texto: "Posadas, Misiones.",
+        direccion: ROUTE_NAMES.UBICACION,
+        lat: -27.3621,
+        lng: -55.9006
+    },
+];
+
+const selectUbicacion = (index) => {
+    selectedUbicacion.value = index
+
+    if (map && ubicaciones[index]) {
+        const ubicacion = ubicaciones[index]
+        map.setCenter({ lat: ubicacion.lat, lng: ubicacion.lng })
+        map.setZoom(12)
+        updateMarkers()
+    }
+}
+
+const initializeMap = async () => {
+    if (typeof window === 'undefined' || !mapContainer.value) return
+
+    try {
+        if (!window.google || !window.google.maps) {
+            const config = useRuntimeConfig()
+            const apiKey = config.public.googleMapsApiKey
+
+            await new Promise((resolve, reject) => {
+                window.initMap = () => {
+                    resolve()
+                    delete window.initMap
+                }
+
+                const existingScript = document.querySelector('script[src*="maps.googleapis.com"]')
+                if (existingScript) {
+                    existingScript.remove()
+                }
+
+                const script = document.createElement('script')
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async&libraries=marker&callback=initMap`
+                script.async = true
+                script.defer = true
+                script.onerror = reject
+                document.head.appendChild(script)
+            })
+        }
+
+        if (mapContainer.value) {
+            map = new window.google.maps.Map(mapContainer.value, {
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                mapId: 'tzadik-map',
+                center: { lat: -27.418540879713515, lng: -59.11149044705953 },
+                zoom: 10
+            })
+
+            await nextTick()
+            updateMarkers()
+        }
+    } catch (error) {
+        console.error('Error al cargar el mapa:', error)
+    }
+}
+
+const updateMarkers = () => {
+    if (!map || !window.google) return
+
+    markers.forEach(marker => {
+        if (marker && marker.setMap) {
+            marker.setMap(null)
+        }
+    })
+    markers = []
+
+    const selectedUbicacionData = ubicaciones[selectedUbicacion.value]
+    if (selectedUbicacionData) {
+        try {
+            const marker = new window.google.maps.marker.AdvancedMarkerElement({
+                position: { lat: selectedUbicacionData.lat, lng: selectedUbicacionData.lng },
+                map: map,
+                title: selectedUbicacionData.texto
+            })
+
+            markers.push(marker)
+        } catch (error) {
+            console.error('Error al crear marcador:', error)
+        }
+    }
+}
+
+onMounted(() => {
+    if (import.meta.client) {
+        nextTick(() => {
+            initializeMap().then(() => {
+                if (map) {
+                    selectUbicacion(0)
+                }
+            })
+        })
+    }
+})
+
+onUnmounted(() => {
+    if (markers.length > 0) {
+        markers.forEach(marker => {
+            if (marker && marker.setMap) {
+                marker.setMap(null)
+            }
+        })
+    }
+    markers = []
+    map = null
+})
+</script>

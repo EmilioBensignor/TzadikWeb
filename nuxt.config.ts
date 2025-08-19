@@ -48,4 +48,9 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+    }
+  },
 })
