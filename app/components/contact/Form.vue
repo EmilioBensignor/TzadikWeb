@@ -21,7 +21,7 @@
                             <label for="nombre" class="text-xs md:text-sm font-medium text-dark">
                                 Nombre
                             </label>
-                            <input type="text" id="nombre" v-model="form.nombre" placeholder="Ingresá su nombre"
+                            <input type="text" id="nombre" v-model="form.nombre" placeholder="Ingrese su nombre"
                                 class="w-full bg-transparent border rounded-md text-xs md:text-sm text-dark placeholder:text-xs md:placeholder:text-sm placeholder:text-gray-dark outline-none p-2"
                                 :class="errors.nombre ? 'border-error' : 'border-primary'" required>
                             <ContactError v-if="errors.nombre">{{ errors.nombre }}</ContactError>
@@ -32,7 +32,7 @@
                                 Correo electrónico
                             </label>
                             <input type="email" id="email" v-model="form.email"
-                                placeholder="Ingresá su correo electrónico"
+                                placeholder="Ingrese su correo electrónico"
                                 class="w-full bg-transparent border rounded-md text-xs md:text-sm text-dark placeholder:text-xs md:placeholder:text-sm placeholder:text-gray-dark outline-none p-2"
                                 :class="errors.email ? 'border-error' : 'border-primary'" autocomplete="email" required>
                             <ContactError v-if="errors.email">{{ errors.email }}</ContactError>
@@ -49,7 +49,7 @@
                                 <input type="text" id="prefijo" v-model="form.prefijo" placeholder="Prefijo"
                                     class="w-14 md:w-16 bg-transparent border border-primary rounded-md text-xs md:text-sm text-dark placeholder:text-xs md:placeholder:text-sm placeholder:text-gray-dark outline-none p-2">
                                 <input type="tel" id="telefono" v-model="form.telefono"
-                                    placeholder="Ingresá su número de teléfono"
+                                    placeholder="Ingrese su número de teléfono"
                                     class="flex-1 bg-transparent border rounded-md text-xs md:text-sm text-dark placeholder:text-xs md:placeholder:text-sm placeholder:text-gray-dark outline-none p-2"
                                     :class="errors.telefono ? 'border-error' : 'border-primary'" required>
                             </div>
@@ -60,7 +60,7 @@
                             <label for="mensaje" class="text-xs md:text-sm font-medium text-dark">
                                 Mensaje
                             </label>
-                            <textarea id="mensaje" v-model="form.mensaje" placeholder="Ingresá su mensaje" rows="4"
+                            <textarea id="mensaje" v-model="form.mensaje" placeholder="Ingrese su mensaje" rows="4"
                                 class="w-full bg-transparent border border-primary rounded-md text-xs md:text-sm text-dark placeholder:text-xs md:placeholder:text-sm placeholder:text-gray-dark outline-none p-2 resize-none"></textarea>
                         </div>
                     </div>
