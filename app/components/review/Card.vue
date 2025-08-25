@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-3 rounded-xl orange-shadow p-3">
+    <div class="flex flex-col gap-3 rounded-xl md:rounded-[20px] orange-shadow p-3">
         <NuxtImg :src="review.img" :alt="`Opinion de ${review.autor}`" class="w-full h-24 object-cover rounded-xl" />
         <div class="h-full flex flex-col justify-between gap-2.5">
             <p class="font-semibold">{{ review.titulo }}</p>

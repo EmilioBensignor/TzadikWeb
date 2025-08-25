@@ -66,6 +66,10 @@ const props = defineProps({
         type: String,
         default: 'smooth',
         validator: (value) => ['smooth', 'auto'].includes(value)
+    },
+    showArrows: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -85,8 +89,8 @@ let resizeObserver = null
 let isDragHorizontal = false
 let hasScrollStarted = false
 
-const showLeftArrow = computed(() => !isAtStart.value)
-const showRightArrow = computed(() => !isAtEnd.value)
+const showLeftArrow = computed(() => props.showArrows && !isAtStart.value)
+const showRightArrow = computed(() => props.showArrows && !isAtEnd.value)
 
 const slidesVisible = computed(() => {
     const value = props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base

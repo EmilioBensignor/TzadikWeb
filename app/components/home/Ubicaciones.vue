@@ -1,8 +1,8 @@
 <template>
-    <DefaultSection class="px-5 pb-8">
+    <DefaultSection class="px-5 md:px-11 pb-8 md:pb-12">
         <div class="flex flex-col items-center text-center gap-2">
             <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
-            <p class="text-xs">
+            <p class="text-xs md:text-sm">
                 Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites.
             </p>
         </div>
@@ -20,10 +20,10 @@
                 </template>
             </ClientOnly>
         </div>
-        <div class="w-full flex flex-col gap-6 mt-3">
+        <div class="w-full flex flex-col md:flex-row md:flex-wrap gap-6 mt-3">
             <div v-for="(ubicacion, index) in ubicaciones" :key="index" @click="selectUbicacion(index)"
-                class="flex items-center gap-3 cursor-pointer transition-colors duration-200 pb-1">
-                <Icon name="tabler:map-pin" class="w-4 h-4 text-primary flex-shrink-0" />
+                class="md:w-[48%] flex items-center gap-3 cursor-pointer transition-colors duration-200 pb-1 md:pb-0">
+                <Icon name="tabler:map-pin" class="w-4 h-4 text-primary flex-shrink-0 mb-1" />
                 <div :class="selectedUbicacion === index ? ' border-primary' : 'border-transparent'" class="border-b">
                     <p class="text-sm">{{ ubicacion.texto }}</p>
                 </div>

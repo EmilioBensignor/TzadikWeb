@@ -1,11 +1,11 @@
 <template>
-    <DefaultSection class="pb-8">
+    <DefaultSection class="pb-8 md:pb-12">
         <div class="flex flex-col items-center text-center gap-2 px-5">
-            <HeadingH1 class="flex flex-col">
+            <HeadingH1 class="flex md:block flex-col">
                 MÁS QUE CLIENTES,
                 <span class="font-teko">SOCIOS EN EL CAMINO</span>
             </HeadingH1>
-            <p class="text-xs">Mira lo que nuestros clientes dicen sobre nosotros.</p>
+            <p class="text-xs md:text-sm">Mira lo que nuestros clientes dicen sobre nosotros.</p>
             <div class="flex items-center gap-2 text-sm font-medium">
                 <p>Excelente</p>
                 <div class="flex items-center gap-1">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <CarouselStatic :gap="{ base: 12, lg: 16, xl: 16, xxl: 16 }">
-            <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
+            <ReviewCard v-for="review in reviews" :key="review.id" :review="review" class="first:md:ml-11 last:md:mr-11" />
         </CarouselStatic>
     </DefaultSection>
 </template>
