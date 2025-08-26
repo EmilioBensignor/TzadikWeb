@@ -47,24 +47,24 @@ const servicios = [
 
 <style scoped>
 .bg-servicios {
-    background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Mobile.jpg');
+    background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Mobile.webp');
 }
 
 @media (width >=768px) {
     .bg-servicios {
-        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Tablet.jpg');
+        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Tablet.webp');
     }
 }
 
 @media (width >=1080px) {
     .bg-servicios {
-        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Desktop.jpg');
+        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Desktop.webp');
     }
 }
 
 @media (width >=1440px) {
     .bg-servicios {
-        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Desktop-XL.jpg');
+        background-image: url('/images/home/servicio/Te-Acompanamos-Servicios-Desktop-XL.webp');
     }
 }
 </style>

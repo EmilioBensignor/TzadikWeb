@@ -10,7 +10,7 @@
             :class="{ 'cursor-grabbing': isDragging }" @scroll="updateArrows" @mousedown="startDrag" @mousemove="drag"
             @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag">
 
-            <div class="carousel-wrapper flex py-2 px-1 first:ml-4 md:first:ml-0 first:mr-4 md:first:mr-0"
+            <div class="carousel-wrapper flex py-2 px-1 first:ml-4 md:first:ml-0 first:mr-4 md:first:mr-0 overflow-y-hidden"
                 :style="wrapperStyles">
                 <slot />
             </div>
