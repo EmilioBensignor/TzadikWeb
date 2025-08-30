@@ -15,12 +15,8 @@ export const useReviews = () => {
     if (!imageUrl) return null
     
     try {
-      const { data } = useSupabaseClient()
-        .storage
-        .from('reviews-imagenes')
-        .getPublicUrl(imageUrl)
-
-      return data.publicUrl
+      const config = useRuntimeConfig()
+      return `${config.public.supabase.url}/storage/v1/object/public/reviews-imagenes/${imageUrl}`
     } catch (error) {
       console.error('Error getting review image:', error)
       return null

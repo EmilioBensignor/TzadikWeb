@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col gap-3 rounded-xl md:rounded-[20px] orange-shadow p-3">
-        <NuxtImg :src="review.img" :alt="`Opinion de ${review.autor}`" class="w-full h-24 object-cover rounded-xl" />
+    <div class="review flex flex-col gap-3 rounded-xl md:rounded-[20px] p-3">
+        <NuxtImg :src="imageUrl" :alt="`Opinion de ${review.autor}`" class="w-full h-24 object-cover rounded-xl" />
         <div class="h-full flex flex-col justify-between gap-2.5">
             <p class="font-semibold">{{ review.titulo }}</p>
             <p class="text-xs">{{ review.comentario }}</p>
@@ -19,10 +19,26 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
     review: {
         type: Object,
         required: true
     }
 })
+
+const imageUrl = computed(() => {
+    return props.review.img || '/images/placeholder-review.jpg'
+})
 </script>
+
+<style scoped>
+.review {
+    box-shadow: 0px 0px 4px 0px #F44B1066;
+}
+
+@media (width >=1080px) {
+    .review {
+        box-shadow: 0px 2px 8px 0px #0000004D;
+    }
+}
+</style>

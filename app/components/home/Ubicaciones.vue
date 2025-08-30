@@ -1,12 +1,12 @@
 <template>
-    <DefaultSection class="px-5 md:px-11 pb-8 md:pb-12">
-        <div class="flex flex-col items-center text-center gap-2">
+    <DefaultSection class="max-w-[1200px] lg:flex-row lg:!gap-16 px-5 md:px-11 pb-8 md:pb-12 lg:pb-0 lg:px-20 xxl:px-0 mx-auto">
+        <div class="flex lg:hidden flex-col items-center text-center gap-2">
             <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
             <p class="text-xs md:text-sm">
                 Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites.
             </p>
         </div>
-        <div class="w-full h-80 border-2 border-dark rounded-[32px] relative overflow-hidden">
+        <div class="w-full h-80 xxl:h-[22rem] relative border-2 border-dark rounded-[32px] lg:shadow-lg overflow-hidden">
             <ClientOnly>
                 <div ref="mapContainer" class="w-full h-full rounded-[30px]">
                 </div>
@@ -20,15 +20,26 @@
                 </template>
             </ClientOnly>
         </div>
-        <div class="w-full flex flex-col md:flex-row md:flex-wrap gap-6 mt-3">
-            <div v-for="(ubicacion, index) in ubicaciones" :key="index" @click="selectUbicacion(index)"
-                class="md:w-[48%] flex items-center gap-3 cursor-pointer transition-colors duration-200 pb-1 md:pb-0">
-                <Icon name="tabler:map-pin" class="w-4 h-4 text-primary flex-shrink-0 mb-1" />
-                <div :class="selectedUbicacion === index ? ' border-primary' : 'border-transparent'" class="border-b">
-                    <p class="text-sm">{{ ubicacion.texto }}</p>
+        <div class="lg:flex flex-col gap-6">
+            <div class="hidden lg:flex flex-col items-center lg:items-start text-center gap-2 lg:gap-6">
+                <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
+                <p class="lg:text-left text-xs md:text-sm lg:text-base">
+                    Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos
+                    necesites.
+                </p>
+            </div>
+            <div class="w-full flex flex-col md:flex-row md:flex-wrap gap-6 mt-3 lg:mt-0">
+                <div v-for="(ubicacion, index) in ubicaciones" :key="index" @click="selectUbicacion(index)"
+                    class="md:w-[48%] lg:w-full flex items-center gap-3 cursor-pointer transition-colors duration-200 pb-1 md:pb-0">
+                    <Icon name="tabler:map-pin" class="w-4 lg:w-5 h-4 lg:h-5 text-primary flex-shrink-0 mb-1" />
+                    <div :class="selectedUbicacion === index ? ' border-primary' : 'border-transparent'"
+                        class="border-b">
+                        <p class="text-sm">{{ ubicacion.texto }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+
     </DefaultSection>
 </template>
 

@@ -1,7 +1,8 @@
 <template>
     <DefaultMain>
         <HomeHero />
-        <HomeOfertas />
+        <NavCategorias class="hidden lg:block" />
+        <HomeOfertas class="lg:mt-16 xxl:mt-14" />
         <HomeMarcas />
         <HomeServicios />
         <HomeReviews />

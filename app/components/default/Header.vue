@@ -1,32 +1,75 @@
 <template>
-    <header class="sticky top-0 z-50">
-        <div class="flex flex-col md:flex-row md:justify-between items-center gap-1 bg-primary text-light text-xs font-medium py-3 px-5 md:px-11">
-            <div class="flex justify-center items-center gap-2">
-                <Icon name="tabler:map-pin" class="w-4 h-4 flex-shrink-0" />
-                <p>{{ ROUTE_NAMES.UBICACION }}</p>
+    <header class="sticky top-0 z-50 lg:shadow-md">
+        <div class="w-full bg-primary">
+            <div
+                class="max-w-[1200px] flex flex-col md:flex-row md:justify-between lg:justify-start items-center gap-1 lg:gap-0 text-light text-xs lg:text-sm font-medium py-3 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
+                <div
+                    class="w-full flex flex-col md:flex-row md:justify-between lg:justify-start items-center lg:items-end gap-1 lg:gap-8">
+                    <div class="flex justify-center items-end gap-2">
+                        <Icon name="tabler:map-pin" class="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
+                        <p>{{ ROUTE_NAMES.UBICACION }}</p>
+                    </div>
+                    <p>Lunes a Viernes de 9hs - 18hs</p>
+                </div>
+                <ul class="hidden lg:flex items-center gap-2">
+                    <li v-for="(red, index) in redes" :key="index">
+                        <NuxtLink :to="red.route">
+                            <NuxtImg :src="`/images/redes/${red.name}-Blanco.svg`" :alt="red.name"
+                                class="w-5 md:w-6 h-5 md:h-6 object-contain" />
+                        </NuxtLink>
+                    </li>
+                </ul>
             </div>
-            <p>Lunes a Viernes de 9hs - 18hs</p>
         </div>
-        <div class="flex justify-center items-center bg-light p-5 md:py-6 md:px-11">
-            <button 
-                @click="toggleDrawer"
-                class="flex justify-center items-center absolute left-5 md:left-11"
-            >
-                <Icon name="tabler:menu-2" class="w-5 md:w-6 h-5 md:h-6 text-primary" />
-            </button>
-            <NuxtLink>
-                <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik" class="w-28 md:w-32 h-6 md:h-7 object-contain" />
-            </NuxtLink>
+
+        <div class="w-full bg-light">
+            <div
+                class="max-w-[1200px] flex justify-center lg:justify-between items-center p-5 md:py-6 lg:py-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
+                <button @click="toggleDrawer"
+                    class="flex lg:hidden justify-center items-center absolute left-5 md:left-11">
+                    <Icon name="tabler:menu-2" class="w-5 md:w-6 h-5 md:h-6 text-primary" />
+                </button>
+                <NuxtLink>
+                    <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
+                        class="w-28 md:w-32 lg:w-44 h-6 md:h-7 lg:h-10 object-contain" />
+                </NuxtLink>
+                <nav class="hidden lg:block">
+                    <ul class="flex items-center gap-1.5 xxl:gap-6">
+                        <li>
+                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                                @click="closeDrawer">
+                                Servicios
+                            </NuxtLink>
+                        </li>
+                        <li>
+                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                                @click="closeDrawer">
+                                Marcas
+                            </NuxtLink>
+                        </li>
+                        <li>
+                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                                @click="closeDrawer">
+                                Quienes Somos
+                            </NuxtLink>
+                        </li>
+                        <ButtonPrimary @click="showContactForm = true">Contactanos</ButtonPrimary>
+                    </ul>
+                </nav>
+            </div>
         </div>
-        <NavCategorias class="md:pl-11" />
-        <NavDrawer :is-open="isDrawerOpen" @close="closeDrawer" />
+        <NavCategorias class="md:pl-11 lg:hidden" />
+        <NavDrawer :is-open="isDrawerOpen" @close="closeDrawer" class="lg:hidden" />
+        <ContactForm :is-open="showContactForm" @close="showContactForm = false" />
     </header>
 </template>
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
+import { redes } from '~/shared/menu';
 
 const isDrawerOpen = ref(false)
+const showContactForm = ref(false)
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value

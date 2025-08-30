@@ -1,18 +1,18 @@
 <template>
-    <DefaultSection class="!gap-8 md:!gap-6 py-8 md:py-12 md:px-11">
-        <div class="w-full h-44 md:h-56 md:flex md:flex-col md:justify-between md:items-start md:rounded-[32px] md:shadow-lg text-light py-6 px-5 md:p-8 bg-cover bg-center bg-no-repeat bg-servicios">
-            <HeadingH2 class="w-full flex md:block flex-col !text-left">
+    <DefaultSection class="xxl:max-w-[1200px] lg:flex-row !gap-8 md:!gap-6 lg:!gap-8 py-8 md:py-12 lg:py-0 md:px-11 lg:px-20 xxl:px-0 xxl:mx-auto">
+        <div class="w-full lg:w-1/2 xxl:w-[44.75rem] h-44 md:h-56 lg:h-[27.5rem] md:flex md:flex-col md:justify-between md:items-start md:rounded-[32px] md:shadow-lg lg:shadow-black/30 text-light bg-cover bg-center bg-no-repeat bg-servicios py-6 px-5 md:p-8 lg:p-12">
+            <HeadingH2 class="w-full flex md:block xxl:flex flex-col !text-left">
                 TE ACOMPAÑAMOS
                 <span class="font-teko">HOY Y SIEMPRE</span>
             </HeadingH2>
             <ButtonPrimary class="hidden md:block">Descubrí todos los servicios</ButtonPrimary>
         </div>
-        <div class="flex md:grid md:grid-cols-2 flex-col gap-4 px-5 md:px-3">
+        <div class="lg:w-1/2 xxl:w-[28.375rem] flex md:grid lg:flex md:grid-cols-2 flex-col gap-4 lg:gap-6 px-5 md:px-3 lg:px-0">
             <div v-for="(servicio, index) in servicios" :key="index" class="flex gap-4">
                 <NuxtImg :src="`/images/servicios/${servicio.icono}.svg`" :alt="servicio.titulo" class="w-7 md:w-8 h-7 md:h-8 object-contain flex-shrink-0" />
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 lg:gap-1.5">
                     <HeadingH3 class="text-primary">{{ servicio.titulo }}</HeadingH3>
-                    <p class="text-xs">{{ servicio.texto }}</p>
+                    <p class="text-xs lg:text-sm">{{ servicio.texto }}</p>
                 </div>
             </div>
         </div>
