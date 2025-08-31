@@ -1,30 +1,38 @@
 <template>
-    <DefaultSection class="xxl:max-w-[1200px] lg:flex-row lg:items-start xxl:!gap-4 pb-8 md:pb-12 lg:pb-0 lg:pl-20 xxl:px-0 mx-auto">
-        <div class="lg:w-1/2 xxl:w-[29.375rem] flex flex-col items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
-            <HeadingH1 class="flex md:block xxl:flex flex-col lg:text-left fade-up">
-                MÁS QUE CLIENTES,
-                <span class="font-teko">SOCIOS EN EL CAMINO</span>
-            </HeadingH1>
-            <p class="text-xs md:text-sm lg:text-xl fade-up">Mira lo que nuestros clientes dicen sobre nosotros.</p>
-            <div class="flex lg:flex-col items-center lg:items-start gap-2 text-sm lg:text-xl font-medium fade-up">
-                <p>Excelente</p>
-                <div class="flex items-center gap-1 lg:gap-2">
-                    <p class="lg:hidden">4.8</p>
-                    <div
-                        class="w-4 lg:w-12 h-4 lg:h-12 flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
-                        <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
-                    </div>
-                    <div class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
-                        <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
-                    </div>
-                    <div class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
-                        <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
-                    </div>
-                    <div class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
-                        <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
-                    </div>
-                    <div class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
-                        <Icon name="tabler:star-half-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+    <DefaultSection
+        class="xxl:max-w-[1200px] lg:flex-row xxl:justify-between lg:!items-stretch xxl:!gap-4 pb-8 md:pb-12 lg:pb-0 lg:pl-20 xxl:px-0 mx-auto">
+        <div
+            class="lg:w-1/2 xxl:w-[29.375rem] flex flex-col justify-between items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
+            <div class="flex flex-col items-center lg:items-start text-center gap-2 lg:gap-6">
+                <HeadingH1 class="flex md:block xxl:flex flex-col lg:text-left fade-up">
+                    MÁS QUE CLIENTES,
+                    <span class="font-teko">SOCIOS EN EL CAMINO</span>
+                </HeadingH1>
+                <p class="text-xs md:text-sm lg:text-xl fade-up">Mira lo que nuestros clientes dicen sobre nosotros.</p>
+                <div class="flex lg:flex-col items-center lg:items-start gap-2 text-sm lg:text-xl font-medium fade-up">
+                    <p>Excelente</p>
+                    <div class="flex items-center gap-1 lg:gap-2">
+                        <p class="lg:hidden">4.8</p>
+                        <div
+                            class="w-4 lg:w-12 h-4 lg:h-12 flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
+                            <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+                        </div>
+                        <div
+                            class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
+                            <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+                        </div>
+                        <div
+                            class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
+                            <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+                        </div>
+                        <div
+                            class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
+                            <Icon name="tabler:star-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+                        </div>
+                        <div
+                            class="w-12 h-12 hidden lg:flex justify-center items-center bg-terciary rounded-full p-1 mb-1">
+                            <Icon name="tabler:star-half-filled" class="w-2 lg:w-6 h-2 lg:h-6 flex-shrink-0" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,9 +55,12 @@
                 <ReviewCard v-for="review in reviews" :key="review.id" :review="review"
                     class="first:md:ml-11 last:md:mr-11" />
             </CarouselStatic>
-            <div class="hidden xxl:block absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-light to-transparent pointer-events-none z-10"></div>
-            <!-- Gradiente derecho -->
-            <div class="hidden xxl:block absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-light to-transparent pointer-events-none z-10"></div>
+            <div
+                class="hidden lg:block absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-light to-transparent pointer-events-none z-10">
+            </div>
+            <div
+                class="hidden xxl:block absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-light to-transparent pointer-events-none z-10">
+            </div>
         </div>
     </DefaultSection>
 </template>
