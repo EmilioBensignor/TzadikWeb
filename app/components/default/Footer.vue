@@ -2,11 +2,11 @@
     <footer>
         <div class="w-full bg-dark">
             <div
-                class="max-w-[1200px] flex flex-col lg:flex-row lg:justify-between items-center lg:items-start gap-6 text-center text-light py-6 lg:py-12 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
+                class="max-w-[1200px] flex flex-col md:flex-row md:justify-between items-center md:items-start gap-6 md:gap-9 text-center text-light py-6 lg:py-12 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
                 <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
-                    class="w-36 lg:w-[13.5rem] h-8 lg:h-12 object-contain" />
-                <div class="md:w-full lg:w-max flex flex-col md:flex-row gap-6 lg:gap-24">
-                    <div class="md:w-1/3 lg:w-max flex flex-col gap-3 md:gap-4">
+                    class="w-36 md:w-32 lg:w-[13.5rem] h-8 md:h-7 lg:h-12 object-contain" />
+                <div class="md:w-full md:max-w-[32.5rem] lg:max-w-[38rem] flex flex-col md:justify-between md:flex-row gap-6 lg:gap-24">
+                    <div class="flex flex-col gap-3 md:gap-4">
                         <p class="md:text-left text-sm md:text-base lg:text-xl font-semibold">Páginas</p>
                         <nav>
                             <ul class="flex flex-col md:items-start gap-3 md:gap-4">
@@ -16,7 +16,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="md:w-1/3 lg:w-44 flex flex-col gap-3 md:gap-4">
+                    <div class="md:max-w-44 flex flex-col gap-3 md:gap-4">
                         <p class="md:text-left text-sm md:text-base lg:text-xl font-semibold">Contacto</p>
                         <ul class="flex flex-col md:items-start gap-3 md:gap-4">
                             <li v-for="(pagina, index) in contacto" :key="index"
@@ -27,7 +27,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="md:w-1/3 lg:w-max flex flex-col gap-3 md:gap-4">
+                    <div class="flex flex-col gap-3 md:gap-4">
                         <p class="md:text-left text-sm md:text-base font-semibold">Redes Sociales</p>
                         <ul class="flex justify-center md:justify-start items-center gap-2">
                             <li v-for="(red, index) in redes" :key="index">

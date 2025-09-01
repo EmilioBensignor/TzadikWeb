@@ -1,8 +1,8 @@
 <template>
     <DefaultSection
-        class="xxl:max-w-[1200px] lg:flex-row xxl:justify-between lg:!items-stretch xxl:!gap-4 pb-8 md:pb-12 lg:pb-0 lg:pl-20 xxl:px-0 mx-auto">
+        class="xxl:max-w-[1200px] lg:flex-row xxl:justify-between xxl:!gap-8 relative pb-8 md:pb-12 lg:pb-0 lg:pl-20 xxl:px-0 mx-auto">
         <div
-            class="lg:w-1/2 xxl:w-[29.375rem] flex flex-col justify-between items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
+            class="lg:w-1/2 flex flex-col justify-between items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
             <div class="flex flex-col items-center lg:items-start text-center gap-2 lg:gap-6">
                 <HeadingH1 class="flex md:block xxl:flex flex-col lg:text-left fade-up">
                     MÁS QUE CLIENTES,
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden lg:flex items-center gap-3 self-end">
+            <div class="hidden lg:flex items-center gap-3 absolute bottom-0 self-end">
                 <button @click="handleScrollLeft"
                     class="w-10 h-10 flex justify-center items-center bg-light border border-dark rounded-full"
                     aria-label="Anterior">

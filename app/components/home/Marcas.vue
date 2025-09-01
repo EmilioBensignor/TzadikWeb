@@ -11,7 +11,7 @@
                 </p>
                 <ButtonPrimary class="hidden lg:block fade-up">Conocé más detalles</ButtonPrimary>
             </div>
-            <CarouselStatic :slides-per-view="{ base: 2.4, sm: 3.1, md: 4, lg: 4, xl: 4, xxl: 5 }"
+            <CarouselStatic :slides-per-view="{ base: 2.4, sm: 3.4, md: 4, lg: 4, xl: 4, xxl: 5 }"
                 :gap="{ md: 12, lg: 16, xl: 16, xxl: 16 }" class="pl-1 fade-up">
                 <div v-for="marca in marcas" :key="marca"
                     class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-xl lg:rounded-[20px] orange-shadow py-5 px-4">
