@@ -1,6 +1,6 @@
 <template>
     <DefaultSection class="md:px-11 md:pb-12 lg:px-20 lg:pb-0">
-        <div class="w-full max-w-[1200px] flex flex-col items-center md:items-start gap-3 md:gap-4 bg-gradient-to-r from-dark to-primary bg-contacto bg-cover bg-center bg-no-repeat md:rounded-[32px] md:shadow-lg py-6 px-5 md:p-8 lg:p-10 xxl:p-12 fade-up">
+        <div class="w-full xxl:max-w-[1200px] flex flex-col items-center md:items-start gap-3 md:gap-4 bg-gradient-to-r from-dark to-primary bg-contacto bg-cover bg-center bg-no-repeat md:rounded-xl md:shadow-lg py-6 px-5 md:p-8 lg:p-10 xxl:p-12 fade-up">
             <HeadingH2 class="text-light">ENCONTRÁ LA SOLUCIÓN IDEAL PARA VOS</HeadingH2>
             <div class="md:flex md:items-center md:gap-6">
                 <div class="hidden md:flex items-center gap-1.5 text-light">

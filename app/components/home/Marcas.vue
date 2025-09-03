@@ -1,7 +1,7 @@
 <template>
     <DefaultSection class="md:px-11 lg:px-20 xxl:px-0">
         <div
-            class="w-full max-w-[1200px] flex flex-col items-center gap-3 md:gap-6 bg-marcas lg:bg-cover lg:bg-no-repeat lg:bg-center lg:rounded-[32px] lg:shadow-md lg:shadow-black/30 lg:py-10 lg:px-8">
+            class="w-full xxl:max-w-[1200px] flex flex-col items-center gap-3 md:gap-6 bg-marcas lg:bg-cover lg:bg-no-repeat lg:bg-center lg:rounded-xl lg:shadow-md lg:shadow-black/30 lg:py-10 lg:px-8">
             <div class="lg:w-full flex flex-col items-center lg:items-start text-center gap-2 lg:gap-3 px-5 lg:px-0">
                 <HeadingH2 class="lg:w-full lg:text-left lg:text-light fade-up">TRABAJAMOS JUNTO A LAS MEJORES MARCAS</HeadingH2>
                 <p class="lg:w-full md:max-w-[26.75rem] lg:max-w-[31rem] lg:text-left lg:text-light text-xs md:text-sm xxl:text-base fade-up">
@@ -14,7 +14,7 @@
             <CarouselStatic :slides-per-view="{ base: 2.4, sm: 3.4, md: 4, lg: 4, xl: 4, xxl: 5 }"
                 :gap="{ md: 12, lg: 16, xl: 16, xxl: 16 }" class="pl-1 fade-up">
                 <div v-for="marca in marcas" :key="marca"
-                    class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-xl lg:rounded-[20px] orange-shadow py-5 px-4">
+                    class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4">
                     <NuxtImg :src="`/images/marcas/${marca}.png`" :alt="marca" class="object-contain" />
                 </div>
             </CarouselStatic>

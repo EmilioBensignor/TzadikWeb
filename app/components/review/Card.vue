@@ -1,6 +1,6 @@
 <template>
-    <div class="review flex flex-col gap-3 rounded-xl md:rounded-[20px] p-3 lg:p-5">
-        <NuxtImg :src="imageUrl" :alt="`Opinion de ${review.autor}`" class="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-xl" />
+    <div class="review flex flex-col gap-3 rounded-xl p-3 lg:p-5">
+        <NuxtImg :src="imageUrl" :alt="`Opinion de ${review.autor}`" class="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-lg" />
         <div class="h-full flex flex-col justify-between gap-2.5">
             <p class="font-semibold lg:text-[1.125rem]">{{ review.titulo }}</p>
             <p class="text-xs lg:text-sm">{{ review.comentario }}</p>

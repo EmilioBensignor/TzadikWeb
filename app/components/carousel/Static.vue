@@ -1,9 +1,9 @@
 <template>
     <div class="relative w-full" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
-            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
+            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light hover:bg-primaryHover text-primary hover:text-light shadow-md rounded-full transition-colors duration-300"
             :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior">
-            <Icon name="material-symbols:chevron-left-rounded" size="3rem" class="text-primary" />
+            <Icon name="material-symbols:chevron-left-rounded" size="3rem" />
         </button>
 
         <div ref="container" class="scrollbar-hide overflow-x-auto cursor-grab select-none"
@@ -17,9 +17,9 @@
         </div>
 
         <button v-if="showRightArrow" @click="scrollRight"
-            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
+            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light hover:bg-primaryHover text-primary hover:text-light shadow-md rounded-full transition-colors duration-300"
             :style="rightButtonStyle" :disabled="isAtEnd" aria-label="Siguiente">
-            <Icon name="material-symbols:chevron-right-rounded" size="3rem" class="text-primary" />
+            <Icon name="material-symbols:chevron-right-rounded" size="3rem" />
         </button>
     </div>
 </template>

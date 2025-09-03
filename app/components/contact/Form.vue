@@ -3,8 +3,8 @@
         leave-active-class="transition-all duration-200 ease-in" enter-from-class="opacity-0"
         enter-to-class="opacity-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
         <div v-if="isOpen && !showConfirmation"
-            class="flex items-center justify-center fixed inset-0 z-50 bg-dark/60 p-5" @click="closeModal">
-            <div class="w-full max-w-md md:max-w-[40rem] flex flex-col gap-6 relative bg-light rounded-[20px] p-4 md:p-6 transition-transform duration-300 ease-out transform"
+            class="flex items-center justify-center fixed inset-0 z-100 bg-dark/60 p-5" @click="closeModal">
+            <div class="w-full max-w-md md:max-w-[40rem] flex flex-col gap-6 relative bg-light rounded-xl p-4 md:p-6 transition-transform duration-300 ease-out transform"
                 :class="isOpen ? 'scale-100' : 'scale-80'" @click.stop>
                 <button @click="closeModal"
                     class="w-6 h-6 flex justify-center items-center absolute top-4 md:top-6 right-4 md:right-6 text-primary">
@@ -78,7 +78,7 @@
         enter-to-class="opacity-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
         <div v-if="showConfirmation" class="flex items-center justify-center fixed inset-0 z-50 bg-dark/60 p-4"
             @click="closeConfirmation">
-            <div class="w-full max-w-sm md:max-w-[40rem] flex flex-col gap-5 md:gap-6 relative bg-light rounded-[20px] transition-transform duration-300 ease-out transform p-4 md:p-6"
+            <div class="w-full max-w-sm md:max-w-[40rem] flex flex-col gap-5 md:gap-6 relative bg-light rounded-xl transition-transform duration-300 ease-out transform p-4 md:p-6"
                 :class="showConfirmation ? 'scale-100' : 'scale-80'" @click.stop>
                 <button @click="closeConfirmation" class="absolute top-4 md:top-6 right-4 md:right-6">
                     <Icon name="tabler:plus" class="w-6 h-6 text-primary rotate-45" />

@@ -1,5 +1,5 @@
 <template>
-    <DefaultSection class="max-w-[1200px] py-8 md:py-12 md:px-11 lg:px-20 lg:py-0 xxl:px-0 mx-auto">
+    <DefaultSection class="xxl:max-w-[1200px] py-8 md:py-12 md:px-11 lg:px-20 lg:py-0 xxl:px-0 mx-auto">
         <div class="md:w-full md:flex md:justify-between md:items-center fade-up">
             <HeadingH2 class="px-5 md:px-0">NOVEDADES Y OFERTAS EXCLUSIVAS</HeadingH2>
             <ButtonPrimary class="hidden md:block">Ver todas las ofertas</ButtonPrimary>

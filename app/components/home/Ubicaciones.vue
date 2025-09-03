@@ -1,17 +1,17 @@
 <template>
-    <DefaultSection class="max-w-[1200px] lg:flex-row lg:!gap-16 px-5 md:px-11 pb-8 md:pb-12 lg:pb-0 lg:px-20 xxl:px-0 mx-auto">
+    <DefaultSection class="xxl:max-w-[1200px] lg:flex-row lg:!gap-16 px-5 md:px-11 pb-8 md:pb-12 lg:pb-0 lg:px-20 xxl:px-0 mx-auto">
         <div class="flex lg:hidden flex-col items-center text-center gap-2 fade-up">
             <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
             <p class="text-xs md:text-sm">
                 Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites.
             </p>
         </div>
-        <div class="w-full h-80 xxl:h-[22rem] relative border-2 border-dark rounded-[32px] lg:shadow-lg overflow-hidden fade-up">
+        <div class="w-full h-80 xxl:h-[22rem] relative rounded-xl lg:shadow-lg lg:shadow-black/30 overflow-hidden fade-up">
             <ClientOnly>
-                <div ref="mapContainer" class="w-full h-full rounded-[30px]">
+                <div ref="mapContainer" class="w-full h-full rounded-xl">
                 </div>
                 <template #fallback>
-                    <div class="w-full h-full bg-gray-100 rounded-[30px] flex items-center justify-center">
+                    <div class="w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
                         <div class="text-center">
                             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
                             <p class="text-sm text-dark">Cargando mapa...</p>

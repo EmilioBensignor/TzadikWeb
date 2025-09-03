@@ -1,6 +1,6 @@
 <template>
     <DefaultSection class="xxl:max-w-[1200px] lg:flex-row !gap-8 md:!gap-6 lg:!gap-8 py-8 md:py-12 lg:py-0 md:px-11 lg:px-20 xxl:px-0 xxl:mx-auto">
-        <div class="w-full lg:w-1/2 xxl:w-[44.75rem] h-44 sm:h-56 lg:h-[27.5rem] md:flex md:flex-col md:justify-between md:items-start md:rounded-[32px] md:shadow-lg lg:shadow-black/30 text-light bg-cover bg-center bg-no-repeat bg-servicios py-6 px-5 md:p-8 lg:p-12">
+        <div class="w-full lg:w-1/2 xxl:w-[44.75rem] h-44 sm:h-56 lg:h-[27.5rem] md:flex md:flex-col md:justify-between md:items-start md:rounded-xl md:shadow-lg lg:shadow-black/30 text-light bg-cover bg-center bg-no-repeat bg-servicios py-6 px-5 md:p-8 lg:p-12">
             <HeadingH2 class="w-full flex md:block xxl:flex flex-col !text-left fade-up">
                 TE ACOMPAÑAMOS
                 <span class="font-teko">HOY Y SIEMPRE</span>

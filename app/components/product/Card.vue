@@ -1,6 +1,6 @@
 <template>
-    <NuxtLink to="#" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl md:rounded-[20px]">
-        <NuxtImg :src="imageUrl" :alt="product.titulo" class="w-full h-48 lg:h-52 object-cover rounded-t-xl md:rounded-t-[20px]" />
+    <NuxtLink to="#" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl">
+        <NuxtImg :src="imageUrl" :alt="product.titulo" class="w-full h-48 lg:h-52 object-cover rounded-t-xl" />
         <p v-if="product.oferta" class="absolute top-3 left-3 bg-secondary rounded-[4px] text-xs text-light !leading-none primary-shadow pt-1.5 px-2 pb-1">{{ product.oferta }}</p>
         <div class="min-h-[11rem] flex flex-col flex-1 justify-between gap-3 p-4">
             <div class="flex flex-col gap-3">

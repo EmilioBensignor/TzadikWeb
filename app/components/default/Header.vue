@@ -2,7 +2,7 @@
     <header class="sticky top-0 z-50 lg:shadow-md">
         <div class="w-full bg-primary">
             <div
-                class="max-w-[1200px] flex flex-col md:flex-row md:justify-between lg:justify-start items-center gap-1 lg:gap-0 text-light text-xs lg:text-sm font-medium py-3 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
+                class="xxl:max-w-[1200px] flex flex-col md:flex-row md:justify-between lg:justify-start items-center gap-1 lg:gap-0 text-light text-xs lg:text-sm font-medium py-3 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
                 <div
                     class="w-full flex flex-col md:flex-row md:justify-between lg:justify-start items-center lg:items-end gap-1 lg:gap-8">
                     <div class="flex justify-center items-end gap-2">
@@ -24,7 +24,7 @@
 
         <div class="w-full bg-light">
             <div
-                class="max-w-[1200px] flex justify-center lg:justify-between items-center p-5 md:py-6 lg:py-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
+                class="xxl:max-w-[1200px] flex justify-center lg:justify-between items-center p-5 md:py-6 lg:py-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
                 <button @click="toggleDrawer"
                     class="flex lg:hidden justify-center items-center absolute left-5 md:left-11">
                     <Icon name="tabler:menu-2" class="w-5 md:w-6 h-5 md:h-6 text-primary" />
@@ -36,19 +36,22 @@
                 <nav class="hidden lg:block">
                     <ul class="flex items-center gap-1.5 xxl:gap-6">
                         <li>
-                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                            <NuxtLink to="#"
+                                class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
                                 @click="closeDrawer">
                                 Servicios
                             </NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                            <NuxtLink to="#"
+                                class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
                                 @click="closeDrawer">
                                 Marcas
                             </NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink to="#" class="h-12 text-dark text-[1.125rem] font-medium px-6"
+                            <NuxtLink to="#"
+                                class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
                                 @click="closeDrawer">
                                 Quienes Somos
                             </NuxtLink>
