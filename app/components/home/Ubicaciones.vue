@@ -46,6 +46,8 @@
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
 
+useFadeUp()
+
 const mapContainer = ref(null)
 const selectedUbicacion = ref(0)
 

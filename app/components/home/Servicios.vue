@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+useFadeUp()
+
 const servicios = [
     {
         titulo: "MANTENIMIENTO",

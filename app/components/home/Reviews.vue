@@ -69,6 +69,8 @@
 const { reviews, loading, error, fetchReviews } = useReviews()
 const carousel = ref(null)
 
+useFadeUp()
+
 const handleScrollLeft = () => {
     if (carousel.value) {
         carousel.value.scrollLeft()

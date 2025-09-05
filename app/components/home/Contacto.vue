@@ -16,6 +16,7 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
+useFadeUp()
 
 const showContactForm = ref(false)
 </script>
