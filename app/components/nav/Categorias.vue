@@ -5,7 +5,7 @@
             :gap="{ base: 16, md: 32, lg: 20, xl: 20, xxl: 20 }" :show-arrows="false">
             <NuxtLink v-for="categoria in categorias" :key="categoria.id" to="#"
                 class="!w-max sm:!w-auto flex flex-col items-center gap-1 lg:gap-2 text-xs md:last:mr-11 lg:last:mr-0">
-                <Icon :name="`tabler:${categoria.icon}`" class="w-6 lg:w-8 h-6 lg:h-8 text-primary" />
+                <NuxtImg :src="categoria.icon" :alt="categoria.nombre" class="w-6 lg:w-8 h-6 lg:h-8 text-primary object-contain" />
                 <p class="font-normal hover:text-primary transition-colors duration-300">{{ categoria.nombre }}</p>
             </NuxtLink>
         </CarouselStatic>

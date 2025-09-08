@@ -15,7 +15,7 @@
                 :gap="{ md: 12, lg: 16, xl: 16, xxl: 16 }" class="pl-1 fade-up">
                 <div v-for="marca in marcas" :key="marca"
                     class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4">
-                    <NuxtImg :src="`/images/marcas/${marca}.png`" :alt="marca" class="object-contain" />
+                    <NuxtImg :src="`/images/marcas/${marca}.webp`" :alt="marca" class="w-full max-h-10 md:max-h-12 lg:max-h-20 object-contain" />
                 </div>
             </CarouselStatic>
             <ButtonPrimary class="lg:hidden">Conocé más detalles</ButtonPrimary>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-const marcas = ["Michigan", "Hanomag", "Husqvarna", "Grosspal", "Fema"];
+const marcas = ["fema", "grosspal", "hanomag", "husqvarna", "luqstoff", "michigan", "montecor", "roland"];
 
 useFadeUp()
 </script>
@@ -32,7 +32,13 @@ useFadeUp()
 <style scoped>
 @media (width >=1080px) {
     .bg-marcas {
-        background-image: url('/images/marcas/Marcas-Tzadik.jpg');
+        background-image: url('/images/marcas/Marcas-Tzadik.webp');
+    }
+}
+
+@media (width >=1440px) {
+    .bg-marcas {
+        background-image: url('/images/marcas/Marcas-Tzadik-XL.webp');
     }
 }
 </style>
