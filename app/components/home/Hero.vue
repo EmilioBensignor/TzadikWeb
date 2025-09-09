@@ -1,8 +1,8 @@
 <template>
     <DefaultSection class="relative">
         <picture class="w-full">
-            <source media="(min-width: 1536px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-DesktopXL.webp">
-            <source media="(min-width: 1024px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Desktop.webp">
+            <source media="(min-width: 1440px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-DesktopXL.webp">
+            <source media="(min-width: 1080px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Desktop.webp">
             <source media="(min-width: 768px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Tablet.webp">
             <img src="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Mobile.webp" alt="Tzadik Maquinaria Agricola Vial"
                 class="w-full h-[28rem] md:h-80 lg:h-[25.5rem] xxl:h-[33.25rem] object-cover object-left">
