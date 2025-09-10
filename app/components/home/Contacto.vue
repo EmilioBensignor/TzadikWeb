@@ -5,7 +5,7 @@
             <div class="md:flex md:items-center md:gap-6">
                 <div class="hidden md:flex items-center gap-1.5 text-light">
                     <Icon name="tabler:brand-whatsapp" class="w-6 h-6 flex-shrink-0" />
-                    <p class="text-xl">{{ ROUTE_NAMES.TELEFONO }}</p>
+                    <p class="text-xl">+549 362 413-0496</p>
                 </div>
                 <ButtonPrimary @click="showContactForm = true">Contactanos</ButtonPrimary>
             </div>

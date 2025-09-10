@@ -21,11 +21,6 @@ const paginas = [
 
 const contacto = [
     {
-        icon: "phone",
-        route: `tel:${ROUTE_NAMES.TELEFONO}`,
-        text: ROUTE_NAMES.TELEFONO,
-    },
-    {
         icon: "brand-whatsapp",
         route: `https://wa.me/${ROUTE_NAMES.WHATSAPP.replace(/\s/g, '')}`,
         text: ROUTE_NAMES.WHATSAPP,
