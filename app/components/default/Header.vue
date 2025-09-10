@@ -56,14 +56,13 @@
                                 Quienes Somos
                             </NuxtLink>
                         </li>
-                        <ButtonPrimary @click="showContactForm = true">Contactanos</ButtonPrimary>
+                        <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos</ButtonPrimary>
                     </ul>
                 </nav>
             </div>
         </div>
         <NavCategorias class="md:pl-11 lg:hidden" />
         <NavDrawer :is-open="isDrawerOpen" @close="closeDrawer" class="lg:hidden" />
-        <ContactForm :is-open="showContactForm" @close="showContactForm = false" />
     </header>
 </template>
 

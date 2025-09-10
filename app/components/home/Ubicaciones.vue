@@ -3,7 +3,7 @@
         <div class="flex lg:hidden flex-col items-center text-center gap-2 fade-up">
             <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
             <p class="text-xs md:text-sm">
-                Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites.
+                Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos necesites. <span class="font-bold">Envíos a todo el país</span>
             </p>
         </div>
         <div class="w-full h-80 xxl:h-[22rem] relative rounded-xl lg:shadow-lg lg:shadow-black/30 overflow-hidden fade-up">
@@ -25,8 +25,9 @@
                 <HeadingH2>ESTAMOS CERCA TUYO</HeadingH2>
                 <p class="lg:text-left text-xs md:text-sm lg:text-base">
                     Contamos con 5 sucursales distribuidas por Argentina para estar siempre cerca de donde nos
-                    necesites.
+                    necesites. <span class="font-bold">Envíos a todo el país</span>
                 </p>
+                <p></p>
             </div>
             <div class="w-full flex flex-col md:flex-row md:flex-wrap gap-6 mt-3 lg:mt-0">
                 <div v-for="(ubicacion, index) in ubicaciones" :key="index" @click="selectUbicacion(index)"
