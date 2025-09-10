@@ -9,7 +9,7 @@
             </div>
             <div class="flex items-end gap-2">
                 <p class="font-teko text-2xl xxl:text-[1.75rem] font-semibold !leading-none">{{ formatCurrency(product.precio) }}</p>
-                <p class="text-sm font-medium">USD</p>
+                <p class="text-sm font-medium">{{ getCurrencySymbol(product) }}</p>
             </div>
         </div>
     </NuxtLink>
@@ -25,7 +25,7 @@ const props = defineProps({
     }
 })
 
-const { getImageUrl } = useProductos()
+const { getImageUrl, getCurrencySymbol } = useProductos()
 
 const imageUrl = computed(() => {
     if (!props.product?.producto_imagenes || props.product.producto_imagenes.length === 0) {

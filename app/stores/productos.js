@@ -16,7 +16,7 @@ export const useProductosStore = defineStore('productos', () => {
     const totalCount = ref(0)
     const filters = ref({
         categoria_id: null,
-        subcategoria_ids: [], // Para manejar múltiples subcategorías
+        subcategoria_ids: [],
         condicion: null,
         precio_min: null,
         precio_max: null,
@@ -39,6 +39,9 @@ export const useProductosStore = defineStore('productos', () => {
         return productosImagenes.value.filter(img => img.producto_id === productoId)
     })
 
+    const getCurrencySymbol = computed(() => (producto) => {
+        return producto.moneda ? 'USD' : 'ARS'
+    })
 
     const totalPages = computed(() => {
         return Math.ceil(totalCount.value / pageSize.value)
@@ -419,6 +422,7 @@ export const useProductosStore = defineStore('productos', () => {
         getProductoById,
         getProductosByCategoria,
         getImagenesByProducto,
+        getCurrencySymbol,
 
         // Actions
         fetchProductos,
