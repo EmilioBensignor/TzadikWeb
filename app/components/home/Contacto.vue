@@ -24,19 +24,19 @@ const showContactForm = ref(false)
 <style scoped>
 @media (width >=768px) {
     .bg-contacto {
-        background-image: url('/images/home/contacto/Contacto-Tzadik-Tablet.jpg');
+        background-image: url('/images/home/contacto/Contacto-Tzadik-Tablet.webp');
     }
 }
 
 @media (width >=1080px) {
     .bg-contacto {
-        background-image: url('/images/home/contacto/Contacto-Tzadik-Desktop.jpg');
+        background-image: url('/images/home/contacto/Contacto-Tzadik-Desktop.webp');
     }
 }
 
 @media (width >=1440px) {
     .bg-contacto {
-        background-image: url('/images/home/contacto/Contacto-Tzadik-Desktop-XL.jpg');
+        background-image: url('/images/home/contacto/Contacto-Tzadik-Desktop-XL.webp');
     }
 }
 </style>
