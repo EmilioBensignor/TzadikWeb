@@ -37,7 +37,7 @@
                         <li v-for="(red, index) in redes" :key="index">
                             <NuxtLink :to="red.route">
                                 <NuxtImg :src="`/images/redes/${red.name}-Negro.svg`" :alt="red.name"
-                                    class="w-5 md:w-6 h-5 md:h-6 object-contain" />
+                                    class="w-full h-5 md:h-6 object-contain" />
                             </NuxtLink>
                         </li>
                     </ul>

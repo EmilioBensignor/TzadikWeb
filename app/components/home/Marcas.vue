@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-const marcas = ["hanomag", "michigan", "husqvarna", "agrochery", "fema", "grosspal", "luqstoff", "montecor"];
+const marcas = ["hanomag", "michigan", "husqvarna", "agrochery", "fema", "grosspal", "luqstoff", "montecor", "yomel"];
 
 useFadeUp()
 </script>

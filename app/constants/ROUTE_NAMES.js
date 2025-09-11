@@ -5,9 +5,10 @@ export const ROUTE_NAMES = {
     MARCAS: "#",
     QUIENES_SOMOS: "#",
     REDES: {
-        INSTAGRAM: "https://www.instagram.com",
-        FACEBOOK: "https://www.facebook.com",
-        TIKTOK: "https://www.tiktok.com",
+        INSTAGRAM: "https://www.instagram.com/tzadik.argentina/",
+        FACEBOOK: "https://www.facebook.com/tzadik.argentina/",
+        TIKTOK: "https://www.tiktok.com/@tzadik.argentina",
+        YOUTUBE: "https://www.youtube.com/@tzadik.argentina",
     },
     WHATSAPP: "5493624620042",
     MAIL: "contacto@tzadik.com.ar",

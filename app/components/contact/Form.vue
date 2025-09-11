@@ -185,8 +185,6 @@ const handleSubmit = () => {
         return
     }
 
-    console.log('Formulario enviado:', form)
-
     resetForm()
     clearErrors()
     showConfirmation.value = true

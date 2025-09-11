@@ -35,7 +35,7 @@
                     <Icon name="tabler:map-pin" class="w-4 lg:w-5 h-4 lg:h-5 text-primary flex-shrink-0 mb-1" />
                     <div :class="selectedUbicacion === index ? ' border-primary' : 'border-transparent'"
                         class="border-b">
-                        <p class="text-sm">{{ ubicacion.texto }}</p>
+                        <p class="text-sm no-underline">{{ ubicacion.texto }}</p>
                     </div>
                 </div>
             </div>

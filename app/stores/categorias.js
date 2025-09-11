@@ -34,7 +34,6 @@ export const useCategoriasStore = defineStore('categorias', () => {
         .order('id')
 
       if (err) throw err
-      console.log('Categorias data:', data)
       categorias.value = data || []
     } catch (err) {
       error.value = err.message

@@ -13,7 +13,7 @@
                 </div>
                 <ul class="hidden lg:flex items-center gap-2">
                     <li v-for="(red, index) in redes" :key="index">
-                        <NuxtLink :to="red.route">
+                        <NuxtLink :to="red.route" class="no-underline">
                             <NuxtImg :src="`/images/redes/${red.name}-Blanco.svg`" :alt="red.name"
                                 class="w-5 md:w-6 h-5 md:h-6 object-contain" />
                         </NuxtLink>

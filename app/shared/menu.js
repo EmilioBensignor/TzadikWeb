@@ -50,6 +50,10 @@ const redes = [
         name: "TikTok",
         route: ROUTE_NAMES.REDES.TIKTOK,
     },
+    {
+        name: "Youtube",
+        route: ROUTE_NAMES.REDES.YOUTUBE,
+    },
 ];
 
 export {
