@@ -38,12 +38,12 @@
             </div>
             <div class="hidden lg:flex items-center gap-3 absolute bottom-0 self-end">
                 <button @click="handleScrollLeft"
-                    class="w-10 h-10 flex justify-center items-center bg-light hover:bg-primaryHover border border-dark text-primary hover:text-light rounded-full transition-colors duration-300"
+                    class="w-10 h-10 flex justify-center items-center bg-light hover:bg-primaryHover text-primary hover:text-light rounded-full primary-shadow transition-colors duration-300"
                     aria-label="Anterior">
                     <Icon name="material-symbols:chevron-left-rounded" size="2rem" />
                 </button>
                 <button @click="handleScrollRight"
-                    class="w-10 h-10 flex justify-center items-center bg-light hover:bg-primaryHover border border-dark text-primary hover:text-light rounded-full transition-colors duration-300"
+                    class="w-10 h-10 flex justify-center items-center bg-light hover:bg-primaryHover text-primary hover:text-light rounded-full primary-shadow transition-colors duration-300"
                     aria-label="Siguiente">
                     <Icon name="material-symbols:chevron-right-rounded" size="2rem" />
                 </button>
