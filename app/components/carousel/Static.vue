@@ -44,7 +44,14 @@ const props = defineProps({
     buttonPosition: {
         type: Object,
         default: () => ({
-            top: '50%',
+            top: {
+                base: '50%',
+                sm: '50%',
+                md: '50%',
+                lg: '50%',
+                xl: '50%',
+                xxl: '50%',
+            },
             transform: 'translateY(-50%)',
             left: {
                 base: '0.5rem',
@@ -297,14 +304,22 @@ const responsiveRight = computed(() => {
     return rightConfig?.[currentBreakpoint.value] || rightConfig?.base || '0.5rem'
 })
 
+const responsiveTop = computed(() => {
+    const topConfig = props.buttonPosition.top
+    if (typeof topConfig === 'string') {
+        return topConfig
+    }
+    return topConfig?.[currentBreakpoint.value] || topConfig?.base || '50%'
+})
+
 const leftButtonStyle = computed(() => ({
-    top: props.buttonPosition.top,
+    top: responsiveTop.value,
     transform: props.buttonPosition.transform,
     left: responsiveLeft.value
 }))
 
 const rightButtonStyle = computed(() => ({
-    top: props.buttonPosition.top,
+    top: responsiveTop.value,
     transform: props.buttonPosition.transform,
     right: responsiveRight.value
 }))
