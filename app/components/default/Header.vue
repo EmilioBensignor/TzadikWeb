@@ -10,6 +10,7 @@
                         <p>{{ ROUTE_NAMES.UBICACION }}</p>
                     </div>
                     <p>Lunes a Viernes de 9hs - 18hs</p>
+                    <p class="absolute top-3 right-3 md:right-5 text-[0.625rem]">BH</p>
                 </div>
                 <ul class="hidden lg:flex items-center gap-2">
                     <li v-for="(red, index) in redes" :key="index">
@@ -29,7 +30,7 @@
                     class="flex lg:hidden justify-center items-center absolute left-5 md:left-11">
                     <Icon name="tabler:menu-2" class="w-5 md:w-6 h-5 md:h-6 text-primary" />
                 </button>
-                <NuxtLink>
+                <NuxtLink :to="ROUTE_NAMES.HOME">
                     <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
                         class="w-28 md:w-32 lg:w-44 h-6 md:h-7 lg:h-10 object-contain" />
                 </NuxtLink>

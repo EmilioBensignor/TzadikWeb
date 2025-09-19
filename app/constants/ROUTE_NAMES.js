@@ -1,6 +1,6 @@
 export const ROUTE_NAMES = {
     HOME: "/",
-    PRODUCTOS: "#",
+    CATEGORIAS: "/categorias",
     SERVICIOS: "#",
     MARCAS: "#",
     QUIENES_SOMOS: "#",

@@ -40,9 +40,9 @@
                         xxl: '-1.75rem',
                     }
                 }" class="pl-1 fade-up">
-                <div v-for="(marca, index) in marcas" :key="marca"
+                <div v-for="(marca, index) in marcas" :key="index"
                     class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4">
-                    <NuxtImg :src="`/images/marcas/${marca}.webp`" :alt="marca" :class="[
+                    <NuxtImg :src="`/images/marcas/${marca.nombre}.webp`" :alt="marca.nombre" :class="[
                         'w-full max-h-10 md:max-h-12 object-contain',
                         index === marcas.length - 1 ? 'lg:!max-h-8' : ''
                     ]" />
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-const marcas = ["hanomag", "michigan", "husqvarna", "agrochery", "fema", "grosspal", "luqstoff", "montecor", "yomel"];
+import marcas from '~/shared/marcas';
 
 useFadeUp()
 </script>

@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 
 export const useProductosStore = defineStore('productos', () => {
 
-    // Estado
     const productos = ref([])
     const ofertas = ref([])
     const productosImagenes = ref([])
@@ -10,7 +9,6 @@ export const useProductosStore = defineStore('productos', () => {
     const error = ref(null)
     const currentProduct = ref(null)
 
-    // Pagination & Filters
     const currentPage = ref(1)
     const pageSize = ref(12)
     const totalCount = ref(0)
@@ -26,7 +24,6 @@ export const useProductosStore = defineStore('productos', () => {
     const sortBy = ref('created_at')
     const sortOrder = ref('desc')
 
-    // Getters
     const getProductoById = computed(() => (id) => {
         return productos.value.find(producto => producto.id === id)
     })
@@ -47,22 +44,27 @@ export const useProductosStore = defineStore('productos', () => {
         return Math.ceil(totalCount.value / pageSize.value)
     })
 
-    // Actions
     const fetchProductos = async (options = {}) => {
         try {
             loading.value = true
             error.value = null
 
             const supabase = useSupabaseClient()
+            let selectQuery = `
+                *,
+                categorias(id, nombre, icon),
+                subcategorias(id, nombre)
+            `
+
+            if (options.includeImages) {
+                selectQuery += `,
+                producto_imagenes(storage_path, es_principal)`
+            }
+
             let query = supabase
                 .from('productos')
-                .select(`
-          *,
-          categorias(id, nombre, icon),
-          subcategorias(id, nombre)
-        `, { count: 'exact' })
+                .select(selectQuery, { count: 'exact' })
 
-            // Aplicar filtros
             if (filters.value.categoria_id) {
                 query = query.eq('categoria_id', filters.value.categoria_id)
             }
@@ -87,17 +89,14 @@ export const useProductosStore = defineStore('productos', () => {
                 query = query.or(`titulo.ilike.%${filters.value.search}%,descripcion_corta.ilike.%${filters.value.search}%`)
             }
 
-            // Filtros dinámicos en JSONB
             Object.entries(filters.value.datos_dinamicos).forEach(([key, value]) => {
                 if (value) {
                     query = query.eq(`datos_dinamicos->>${key}`, value)
                 }
             })
 
-            // Ordenamiento
             query = query.order(sortBy.value, { ascending: sortOrder.value === 'asc' })
 
-            // Paginación
             const from = (currentPage.value - 1) * pageSize.value
             const to = from + pageSize.value - 1
             query = query.range(from, to)
@@ -108,11 +107,6 @@ export const useProductosStore = defineStore('productos', () => {
 
             productos.value = data || []
             totalCount.value = count || 0
-
-            // Si se especifica cargar imágenes
-            if (options.includeImages) {
-                await fetchProductosImagenes(data?.map(p => p.id))
-            }
 
 
         } catch (err) {
@@ -132,10 +126,10 @@ export const useProductosStore = defineStore('productos', () => {
             const { data, error: err } = await supabase
                 .from('productos')
                 .select(`
-          *,
-          categorias(id, nombre, icon),
-          subcategorias(id, nombre)
-        `)
+                    *,
+                    categorias(id, nombre, icon),
+                    subcategorias(id, nombre)
+                `)
                 .eq('id', id)
                 .single()
 
@@ -143,7 +137,6 @@ export const useProductosStore = defineStore('productos', () => {
 
             currentProduct.value = data
 
-            // Cargar imágenes si se especifica
             if (options.includeImages || options.includeAll) {
                 await fetchProductosImagenes([id])
             }
@@ -175,7 +168,6 @@ export const useProductosStore = defineStore('productos', () => {
             if (err) throw err
 
             if (productoIds && productoIds.length > 0) {
-                // Reemplazar solo las imágenes de los productos especificados
                 productosImagenes.value = productosImagenes.value.filter(
                     img => !productoIds.includes(img.producto_id)
                 )
@@ -230,13 +222,11 @@ export const useProductosStore = defineStore('productos', () => {
 
             if (err) throw err
 
-            // Actualizar en el array local si existe
             const index = productos.value.findIndex(p => p.id === id)
             if (index !== -1) {
                 productos.value[index] = { ...productos.value[index], ...data }
             }
 
-            // Actualizar currentProduct si es el mismo
             if (currentProduct.value?.id === id) {
                 currentProduct.value = { ...currentProduct.value, ...data }
             }
@@ -258,21 +248,17 @@ export const useProductosStore = defineStore('productos', () => {
 
             const supabase = useSupabaseClient()
 
-            // 1. Obtener todas las imágenes del producto para borrarlas del storage
             const imagenesDelProducto = productosImagenes.value.filter(img => img.producto_id === id)
 
-            // 2. Borrar imágenes del storage
             const { deleteProductoImagen } = useStorage()
             for (const imagen of imagenesDelProducto) {
                 try {
                     await deleteProductoImagen(imagen.storage_path)
                 } catch (storageError) {
                     console.warn(`Error deleting image ${imagen.storage_path}:`, storageError)
-                    // Continuar con el borrado aunque falle una imagen
                 }
             }
 
-            // 3. Borrar registros de imágenes de la BD
             const { error: imagenesError } = await supabase
                 .from('producto_imagenes')
                 .delete()
@@ -280,10 +266,8 @@ export const useProductosStore = defineStore('productos', () => {
 
             if (imagenesError) {
                 console.warn('Error deleting image records:', imagenesError)
-                // Continuar con el borrado del producto
             }
 
-            // 4. Borrar el producto de la BD
             const { error: err } = await supabase
                 .from('productos')
                 .delete()
@@ -291,7 +275,6 @@ export const useProductosStore = defineStore('productos', () => {
 
             if (err) throw err
 
-            // 5. Remover de arrays locales
             productos.value = productos.value.filter(p => p.id !== id)
             productosImagenes.value = productosImagenes.value.filter(img => img.producto_id !== id)
 
@@ -308,10 +291,9 @@ export const useProductosStore = defineStore('productos', () => {
         }
     }
 
-    // Funciones para manejar filtros
     const setFilter = (key, value) => {
         filters.value[key] = value
-        currentPage.value = 1 // Reset page when filtering
+        currentPage.value = 1
     }
 
     const setDynamicFilter = (key, value) => {
@@ -346,14 +328,12 @@ export const useProductosStore = defineStore('productos', () => {
         currentPage.value = page
     }
 
-    // Funciones helper para URLs de Storage
     const getImageUrl = (storagePath) => {
         if (!storagePath) return null
         const config = useRuntimeConfig()
         return `${config.public.supabase.url}/storage/v1/object/public/productos-imagenes/${storagePath}`
     }
 
-    // Función helper para manejar múltiples subcategorías
     const addSubcategoriaFilter = (subcategoriaId) => {
         if (!filters.value.subcategoria_ids.includes(subcategoriaId)) {
             filters.value.subcategoria_ids.push(subcategoriaId)
@@ -403,7 +383,6 @@ export const useProductosStore = defineStore('productos', () => {
     }
 
     return {
-        // Estado
         productos,
         ofertas,
         productosImagenes,
@@ -418,13 +397,11 @@ export const useProductosStore = defineStore('productos', () => {
         sortBy,
         sortOrder,
 
-        // Getters
         getProductoById,
         getProductosByCategoria,
         getImagenesByProducto,
         getCurrencySymbol,
 
-        // Actions
         fetchProductos,
         fetchProductoById,
         fetchProductosImagenes,
@@ -433,7 +410,6 @@ export const useProductosStore = defineStore('productos', () => {
         updateProducto,
         deleteProducto,
 
-        // Filters & Pagination
         setFilter,
         setDynamicFilter,
         clearFilters,
@@ -443,7 +419,6 @@ export const useProductosStore = defineStore('productos', () => {
         removeSubcategoriaFilter,
         setSubcategoriasFilter,
 
-        // Helpers
         getImageUrl
     }
 })

@@ -18,7 +18,7 @@ export default {
                 whatsapp: "#25D366",
                 gray: {
                     extraLight: "#EFE0DB",
-                    dark: "##7C797A",
+                    dark: "#7C797A",
                 },
                 error: "#F03A36",
             },

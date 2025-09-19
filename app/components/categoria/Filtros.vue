@@ -1,0 +1,414 @@
+<template>
+    <DefaultSection class="md:flex-row md:items-start">
+        <div class="w-full md:max-w-[13.75rem] flex flex-col gap-3 pt-6 pb-3 px-5 md:p-0">
+            <div class="flex flex-col gap-3 rounded-xl shadow-md shadow-black/20 p-3">
+                <p class="font-bold">Filtros aplicados</p>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span v-for="(filtro, index) in filtrosAplicados" :key="index"
+                        class="flex items-center gap-2 border border-primary rounded-lg text-sm font-medium p-2">
+                        {{ filtro }}
+                        <button v-if="!(index === 0 && categoriaActual?.nombre === filtro)"
+                            @click="removerFiltro(index)"
+                            class="w-3 h-3 flex justify-center items-center bg-primary rounded-full text-light">
+                            <Icon name="tabler:x" class="w-3 h-3" />
+                        </button>
+                    </span>
+                </div>
+                <button @click="limpiarFiltros" class="self-end text-xs text-primary font-semibold">Limpiar
+                    filtros</button>
+            </div>
+            <div class="flex flex-col gap-3 rounded-xl shadow-md shadow-black/20 p-3">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold">Filtros</p>
+                    <button @click="toggleFiltros"
+                        class="w-6 h-6 flex justify-center items-center bg-primary rounded-full shadow-md shadow-black/20 text-light md:hidden">
+                        <Icon name="tabler:chevron-down" class="w-5 h-5 transition-transform duration-200"
+                            :class="filtrosAbiertos ? 'rotate-180' : ''" />
+                    </button>
+                </div>
+                <Transition enter-active-class="transition-all duration-300 ease-out"
+                    enter-from-class="opacity-0 transform -translate-y-2"
+                    enter-to-class="opacity-100 transform translate-y-0"
+                    leave-active-class="transition-all duration-200 ease-in"
+                    leave-from-class="opacity-100 transform translate-y-0"
+                    leave-to-class="opacity-0 transform -translate-y-2">
+                    <div v-if="filtrosAbiertos" class="space-y-6 pt-3 md:block">
+                        <div v-if="subcategorias.length > 0" class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold">Subcategoría</p>
+                            <div class="flex flex-col gap-2">
+                                <FormCheckbox v-for="(subcategoria, index) in subcategorias" :key="index"
+                                    :id="`subcat-${index}`" :value="subcategoria.nombre"
+                                    :checked="filtrosSeleccionados.subcategorias.includes(subcategoria.nombre)"
+                                    :label="subcategoria.nombre"
+                                    @update:checked="toggleSubcategoria(subcategoria.nombre, $event)" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold">Condición</p>
+                            <div class="flex flex-col gap-2">
+                                <FormCheckbox id="nuevo" value="nuevo"
+                                    :checked="filtrosSeleccionados.condicion.includes('nuevo')" label="Nuevo"
+                                    @update:checked="toggleCondicion('nuevo', $event)" />
+                                <FormCheckbox id="usado" value="usado"
+                                    :checked="filtrosSeleccionados.condicion.includes('usado')" label="Usado"
+                                    @update:checked="toggleCondicion('usado', $event)" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold">Marca</p>
+                            <div class="flex flex-col gap-2">
+                                <FormCheckbox v-for="(marca, index) in marcas" :key="index" :id="`marca-${index}`"
+                                    :value="marca.nombre" :checked="filtrosSeleccionados.marcas.includes(marca.nombre)"
+                                    :label="marca.nombre.charAt(0).toUpperCase() + marca.nombre.slice(1)"
+                                    @update:checked="toggleMarca(marca, $event)" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold">Moneda</p>
+                            <div class="flex flex-col gap-2">
+                                <FormCheckbox id="dolares" value="dolares"
+                                    :checked="filtrosSeleccionados.moneda.includes('dolares')" label="Dólares"
+                                    @update:checked="toggleMoneda('dolares', $event)" />
+                                <FormCheckbox id="pesos" value="pesos"
+                                    :checked="filtrosSeleccionados.moneda.includes('pesos')" label="Pesos Argentinos"
+                                    @update:checked="toggleMoneda('pesos', $event)" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold">Oferta</p>
+                            <div class="flex flex-col gap-2">
+                                <FormCheckbox id="productosOferta" value="productosOferta"
+                                    :checked="filtrosSeleccionados.oferta.includes('productosOferta')"
+                                    label="Productos en oferta"
+                                    @update:checked="toggleOferta('productosOferta', $event)" />
+                            </div>
+                        </div>
+                    </div>
+                </Transition>
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-6">
+            <div class="flex justify-between items-center border-b border-gray-dark pb-1.5 mx-5">
+                <div class="flex items-center gap-2">
+                    <NuxtImg :src="categoriaActual?.icon" :alt="`Icono de ${categoriaActual?.nombre}`"
+                        class="w-5 h-5 object-contain" />
+                    <p class="text-xs font-bold">{{ productosFiltrados.length }} Resultados</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <FormSelect v-model="ordenarPor" :options="opcionesOrdenar" />
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 pb-6">
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+                    <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
+                </div>
+
+                <CategoriaContacto v-if="mostrarBannerContacto" class="my-3" />
+
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+                    <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" />
+                </div>
+
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+                    <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" />
+                </div>
+
+                <ButtonPrimary v-if="mostrarBotonCargarMas" @click="cargarMasProductos" class="self-center">
+                    Cargar más productos
+                </ButtonPrimary>
+            </div>
+        </div>
+    </DefaultSection>
+</template>
+
+<script setup>
+import marcas from '~/shared/marcas'
+
+const route = useRoute()
+const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
+const { productos, searchProductos, clearFilters } = useProductos()
+const productosStore = useProductosStore()
+
+const categoriaActual = computed(() => {
+    return categorias.value.find(cat => cat.nombre === route.params.nombre)
+})
+
+const subcategorias = computed(() => {
+    if (!categoriaActual.value?.id) return []
+    return getSubcategoriasPorCategoria(categoriaActual.value.id)
+})
+
+const filtrosAbiertos = ref(false)
+
+onMounted(() => {
+    const checkScreenSize = () => {
+        filtrosAbiertos.value = window.innerWidth >= 768
+        isXXL.value = window.innerWidth >= 1440
+        isMD.value = window.innerWidth >= 768
+    }
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+})
+const ordenarPor = ref('precio-mayor')
+const productosAdicionalesTotales = ref(0)
+
+const opcionesOrdenar = [
+    { value: 'precio-mayor', label: 'Precio: mayor a menor' },
+    { value: 'precio-menor', label: 'Precio: menor a mayor' }
+]
+
+const filtrosSeleccionados = reactive({
+    subcategorias: [],
+    condicion: [],
+    marcas: [],
+    moneda: [],
+    oferta: []
+})
+
+const filtrosAplicados = computed(() => {
+    const aplicados = []
+
+    if (categoriaActual.value?.nombre) {
+        aplicados.push(categoriaActual.value.nombre)
+    }
+
+    if (filtrosSeleccionados.subcategorias.length > 0) {
+        aplicados.push(...filtrosSeleccionados.subcategorias)
+    }
+    if (filtrosSeleccionados.condicion.length > 0) {
+        aplicados.push(...filtrosSeleccionados.condicion.map(c => c === 'nuevo' ? 'Nuevo' : 'Usado'))
+    }
+    if (filtrosSeleccionados.marcas.length > 0) {
+        aplicados.push(...filtrosSeleccionados.marcas.map(m => m.charAt(0).toUpperCase() + m.slice(1)))
+    }
+    if (filtrosSeleccionados.moneda.length > 0) {
+        aplicados.push(...filtrosSeleccionados.moneda.map(m => m === 'dolares' ? 'Dólares' : 'Pesos Argentinos'))
+    }
+    if (filtrosSeleccionados.oferta.length > 0) {
+        aplicados.push('En oferta')
+    }
+
+    return aplicados
+})
+
+const productosFiltrados = computed(() => {
+    if (!categoriaActual.value) return []
+
+    let productosBase = productos.value.filter(producto =>
+        producto.categoria_id === categoriaActual.value.id
+    )
+
+    if (filtrosSeleccionados.subcategorias.length > 0) {
+        productosBase = productosBase.filter(producto =>
+            filtrosSeleccionados.subcategorias.includes(producto.subcategoria_nombre)
+        )
+    }
+
+    if (filtrosSeleccionados.condicion.length > 0) {
+        productosBase = productosBase.filter(producto =>
+            filtrosSeleccionados.condicion.includes(producto.condicion)
+        )
+    }
+
+    if (filtrosSeleccionados.marcas.length > 0) {
+        productosBase = productosBase.filter(producto =>
+            filtrosSeleccionados.marcas.includes(producto.marca)
+        )
+    }
+
+    if (filtrosSeleccionados.moneda.length > 0) {
+        productosBase = productosBase.filter(producto =>
+            filtrosSeleccionados.moneda.includes(producto.tipo_moneda)
+        )
+    }
+
+    if (filtrosSeleccionados.oferta.length > 0) {
+        productosBase = productosBase.filter(producto =>
+            producto.en_oferta === true
+        )
+    }
+
+    if (ordenarPor.value === 'precio-mayor') {
+        productosBase.sort((a, b) => b.precio - a.precio)
+    } else if (ordenarPor.value === 'precio-menor') {
+        productosBase.sort((a, b) => a.precio - b.precio)
+    }
+
+    return productosBase
+})
+
+const isXXL = ref(false)
+const isMD = ref(false)
+
+const productosAntesBanner = computed(() => {
+    if (isXXL.value) return 9
+    if (isMD.value) return 6
+    return 5
+})
+
+const productosAntesBoton = computed(() => {
+    if (isXXL.value) return 18
+    if (isMD.value) return 12
+    return 10
+})
+
+const productosPorCarga = computed(() => {
+    if (isXXL.value) return 9
+    if (isMD.value) return 6
+    return 5
+})
+
+const primerosProductos = computed(() => {
+    return productosFiltrados.value.slice(0, productosAntesBanner.value)
+})
+
+const siguientesProductos = computed(() => {
+    if (productosFiltrados.value.length <= productosAntesBanner.value) return []
+    return productosFiltrados.value.slice(productosAntesBanner.value, productosAntesBanner.value * 2)
+})
+
+const productosAdicionales = computed(() => {
+    if (productosFiltrados.value.length <= productosAntesBanner.value * 2) return []
+    return productosFiltrados.value.slice(productosAntesBanner.value * 2, productosAntesBanner.value * 2 + productosAdicionalesTotales.value)
+})
+
+const productosVisibles = computed(() => {
+    return primerosProductos.value.length + siguientesProductos.value.length + productosAdicionales.value.length
+})
+
+const mostrarBannerContacto = computed(() => {
+    return productosFiltrados.value.length > productosAntesBanner.value
+})
+
+const mostrarBotonCargarMas = computed(() => {
+    const totalProductos = productosFiltrados.value.length
+    return productosVisibles.value < totalProductos
+})
+
+const cargarMasProductos = () => {
+    productosAdicionalesTotales.value += productosPorCarga.value
+}
+
+const toggleFiltros = () => {
+    filtrosAbiertos.value = !filtrosAbiertos.value
+}
+
+const toggleSubcategoria = (subcategoria, checked) => {
+    if (checked) {
+        filtrosSeleccionados.subcategorias.push(subcategoria)
+    } else {
+        const index = filtrosSeleccionados.subcategorias.indexOf(subcategoria)
+        if (index > -1) {
+            filtrosSeleccionados.subcategorias.splice(index, 1)
+        }
+    }
+}
+
+const toggleCondicion = (condicion, checked) => {
+    if (checked) {
+        filtrosSeleccionados.condicion.push(condicion)
+    } else {
+        const index = filtrosSeleccionados.condicion.indexOf(condicion)
+        if (index > -1) {
+            filtrosSeleccionados.condicion.splice(index, 1)
+        }
+    }
+}
+
+const toggleMarca = (marca, checked) => {
+    if (checked) {
+        filtrosSeleccionados.marcas.push(marca.nombre)
+    } else {
+        const index = filtrosSeleccionados.marcas.indexOf(marca.nombre)
+        if (index > -1) {
+            filtrosSeleccionados.marcas.splice(index, 1)
+        }
+    }
+}
+
+const toggleMoneda = (moneda, checked) => {
+    if (checked) {
+        filtrosSeleccionados.moneda.push(moneda)
+    } else {
+        const index = filtrosSeleccionados.moneda.indexOf(moneda)
+        if (index > -1) {
+            filtrosSeleccionados.moneda.splice(index, 1)
+        }
+    }
+}
+
+const toggleOferta = (oferta, checked) => {
+    if (checked) {
+        filtrosSeleccionados.oferta.push(oferta)
+    } else {
+        const index = filtrosSeleccionados.oferta.indexOf(oferta)
+        if (index > -1) {
+            filtrosSeleccionados.oferta.splice(index, 1)
+        }
+    }
+}
+
+const limpiarFiltros = () => {
+    Object.keys(filtrosSeleccionados).forEach(key => {
+        filtrosSeleccionados[key] = []
+    })
+    productosAdicionalesTotales.value = 0
+}
+
+const removerFiltro = (index) => {
+    const filtroARemover = filtrosAplicados.value[index]
+
+    if (index === 0 && categoriaActual.value?.nombre === filtroARemover) {
+        return
+    }
+
+    Object.keys(filtrosSeleccionados).forEach(categoria => {
+        const filtros = filtrosSeleccionados[categoria]
+        const indice = filtros.findIndex(filtro => {
+            if (categoria === 'condicion') {
+                return (filtro === 'nuevo' && filtroARemover === 'Nuevo') ||
+                    (filtro === 'usado' && filtroARemover === 'Usado')
+            }
+            if (categoria === 'moneda') {
+                return (filtro === 'dolares' && filtroARemover === 'Dólares') ||
+                    (filtro === 'pesos' && filtroARemover === 'Pesos Argentinos')
+            }
+            if (categoria === 'oferta') {
+                return filtroARemover === 'En oferta'
+            }
+            return filtro === filtroARemover
+        })
+
+        if (indice !== -1) {
+            filtros.splice(indice, 1)
+        }
+    })
+}
+
+onMounted(async () => {
+    if (categorias.value.length === 0) {
+        await fetchCategorias()
+    }
+})
+
+watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
+    if (nuevaCategoriaId) {
+        limpiarFiltros()
+        const originalPageSize = productosStore.pageSize
+        productosStore.pageSize = 1000
+        await searchProductos({ categoria_id: nuevaCategoriaId })
+        productosStore.pageSize = originalPageSize
+    }
+}, { immediate: true })
+
+watch(() => [
+    filtrosSeleccionados.subcategorias,
+    filtrosSeleccionados.condicion,
+    filtrosSeleccionados.marcas,
+    filtrosSeleccionados.moneda,
+    filtrosSeleccionados.oferta,
+    ordenarPor.value
+], () => {
+    productosAdicionalesTotales.value = 0
+}, { deep: true })
+</script>
