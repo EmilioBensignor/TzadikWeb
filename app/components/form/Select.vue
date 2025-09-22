@@ -1,12 +1,12 @@
 <template>
     <div class="relative">
         <button @click="isOpen = !isOpen" :class="[
-            'flex items-center gap-2 text-xs font-bold bg-transparent border-none outline-none appearance-none transition-colors duration-200 cursor-pointer',
+            'flex items-center gap-2 text-xs md:text-base lg:text-xl font-bold bg-transparent border-none outline-none appearance-none transition-colors duration-200 cursor-pointer',
             selectClass
         ]">
             {{ selectedLabel }}
             <div class="w-6 h-6 flex justify-center items-center bg-primary rounded-full shadow-md shadow-dark/20 text-light">
-                <Icon name="tabler:chevron-down" class="w-4 h-4 transition-transform duration-200"
+                <Icon name="tabler:chevron-down" class="w-4 md:w-5 h-4 md:h-5 transition-transform duration-200"
                     :class="isOpen ? 'rotate-180' : ''" />
             </div>
         </button>
@@ -18,7 +18,7 @@
             <div v-if="isOpen"
                 class="absolute top-full mt-1 right-0 bg-light border border-gray-200 rounded-lg shadow-lg z-50 min-w-40">
                 <button v-for="option in options" :key="option.value" @click="selectOption(option)"
-                    class="w-full block text-left text-xs font-bold first:rounded-t-lg last:rounded-b-lg transition-colors duration-150 px-3 py-2 "
+                    class="w-full block text-left text-xs md:text-base lg:text-xl font-bold first:rounded-t-lg last:rounded-b-lg transition-colors duration-150 px-3 py-2 "
                     :class="{ 'text-primary': option.value === modelValue }">
                     {{ option.label }}
                 </button>

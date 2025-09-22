@@ -1,8 +1,8 @@
 <template>
-    <DefaultSection class="md:flex-row md:items-start">
-        <div class="w-full md:max-w-[13.75rem] flex flex-col gap-3 pt-6 pb-3 px-5 md:p-0">
-            <div class="flex flex-col gap-3 rounded-xl shadow-md shadow-black/20 p-3">
-                <p class="font-bold">Filtros aplicados</p>
+    <DefaultSection class="w-full max-w-[1200px] md:flex-row md:items-start md:!gap-4 mx-auto">
+        <div class="w-full md:max-w-[13.75rem] lg:max-w-[17rem] flex flex-col gap-3 md:gap-4 pt-6 pb-3 px-5 md:p-0">
+            <div class="flex flex-col gap-3 md:gap-4 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6">
+                <p class="lg:text-xl font-bold">Filtros aplicados</p>
                 <div class="flex flex-wrap items-center gap-2">
                     <span v-for="(filtro, index) in filtrosAplicados" :key="index"
                         class="flex items-center gap-2 border border-primary rounded-lg text-sm font-medium p-2">
@@ -14,12 +14,12 @@
                         </button>
                     </span>
                 </div>
-                <button @click="limpiarFiltros" class="self-end text-xs text-primary font-semibold">Limpiar
+                <button @click="limpiarFiltros" class="self-end text-xs lg:text-base text-primary font-semibold">Limpiar
                     filtros</button>
             </div>
-            <div class="flex flex-col gap-3 rounded-xl shadow-md shadow-black/20 p-3">
+            <div class="flex flex-col gap-3 md:gap-5 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6">
                 <div class="flex justify-between items-center">
-                    <p class="font-bold">Filtros</p>
+                    <p class="font-bold lg:text-xl">Filtros</p>
                     <button @click="toggleFiltros"
                         class="w-6 h-6 flex justify-center items-center bg-primary rounded-full shadow-md shadow-black/20 text-light md:hidden">
                         <Icon name="tabler:chevron-down" class="w-5 h-5 transition-transform duration-200"
@@ -32,10 +32,10 @@
                     leave-active-class="transition-all duration-200 ease-in"
                     leave-from-class="opacity-100 transform translate-y-0"
                     leave-to-class="opacity-0 transform -translate-y-2">
-                    <div v-if="filtrosAbiertos" class="space-y-6 pt-3 md:block">
+                    <div v-if="filtrosAbiertos" class="flex flex-col gap-6">
                         <div v-if="subcategorias.length > 0" class="flex flex-col gap-2">
-                            <p class="text-sm font-semibold">Subcategoría</p>
-                            <div class="flex flex-col gap-2">
+                            <p class="text-sm md:text-base font-semibold">Subcategoría</p>
+                            <div class="flex flex-col gap-2 text-xs">
                                 <FormCheckbox v-for="(subcategoria, index) in subcategorias" :key="index"
                                     :id="`subcat-${index}`" :value="subcategoria.nombre"
                                     :checked="filtrosSeleccionados.subcategorias.includes(subcategoria.nombre)"
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <p class="text-sm font-semibold">Condición</p>
+                            <p class="text-sm md:text-base font-semibold">Condición</p>
                             <div class="flex flex-col gap-2">
                                 <FormCheckbox id="nuevo" value="nuevo"
                                     :checked="filtrosSeleccionados.condicion.includes('nuevo')" label="Nuevo"
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <p class="text-sm font-semibold">Marca</p>
+                            <p class="text-sm md:text-base font-semibold">Marca</p>
                             <div class="flex flex-col gap-2">
                                 <FormCheckbox v-for="(marca, index) in marcas" :key="index" :id="`marca-${index}`"
                                     :value="marca.nombre" :checked="filtrosSeleccionados.marcas.includes(marca.nombre)"
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <p class="text-sm font-semibold">Moneda</p>
+                            <p class="text-sm md:text-base font-semibold">Moneda</p>
                             <div class="flex flex-col gap-2">
                                 <FormCheckbox id="dolares" value="dolares"
                                     :checked="filtrosSeleccionados.moneda.includes('dolares')" label="Dólares"
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <p class="text-sm font-semibold">Oferta</p>
+                            <p class="text-sm md:text-base font-semibold">Oferta</p>
                             <div class="flex flex-col gap-2">
                                 <FormCheckbox id="productosOferta" value="productosOferta"
                                     :checked="filtrosSeleccionados.oferta.includes('productosOferta')"
@@ -88,28 +88,28 @@
             </div>
         </div>
         <div class="w-full flex flex-col gap-6">
-            <div class="flex justify-between items-center border-b border-gray-dark pb-1.5 mx-5">
-                <div class="flex items-center gap-2">
+            <div class="flex justify-between items-center border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0">
+                <div class="flex items-end gap-2 lg:gap-4">
                     <NuxtImg :src="categoriaActual?.icon" :alt="`Icono de ${categoriaActual?.nombre}`"
-                        class="w-5 h-5 object-contain" />
-                    <p class="text-xs font-bold">{{ productosFiltrados.length }} Resultados</p>
+                        class="w-5 md:w-6 lg:w-7 h-5 md:h-6 lg:h-7 object-contain" />
+                    <p class="text-xs md:text-base lg:text-xl font-bold">{{ productosFiltrados.length }} Resultados</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <FormSelect v-model="ordenarPor" :options="opcionesOrdenar" />
                 </div>
             </div>
-            <div class="flex flex-col gap-3 pb-6">
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+            <div class="flex flex-col gap-3">
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
                 </div>
 
                 <CategoriaContacto v-if="mostrarBannerContacto" class="my-3" />
 
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" />
                 </div>
 
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5">
+                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" />
                 </div>
 
@@ -217,9 +217,15 @@ const productosFiltrados = computed(() => {
     }
 
     if (filtrosSeleccionados.moneda.length > 0) {
-        productosBase = productosBase.filter(producto =>
-            filtrosSeleccionados.moneda.includes(producto.tipo_moneda)
-        )
+        productosBase = productosBase.filter(producto => {
+            const esDolar = producto.moneda === true
+            const esPeso = producto.moneda === false
+
+            return filtrosSeleccionados.moneda.some(moneda =>
+                (moneda === 'dolares' && esDolar) ||
+                (moneda === 'pesos' && esPeso)
+            )
+        })
     }
 
     if (filtrosSeleccionados.oferta.length > 0) {

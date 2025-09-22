@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky top-0 z-50 lg:shadow-md">
+    <header class="sticky top-0 z-50" :class="isHomePage ? 'lg:shadow-md' : ''">
         <div class="w-full bg-primary">
             <div
                 class="xxl:max-w-[1200px] flex flex-col md:flex-row md:justify-between lg:justify-start items-center gap-1 lg:gap-0 text-light text-xs lg:text-sm font-medium py-3 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="w-full bg-light">
+        <div class="w-full bg-light" :class="isHomePage ? '' : 'lg:shadow-md'">
             <div
                 class="xxl:max-w-[1200px] flex justify-center lg:justify-between items-center p-5 md:py-6 lg:py-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
                 <button @click="toggleDrawer"
@@ -62,7 +62,7 @@
                 </nav>
             </div>
         </div>
-        <NavCategorias class="md:pl-11 lg:hidden" />
+        <NavCategorias class="md:pl-11" :class="isHomePage ? 'lg:hidden' : 'border border-primary mt-8'" />
         <NavDrawer :is-open="isDrawerOpen" @close="closeDrawer" class="lg:hidden" />
     </header>
 </template>
@@ -71,8 +71,11 @@
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
 import { redes } from '~/shared/menu';
 
+const route = useRoute()
 const isDrawerOpen = ref(false)
 const showContactForm = ref(false)
+
+const isHomePage = computed(() => route.name === 'index')
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value

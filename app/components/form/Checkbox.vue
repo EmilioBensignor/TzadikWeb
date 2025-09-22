@@ -6,9 +6,9 @@
             :value="value"
             :checked="checked"
             @change="$emit('update:checked', $event.target.checked)"
-            class="w-4 h-4 border-2 border-primary rounded appearance-none cursor-pointer transition-all duration-200 hover:border-primaryHover checked:bg-primary checked:border-primary checked:hover:bg-primaryHover checked:hover:border-primaryHover"
+            class="w-4 lg:w-5 h-4 lg:h-5 border-2 border-primary rounded appearance-none cursor-pointer transition-all duration-200 hover:border-primaryHover checked:bg-primary checked:border-primary checked:hover:bg-primaryHover checked:hover:border-primaryHover"
         />
-        <label :for="id" class="text-sm cursor-pointer">
+        <label :for="id" class="text-xs lg:text-sm cursor-pointer">
             <slot>{{ label }}</slot>
         </label>
     </div>
