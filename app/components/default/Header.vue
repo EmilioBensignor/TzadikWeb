@@ -57,12 +57,16 @@
                                 Quienes Somos
                             </NuxtLink>
                         </li>
-                        <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos</ButtonPrimary>
+                        <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos
+                        </ButtonPrimary>
                     </ul>
                 </nav>
             </div>
         </div>
-        <NavCategorias class="md:pl-11" :class="isHomePage ? 'lg:hidden' : 'border border-primary mt-8'" />
+        <div class="lg:px-20">
+            <NavCategorias class="md:pl-11"
+                :class="isHomePage ? 'lg:hidden' : 'lg:w-full lg:border lg:border-primary lg:mt-8'" />
+        </div>
         <NavDrawer :is-open="isDrawerOpen" @close="closeDrawer" class="lg:hidden" />
     </header>
 </template>

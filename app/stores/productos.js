@@ -15,7 +15,10 @@ export const useProductosStore = defineStore('productos', () => {
     const filters = ref({
         categoria_id: null,
         subcategoria_ids: [],
-        condicion: null,
+        condicion: [],
+        marca: [],
+        moneda: [],
+        en_oferta: false,
         precio_min: null,
         precio_max: null,
         search: '',
@@ -73,8 +76,35 @@ export const useProductosStore = defineStore('productos', () => {
                 query = query.in('subcategoria_id', filters.value.subcategoria_ids)
             }
 
-            if (filters.value.condicion) {
-                query = query.eq('condicion', filters.value.condicion)
+            if (filters.value.condicion && filters.value.condicion.length > 0) {
+                query = query.in('condicion', filters.value.condicion)
+            }
+
+            if (filters.value.marca && filters.value.marca.length > 0) {
+                // La marca podría estar en datos_dinamicos
+                const marcaConditions = filters.value.marca.map(marca =>
+                    `datos_dinamicos->>marca.ilike.%${marca}%`
+                )
+                if (marcaConditions.length > 0) {
+                    query = query.or(marcaConditions.join(','))
+                }
+            }
+
+            if (filters.value.moneda && filters.value.moneda.length > 0) {
+                const monedaConditions = filters.value.moneda.map(m => {
+                    if (m === 'dolares') return 'moneda.eq.true'
+                    if (m === 'pesos') return 'moneda.eq.false'
+                    return null
+                }).filter(Boolean)
+
+                if (monedaConditions.length > 0) {
+                    query = query.or(monedaConditions.join(','))
+                }
+            }
+
+            if (filters.value.en_oferta) {
+                // Productos en oferta: destacados O que tengan texto en el campo oferta
+                query = query.or('destacado.eq.true,oferta.not.is.null')
             }
 
             if (filters.value.precio_min) {
@@ -309,7 +339,10 @@ export const useProductosStore = defineStore('productos', () => {
         filters.value = {
             categoria_id: null,
             subcategoria_ids: [],
-            condicion: null,
+            condicion: [],
+            marca: [],
+            moneda: [],
+            en_oferta: false,
             precio_min: null,
             precio_max: null,
             search: '',

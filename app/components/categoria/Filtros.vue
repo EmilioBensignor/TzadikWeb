@@ -46,12 +46,15 @@
                         <div class="flex flex-col gap-2">
                             <p class="text-sm md:text-base font-semibold">Condición</p>
                             <div class="flex flex-col gap-2">
-                                <FormCheckbox id="nuevo" value="nuevo"
-                                    :checked="filtrosSeleccionados.condicion.includes('nuevo')" label="Nuevo"
-                                    @update:checked="toggleCondicion('nuevo', $event)" />
-                                <FormCheckbox id="usado" value="usado"
-                                    :checked="filtrosSeleccionados.condicion.includes('usado')" label="Usado"
-                                    @update:checked="toggleCondicion('usado', $event)" />
+                                <FormCheckbox id="nuevo" value="Nuevo"
+                                    :checked="filtrosSeleccionados.condicion.includes('Nuevo')" label="Nuevo"
+                                    @update:checked="toggleCondicion('Nuevo', $event)" />
+                                <FormCheckbox id="usado" value="Usado"
+                                    :checked="filtrosSeleccionados.condicion.includes('Usado')" label="Usado"
+                                    @update:checked="toggleCondicion('Usado', $event)" />
+                                <FormCheckbox id="seminuevo" value="Seminuevo"
+                                    :checked="filtrosSeleccionados.condicion.includes('Seminuevo')" label="Seminuevo"
+                                    @update:checked="toggleCondicion('Seminuevo', $event)" />
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
@@ -99,17 +102,17 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
                 </div>
 
                 <CategoriaContacto v-if="mostrarBannerContacto" class="my-3" />
 
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" />
                 </div>
 
-                <div class="flex md:grid md:grid-cols-2 xxl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
                     <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" />
                 </div>
 
@@ -176,7 +179,7 @@ const filtrosAplicados = computed(() => {
         aplicados.push(...filtrosSeleccionados.subcategorias)
     }
     if (filtrosSeleccionados.condicion.length > 0) {
-        aplicados.push(...filtrosSeleccionados.condicion.map(c => c === 'nuevo' ? 'Nuevo' : 'Usado'))
+        aplicados.push(...filtrosSeleccionados.condicion)
     }
     if (filtrosSeleccionados.marcas.length > 0) {
         aplicados.push(...filtrosSeleccionados.marcas.map(m => m.charAt(0).toUpperCase() + m.slice(1)))
@@ -192,55 +195,7 @@ const filtrosAplicados = computed(() => {
 })
 
 const productosFiltrados = computed(() => {
-    if (!categoriaActual.value) return []
-
-    let productosBase = productos.value.filter(producto =>
-        producto.categoria_id === categoriaActual.value.id
-    )
-
-    if (filtrosSeleccionados.subcategorias.length > 0) {
-        productosBase = productosBase.filter(producto =>
-            filtrosSeleccionados.subcategorias.includes(producto.subcategoria_nombre)
-        )
-    }
-
-    if (filtrosSeleccionados.condicion.length > 0) {
-        productosBase = productosBase.filter(producto =>
-            filtrosSeleccionados.condicion.includes(producto.condicion)
-        )
-    }
-
-    if (filtrosSeleccionados.marcas.length > 0) {
-        productosBase = productosBase.filter(producto =>
-            filtrosSeleccionados.marcas.includes(producto.marca)
-        )
-    }
-
-    if (filtrosSeleccionados.moneda.length > 0) {
-        productosBase = productosBase.filter(producto => {
-            const esDolar = producto.moneda === true
-            const esPeso = producto.moneda === false
-
-            return filtrosSeleccionados.moneda.some(moneda =>
-                (moneda === 'dolares' && esDolar) ||
-                (moneda === 'pesos' && esPeso)
-            )
-        })
-    }
-
-    if (filtrosSeleccionados.oferta.length > 0) {
-        productosBase = productosBase.filter(producto =>
-            producto.en_oferta === true
-        )
-    }
-
-    if (ordenarPor.value === 'precio-mayor') {
-        productosBase.sort((a, b) => b.precio - a.precio)
-    } else if (ordenarPor.value === 'precio-menor') {
-        productosBase.sort((a, b) => a.precio - b.precio)
-    }
-
-    return productosBase
+    return productos.value
 })
 
 const isXXL = ref(false)
@@ -299,7 +254,7 @@ const toggleFiltros = () => {
     filtrosAbiertos.value = !filtrosAbiertos.value
 }
 
-const toggleSubcategoria = (subcategoria, checked) => {
+const toggleSubcategoria = async (subcategoria, checked) => {
     if (checked) {
         filtrosSeleccionados.subcategorias.push(subcategoria)
     } else {
@@ -308,9 +263,10 @@ const toggleSubcategoria = (subcategoria, checked) => {
             filtrosSeleccionados.subcategorias.splice(index, 1)
         }
     }
+    await aplicarFiltros()
 }
 
-const toggleCondicion = (condicion, checked) => {
+const toggleCondicion = async (condicion, checked) => {
     if (checked) {
         filtrosSeleccionados.condicion.push(condicion)
     } else {
@@ -319,9 +275,10 @@ const toggleCondicion = (condicion, checked) => {
             filtrosSeleccionados.condicion.splice(index, 1)
         }
     }
+    await aplicarFiltros()
 }
 
-const toggleMarca = (marca, checked) => {
+const toggleMarca = async (marca, checked) => {
     if (checked) {
         filtrosSeleccionados.marcas.push(marca.nombre)
     } else {
@@ -330,9 +287,10 @@ const toggleMarca = (marca, checked) => {
             filtrosSeleccionados.marcas.splice(index, 1)
         }
     }
+    await aplicarFiltros()
 }
 
-const toggleMoneda = (moneda, checked) => {
+const toggleMoneda = async (moneda, checked) => {
     if (checked) {
         filtrosSeleccionados.moneda.push(moneda)
     } else {
@@ -341,9 +299,10 @@ const toggleMoneda = (moneda, checked) => {
             filtrosSeleccionados.moneda.splice(index, 1)
         }
     }
+    await aplicarFiltros()
 }
 
-const toggleOferta = (oferta, checked) => {
+const toggleOferta = async (oferta, checked) => {
     if (checked) {
         filtrosSeleccionados.oferta.push(oferta)
     } else {
@@ -352,16 +311,41 @@ const toggleOferta = (oferta, checked) => {
             filtrosSeleccionados.oferta.splice(index, 1)
         }
     }
+    await aplicarFiltros()
 }
 
-const limpiarFiltros = () => {
+const aplicarFiltros = async () => {
+    if (!categoriaActual.value?.id) return
+
+    const searchParams = {
+        categoria_id: categoriaActual.value.id,
+        condicion: filtrosSeleccionados.condicion,
+        marca: filtrosSeleccionados.marcas,
+        moneda: filtrosSeleccionados.moneda,
+        en_oferta: filtrosSeleccionados.oferta.length > 0
+    }
+
+    // Aplicar subcategorías si hay alguna seleccionada
+    if (filtrosSeleccionados.subcategorias.length > 0) {
+        const subcategoriasIds = subcategorias.value
+            .filter(sub => filtrosSeleccionados.subcategorias.includes(sub.nombre))
+            .map(sub => sub.id)
+        searchParams.subcategoria_ids = subcategoriasIds
+    }
+
+    await searchProductos(searchParams)
+    productosAdicionalesTotales.value = 0
+}
+
+const limpiarFiltros = async () => {
     Object.keys(filtrosSeleccionados).forEach(key => {
         filtrosSeleccionados[key] = []
     })
     productosAdicionalesTotales.value = 0
+    await aplicarFiltros()
 }
 
-const removerFiltro = (index) => {
+const removerFiltro = async (index) => {
     const filtroARemover = filtrosAplicados.value[index]
 
     if (index === 0 && categoriaActual.value?.nombre === filtroARemover) {
@@ -372,8 +356,7 @@ const removerFiltro = (index) => {
         const filtros = filtrosSeleccionados[categoria]
         const indice = filtros.findIndex(filtro => {
             if (categoria === 'condicion') {
-                return (filtro === 'nuevo' && filtroARemover === 'Nuevo') ||
-                    (filtro === 'usado' && filtroARemover === 'Usado')
+                return filtro === filtroARemover
             }
             if (categoria === 'moneda') {
                 return (filtro === 'dolares' && filtroARemover === 'Dólares') ||
@@ -389,6 +372,8 @@ const removerFiltro = (index) => {
             filtros.splice(indice, 1)
         }
     })
+
+    await aplicarFiltros()
 }
 
 onMounted(async () => {
@@ -407,14 +392,12 @@ watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
     }
 }, { immediate: true })
 
-watch(() => [
-    filtrosSeleccionados.subcategorias,
-    filtrosSeleccionados.condicion,
-    filtrosSeleccionados.marcas,
-    filtrosSeleccionados.moneda,
-    filtrosSeleccionados.oferta,
-    ordenarPor.value
-], () => {
-    productosAdicionalesTotales.value = 0
-}, { deep: true })
+watch(() => ordenarPor.value, async () => {
+    if (ordenarPor.value === 'precio-mayor') {
+        productosStore.setSorting('precio', 'desc')
+    } else if (ordenarPor.value === 'precio-menor') {
+        productosStore.setSorting('precio', 'asc')
+    }
+    await aplicarFiltros()
+})
 </script>
