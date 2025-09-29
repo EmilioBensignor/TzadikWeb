@@ -110,26 +110,35 @@
                     <p class="text-gray-600 text-center">Cargando productos...</p>
                 </div>
 
-                <div v-else-if="!loading && productosFiltrados.length === 0"
-                    class="flex flex-col items-center justify-center py-12 px-5">
-                    <Icon name="tabler:package-off" class="w-16 h-16 text-gray-400 mb-4" />
-                    <p class="text-lg font-semibold text-gray-600 mb-2">No se encontraron productos</p>
-                    <p class="text-gray-500 text-center">Intenta ajustar los filtros o selecciona otra categoría</p>
+                <div v-else-if="!loading && productosFiltrados.length === 0" class="px-5 md:px-0">
+                    <div
+                        class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-dark rounded-[9px] text-light p-3 md:p-5 lg:p-6 xxl:p-8">
+                        <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu búsqueda.</p>
+                        <ButtonPrimary @click="limpiarFiltros">Limpiar filtros</ButtonPrimary>
+                        <p class="text-xs lg:text-sm xxl:text-base font-bold">O <NuxtLink
+                                :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank" class="underline">ponete
+                                en
+                                contacto</NuxtLink> con
+                            nosotros.</p>
+                    </div>
                 </div>
 
                 <template v-else>
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" class="fade-up" />
+                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product"
+                            class="fade-up" />
                     </div>
 
                     <CategoriaContacto v-if="mostrarBannerContacto" class="my-3 fade-up" />
 
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" class="fade-up" />
+                        <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product"
+                            class="fade-up" />
                     </div>
 
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" class="fade-up" />
+                        <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product"
+                            class="fade-up" />
                     </div>
 
                     <ButtonPrimary v-if="mostrarBotonCargarMas" @click="cargarMasProductos" class="self-center">
@@ -142,6 +151,7 @@
 </template>
 
 <script setup>
+import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
 import marcas from '~/shared/marcas'
 
 const route = useRoute()
