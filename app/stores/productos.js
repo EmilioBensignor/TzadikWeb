@@ -64,6 +64,7 @@ export const useProductosStore = defineStore('productos', () => {
                 producto_imagenes(storage_path, es_principal)`
             }
 
+
             let query = supabase
                 .from('productos')
                 .select(selectQuery, { count: 'exact' })

@@ -1,7 +1,8 @@
 <template>
     <DefaultSection class="w-full max-w-[1200px] md:flex-row md:items-start md:!gap-4 mx-auto">
         <div class="w-full md:max-w-[13.75rem] lg:max-w-[17rem] flex flex-col gap-3 md:gap-4 pt-6 pb-3 px-5 md:p-0">
-            <div class="flex flex-col gap-3 md:gap-4 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6">
+            <div
+                class="flex flex-col gap-3 md:gap-4 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6 fade-up">
                 <p class="lg:text-xl font-bold">Filtros aplicados</p>
                 <div class="flex flex-wrap items-center gap-2">
                     <span v-for="(filtro, index) in filtrosAplicados" :key="index"
@@ -17,7 +18,8 @@
                 <button @click="limpiarFiltros" class="self-end text-xs lg:text-base text-primary font-semibold">Limpiar
                     filtros</button>
             </div>
-            <div class="flex flex-col gap-3 md:gap-5 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6">
+            <div
+                class="flex flex-col gap-3 md:gap-5 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6 fade-up">
                 <div class="flex justify-between items-center">
                     <p class="font-bold lg:text-xl">Filtros</p>
                     <button @click="toggleFiltros"
@@ -91,7 +93,8 @@
             </div>
         </div>
         <div class="w-full flex flex-col gap-6">
-            <div class="flex justify-between items-center border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0">
+            <div
+                class="flex justify-between items-center border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0 fade-up">
                 <div class="flex items-end gap-2 lg:gap-4">
                     <NuxtImg :src="categoriaActual?.icon" :alt="`Icono de ${categoriaActual?.nombre}`"
                         class="w-5 md:w-6 lg:w-7 h-5 md:h-6 lg:h-7 object-contain" />
@@ -102,23 +105,37 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
-                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                    <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
+                <div v-if="loading" class="flex flex-col items-center justify-center py-12 px-5">
+                    <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin mb-4" />
+                    <p class="text-gray-600 text-center">Cargando productos...</p>
                 </div>
 
-                <CategoriaContacto v-if="mostrarBannerContacto" class="my-3" />
-
-                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                    <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" />
+                <div v-else-if="!loading && productosFiltrados.length === 0"
+                    class="flex flex-col items-center justify-center py-12 px-5">
+                    <Icon name="tabler:package-off" class="w-16 h-16 text-gray-400 mb-4" />
+                    <p class="text-lg font-semibold text-gray-600 mb-2">No se encontraron productos</p>
+                    <p class="text-gray-500 text-center">Intenta ajustar los filtros o selecciona otra categoría</p>
                 </div>
 
-                <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                    <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" />
-                </div>
+                <template v-else>
+                    <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" class="fade-up" />
+                    </div>
 
-                <ButtonPrimary v-if="mostrarBotonCargarMas" @click="cargarMasProductos" class="self-center">
-                    Cargar más productos
-                </ButtonPrimary>
+                    <CategoriaContacto v-if="mostrarBannerContacto" class="my-3 fade-up" />
+
+                    <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                        <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" class="fade-up" />
+                    </div>
+
+                    <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
+                        <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" class="fade-up" />
+                    </div>
+
+                    <ButtonPrimary v-if="mostrarBotonCargarMas" @click="cargarMasProductos" class="self-center">
+                        Cargar más productos
+                    </ButtonPrimary>
+                </template>
             </div>
         </div>
     </DefaultSection>
@@ -129,11 +146,11 @@ import marcas from '~/shared/marcas'
 
 const route = useRoute()
 const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
-const { productos, searchProductos, clearFilters } = useProductos()
+const { productos, searchProductos, clearFilters, loading } = useProductos()
 const productosStore = useProductosStore()
 
 const categoriaActual = computed(() => {
-    return categorias.value.find(cat => cat.nombre === route.params.nombre)
+    return categorias.value.find(cat => cat.nombre === route.params.categoria)
 })
 
 const subcategorias = computed(() => {

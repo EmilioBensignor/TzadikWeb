@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink to="#" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl">
+    <NuxtLink :to="productUrl" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl">
         <NuxtImg :src="imageUrl" :alt="product.titulo" class="w-full h-48 lg:h-52 object-cover rounded-t-xl" />
         <p v-if="product.oferta" class="absolute top-3 left-3 bg-secondary rounded-[4px] text-xs text-light !leading-none primary-shadow pt-1.5 px-2 pb-1">{{ product.oferta }}</p>
         <div class="min-h-[11rem] flex flex-col flex-1 justify-between gap-3 p-4">
@@ -25,7 +25,7 @@ const props = defineProps({
     }
 })
 
-const { getImageUrl, getCurrencySymbol } = useProductos()
+const { getImageUrl, getCurrencySymbol, generateSlug } = useProductos()
 
 const imageUrl = computed(() => {
     if (!props.product?.producto_imagenes || props.product.producto_imagenes.length === 0) {
@@ -33,5 +33,12 @@ const imageUrl = computed(() => {
     }
     const imagenPrincipal = props.product.producto_imagenes.find(img => img.es_principal) || props.product.producto_imagenes[0]
     return imagenPrincipal ? getImageUrl(imagenPrincipal.storage_path) : '/images/placeholder-product.jpg'
+})
+
+const productUrl = computed(() => {
+    if (!props.product) return '#'
+    const categoriaSlug = generateSlug(props.product.categorias?.nombre || 'categoria')
+    const productoSlug = generateSlug(props.product.titulo)
+    return `/categorias/${categoriaSlug}/${productoSlug}`
 })
 </script>
