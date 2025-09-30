@@ -1,5 +1,5 @@
 <template>
-    <DefaultSection class="flex flex-col lg:flex-row-reverse lg:items-start gap-6 lg:gap-4 lg:px-20">
+    <DefaultSection class="flex flex-col lg:flex-row-reverse lg:items-start gap-6 lg:gap-4 xxl:gap-8 lg:px-20 xxl:px-0">
         <div class="max-w-[100vw] lg:hidden md:pl-11 lg:pl-0">
             <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="true">
                 <div v-for="(media, index) in todosLosMedias" :key="index" class="bg-gray-100 overflow-hidden">
@@ -41,7 +41,7 @@
             </div>
             <div v-if="todosLosMedias.length > 1" class="flex gap-2 overflow-x-auto">
                 <div v-for="(media, index) in mediasSecundarios" :key="index"
-                    class="flex-shrink-0 w-[6.75rem] h-[6.875rem] rounded-lg overflow-hidden cursor-pointer relative"
+                    class="flex-shrink-0 w-[6.75rem] xxl:w-36 h-[6.875rem] rounded-lg overflow-hidden cursor-pointer relative"
                     @click="cambiarMediaPrincipal(media)">
                     <div v-if="media.es_video" class="relative w-full h-full">
                         <img :src="getYouTubeThumbnail(media.url || media.storage_path || media.link)"
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 flex flex-col gap-6 lg:gap-8 px-5 md:px-11 lg:px-0">
+        <div class="w-full lg:w-1/2 flex flex-col gap-6 lg:gap-8 xxl:gap-10 px-5 md:px-11 lg:px-0">
             <div class="w-full flex flex-col gap-2 lg:gap-4">
                 <div v-if="producto.oferta" class="w-max bg-secondary rounded-[4px] text-light pt-1.5 px-2 pb-1">
                     <p class="text-xs lg:text-sm font-medium">{{ producto.oferta }}</p>
@@ -91,7 +91,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <p class="font-teko text-[1.625rem] lg:text-[2rem] font-semibold">{{ formatCurrency(producto.precio) }}
+                <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{ formatCurrency(producto.precio) }}
                 </p>
                 <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
             </div>
@@ -103,7 +103,7 @@
 
             <div v-if="datosDinamicos && Object.keys(datosDinamicos).length > 0" class="flex flex-col gap-2 lg:gap-3">
                 <div class="md:flex md:justify-between md:items-center">
-                    <HeadingH2 class="!text-left lg:!text-2xl">DETALLES TÉCNICOS</HeadingH2>
+                    <HeadingH2 class="!text-left lg:!text-2xl xxl:!text-[1.75rem]">DETALLES TÉCNICOS</HeadingH2>
                     <div v-if="producto.ficha_tecnica" class="hidden md:block">
                         <button @click="descargarFichaTecnica" class="flex items-center gap-2.5 text-primary font-bold">
                             <Icon name="tabler:download" class="w-5 h-5 flex-shrink-0 -mt-1" />

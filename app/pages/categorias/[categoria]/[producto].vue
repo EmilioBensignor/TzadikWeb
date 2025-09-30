@@ -1,7 +1,7 @@
 <template>
-    <DefaultMain class="gap-6 lg:gap-8">
+    <DefaultMain class="gap-6 lg:!gap-8 xxl:!gap-10">
         <nav
-            class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 md:px-11 lg:px-20 mx-auto">
+            class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
             <ul class="flex items-center gap-2">
                 <li>
                     <NuxtLink :to="ROUTE_NAMES.HOME" class="text-gray-dark">Inicio</NuxtLink>
@@ -60,41 +60,43 @@
                 </div>
             </div>
         </DefaultSection>
-        <DefaultSection class="lg:px-20 my-8">
-            <HeadingH2 class="lg:w-full lg:text-left">MIRÁ OTROS PRODUCTOS SIMILARES</HeadingH2>
+        <div class="w-full max-w-[1200px] mx-auto">
+            <DefaultSection class="lg:px-20 xxl:px-0 my-8">
+                <HeadingH2 class="lg:w-full lg:text-left">MIRÁ OTROS PRODUCTOS SIMILARES</HeadingH2>
 
-            <div v-if="loadingSimilares" class="flex justify-center py-4">
-                <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin" />
-            </div>
+                <div v-if="loadingSimilares" class="flex justify-center py-4">
+                    <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin" />
+                </div>
 
-            <CarouselStatic v-else :slides-per-view="{ base: 1.3, sm: 2.3, md: 3, lg: 4, xl: 4, xxl: 4 }"
-                :gap="{ base: 12, md: 12, lg: 16, xl: 16, xxl: 16 }" :button-position="{
-                    top: {
-                        base: '20%',
-                        md: '30%',
-                        lg: '32%',
-                        xl: '35%',
-                        xxl: '35%',
-                    },
-                    transform: 'translateY(0)',
-                    left: {
-                        base: '0.5rem',
-                        md: '1rem',
-                        lg: '-1rem',
-                        xl: '1.25rem',
-                        xxl: '1.25rem',
-                    },
-                    right: {
-                        base: '0.5rem',
-                        md: '1rem',
-                        lg: '-1rem',
-                        xl: '1.25rem',
-                        xxl: '1.25rem',
-                    }
-                }" class="md:px-11 lg:px-0">
-                <ProductCard v-for="producto in productosSimilares" :key="producto.id" :product="producto" />
-            </CarouselStatic>
-        </DefaultSection>
+                <CarouselStatic v-else :slides-per-view="{ base: 1.3, sm: 2.3, md: 3, lg: 4, xl: 4, xxl: 4 }"
+                    :gap="{ base: 12, md: 12, lg: 16, xl: 16, xxl: 16 }" :button-position="{
+                        top: {
+                            base: '20%',
+                            md: '30%',
+                            lg: '32%',
+                            xl: '35%',
+                            xxl: '35%',
+                        },
+                        transform: 'translateY(0)',
+                        left: {
+                            base: '0.5rem',
+                            md: '1rem',
+                            lg: '-1rem',
+                            xl: '1.25rem',
+                            xxl: '1.25rem',
+                        },
+                        right: {
+                            base: '0.5rem',
+                            md: '1rem',
+                            lg: '-1rem',
+                            xl: '1.25rem',
+                            xxl: '1.25rem',
+                        }
+                    }" class="md:px-11 lg:px-0">
+                    <ProductCard v-for="producto in productosSimilares" :key="producto.id" :product="producto" />
+                </CarouselStatic>
+            </DefaultSection>
+        </div>
         <HomeContacto />
     </DefaultMain>
 </template>
