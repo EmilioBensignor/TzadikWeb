@@ -1,12 +1,12 @@
 <template>
-    <DefaultSection class="flex flex-col gap-6">
-        <div class="max-w-[100vw] lg:hidden md:pl-11">
+    <DefaultSection class="flex flex-col lg:flex-row-reverse lg:items-start gap-6 lg:gap-4 lg:px-20">
+        <div class="max-w-[100vw] lg:hidden md:pl-11 lg:pl-0">
             <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="true">
                 <div v-for="(media, index) in todosLosMedias" :key="index" class="bg-gray-100 overflow-hidden">
                     <div v-if="media.es_video" class="relative w-full h-full">
                         <iframe :src="getYouTubeEmbedUrl(media.url || media.storage_path || media.link)"
-                            :title="`${producto.titulo} video ${index + 1}`" class="w-full absolute inset-0 rounded-xl"
-                            frameborder="0" allowfullscreen
+                            :title="`${producto.titulo} video ${index + 1}`"
+                            class="w-full h-full absolute inset-0 rounded-xl" frameborder="0" allowfullscreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             loading="lazy">
                         </iframe>
@@ -20,17 +20,28 @@
             </CarouselStatic>
         </div>
 
-        <div class="hidden lg:flex flex-col gap-4">
-            <div class="w-full aspect-square bg-gray-100 rounded-xl overflow-hidden">
+        <div class="lg:w-1/2 hidden lg:flex flex-col gap-4 lg:gap-6">
+            <div class="w-full h-[25rem] overflow-hidden px-4 relative">
                 <iframe v-if="esPrincipalVideo" :src="imagenPrincipal" :title="`${producto.titulo} video`"
-                    class="w-full h-full" frameborder="0" allowfullscreen
+                    class="w-full h-full rounded-xl" frameborder="0" allowfullscreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
                 </iframe>
-                <NuxtImg v-else :src="imagenPrincipal" :alt="producto.titulo" class="w-full h-full object-cover" />
+                <NuxtImg v-else :src="imagenPrincipal" :alt="producto.titulo"
+                    class="w-full h-full object-cover rounded-xl" />
+
+                <button v-if="todosLosMedias.length > 1" @click="navegarMedia('prev')"
+                    class="w-10 h-10 flex items-center justify-center absolute z-10 left-0 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
+                    <Icon name="tabler:chevron-left" class="w-7 h-7" />
+                </button>
+
+                <button v-if="todosLosMedias.length > 1" @click="navegarMedia('next')"
+                    class="w-10 h-10 flex items-center justify-center absolute z-10 right-0 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
+                    <Icon name="tabler:chevron-right" class="w-7 h-7" />
+                </button>
             </div>
             <div v-if="todosLosMedias.length > 1" class="flex gap-2 overflow-x-auto">
-                <div v-for="(media, index) in todosLosMedias.slice(1)" :key="index"
-                    class="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden cursor-pointer"
+                <div v-for="(media, index) in mediasSecundarios" :key="index"
+                    class="flex-shrink-0 w-[6.75rem] h-[6.875rem] rounded-lg overflow-hidden cursor-pointer relative"
                     @click="cambiarMediaPrincipal(media)">
                     <div v-if="media.es_video" class="relative w-full h-full">
                         <img :src="getYouTubeThumbnail(media.url || media.storage_path || media.link)"
@@ -41,24 +52,48 @@
                     </div>
                     <NuxtImg v-else :src="getImageUrl(media.storage_path)" :alt="`${producto.titulo} ${index + 2}`"
                         class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-dark/40"></div>
+                </div>
+            </div>
+            <div class="w-full flex flex-col gap-4 bg-gray-mid rounded-lg p-3 lg:p-5">
+                <div class="flex items-center gap-3">
+                    <NuxtImg src="/images/servicios/Mantenimiento.svg" alt="Mantenimiento Servicios Tzadik"
+                        class="w-8 lg:w-10 h-8 lg:h-10 object-contain flex-shrink-0" />
+                    <div class="flex flex-col">
+                        <HeadingH3 class="lg:!text-xl text-primary">RENDIMIENTO ASEGURADO</HeadingH3>
+                        <p class="text-xs md:text-sm font-bold">Contamos con técnicos expertos y repuestos oficiales
+                            para tu
+                            equipo.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <NuxtImg src="/images/servicios/Camion-traslados.svg" alt="Camión de Traslados Servicios Tzadik"
+                        class="w-8 lg:w-10 h-8 lg:h-10 object-contain flex-shrink-0" />
+                    <div class="flex flex-col">
+                        <HeadingH3 class="lg:!text-xl text-primary">TRASLADAMOS TU MAQUINARIA</HeadingH3>
+                        <p class="text-xs md:text-sm font-bold">Nos encargamos de llevarte tu maquinaria con nuestro
+                            camión
+                            especializado</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="w-full flex flex-col gap-6 px-5 md:px-11">
-            <div class="w-full flex flex-col gap-2">
+        <div class="w-full lg:w-1/2 flex flex-col gap-6 lg:gap-8 px-5 md:px-11 lg:px-0">
+            <div class="w-full flex flex-col gap-2 lg:gap-4">
                 <div v-if="producto.oferta" class="w-max bg-secondary rounded-[4px] text-light pt-1.5 px-2 pb-1">
-                    <p class="text-xs font-medium">{{ producto.oferta }}</p>
+                    <p class="text-xs lg:text-sm font-medium">{{ producto.oferta }}</p>
                 </div>
                 <HeadingH1 class="!text-left">{{ producto.titulo }}
                 </HeadingH1>
                 <p v-if="producto.descripcion_larga" v-html="formatearTexto(producto.descripcion_larga)"
-                    class="text-xs font-semibold"></p>
+                    class="text-xs lg:text-base font-semibold"></p>
             </div>
 
             <div class="flex items-center gap-2">
-                <p class="font-teko text-[1.625rem] font-semibold">{{ formatCurrency(producto.precio) }}</p>
-                <p class="text-xs font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
+                <p class="font-teko text-[1.625rem] lg:text-[2rem] font-semibold">{{ formatCurrency(producto.precio) }}
+                </p>
+                <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
             </div>
             <NuxtLink :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank"
                 class="w-max h-12 flex justify-center items-center gap-2.5 bg-whatsapp text-light font-bold rounded-full shadow-lg px-8">
@@ -66,9 +101,9 @@
                 Consultar ahora
             </NuxtLink>
 
-            <div v-if="datosDinamicos && Object.keys(datosDinamicos).length > 0" class="flex flex-col gap-2">
+            <div v-if="datosDinamicos && Object.keys(datosDinamicos).length > 0" class="flex flex-col gap-2 lg:gap-3">
                 <div class="md:flex md:justify-between md:items-center">
-                    <HeadingH2 class="!text-left">DETALLES TÉCNICOS</HeadingH2>
+                    <HeadingH2 class="!text-left lg:!text-2xl">DETALLES TÉCNICOS</HeadingH2>
                     <div v-if="producto.ficha_tecnica" class="hidden md:block">
                         <button @click="descargarFichaTecnica" class="flex items-center gap-2.5 text-primary font-bold">
                             <Icon name="tabler:download" class="w-5 h-5 flex-shrink-0 -mt-1" />
@@ -78,13 +113,13 @@
                 </div>
                 <div class="grid grid-cols-1 gap-2">
                     <div v-for="(valor, campo) in datosDinamicos" :key="campo"
-                        class="flex justify-between border-b border-gray-dark py-3">
-                        <span class="text-xs font-bold">{{ campo }}:</span>
-                        <span class="text-xs font-medium">{{ valor }}</span>
+                        class="flex justify-between border-b border-gray-dark py-3 lg:py-4">
+                        <span class="text-xs lg:text-base font-bold">{{ campo }}:</span>
+                        <span class="text-xs lg:text-base font-medium">{{ valor }}</span>
                     </div>
-                    <div v-if="producto.condicion" class="flex justify-between py-3">
-                        <span class="text-xs font-bold">Condición:</span>
-                        <span class="text-xs font-medium">{{ producto.condicion }}</span>
+                    <div v-if="producto.condicion" class="flex justify-between py-3 lg:py-4">
+                        <span class="text-xs lg:text-base font-bold">Condición:</span>
+                        <span class="text-xs lg:text-base font-medium">{{ producto.condicion }}</span>
                     </div>
                 </div>
             </div>
@@ -189,7 +224,47 @@ const datosDinamicos = computed(() => {
     return formatted
 })
 
+const mediasSecundarios = computed(() => {
+    const getMediaId = (media) => {
+        if (!media) return null
+        return media.es_video
+            ? (media.url || media.storage_path || media.link)
+            : media.storage_path
+    }
+
+    const idActual = getMediaId(imagenPrincipalActual.value)
+    return todosLosMedias.value.filter(media => getMediaId(media) !== idActual)
+})
+
 const cambiarMediaPrincipal = (media) => {
     imagenPrincipalActual.value = media
+}
+
+const navegarMedia = (direccion) => {
+    if (!todosLosMedias.value.length) return
+
+    const getMediaId = (media) => {
+        if (!media) return null
+        return media.es_video
+            ? (media.url || media.storage_path || media.link)
+            : media.storage_path
+    }
+
+    const idActual = getMediaId(imagenPrincipalActual.value)
+    const indiceActual = todosLosMedias.value.findIndex(media => getMediaId(media) === idActual)
+
+    if (indiceActual === -1) {
+        imagenPrincipalActual.value = todosLosMedias.value[0]
+        return
+    }
+
+    let nuevoIndice
+    if (direccion === 'next') {
+        nuevoIndice = (indiceActual + 1) % todosLosMedias.value.length
+    } else {
+        nuevoIndice = (indiceActual - 1 + todosLosMedias.value.length) % todosLosMedias.value.length
+    }
+
+    imagenPrincipalActual.value = todosLosMedias.value[nuevoIndice]
 }
 </script>

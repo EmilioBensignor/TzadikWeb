@@ -1,7 +1,7 @@
 <template>
-    <DefaultMain class="gap-6">
+    <DefaultMain class="gap-6 lg:gap-8">
         <nav
-            class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 md:px-11 mx-auto">
+            class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 md:px-11 lg:px-20 mx-auto">
             <ul class="flex items-center gap-2">
                 <li>
                     <NuxtLink :to="ROUTE_NAMES.HOME" class="text-gray-dark">Inicio</NuxtLink>
@@ -36,7 +36,7 @@
                 :getYouTubeThumbnail="getYouTubeThumbnail" :formatearTexto="formatearTexto"
                 :descargarFichaTecnica="descargarFichaTecnica" :cambiarImagenPrincipal="cambiarImagenPrincipal" />
         </div>
-        <DefaultSection class="px-5 md:px-11">
+        <DefaultSection class="lg:hidden px-5 md:px-11">
             <div class="w-full flex flex-col gap-4 bg-gray-mid rounded-lg p-3">
                 <div class="flex gap-3">
                     <NuxtImg src="/images/servicios/Mantenimiento.svg" alt="Mantenimiento Servicios Tzadik"
@@ -60,8 +60,8 @@
                 </div>
             </div>
         </DefaultSection>
-        <DefaultSection>
-            <HeadingH2>MIRÁ OTROS PRODUCTOS SIMILARES</HeadingH2>
+        <DefaultSection class="lg:px-20 my-8">
+            <HeadingH2 class="lg:w-full lg:text-left">MIRÁ OTROS PRODUCTOS SIMILARES</HeadingH2>
 
             <div v-if="loadingSimilares" class="flex justify-center py-4">
                 <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin" />
@@ -72,7 +72,7 @@
                     top: {
                         base: '20%',
                         md: '30%',
-                        lg: '35%',
+                        lg: '32%',
                         xl: '35%',
                         xxl: '35%',
                     },
@@ -80,18 +80,18 @@
                     left: {
                         base: '0.5rem',
                         md: '1rem',
-                        lg: '-1.5rem',
-                        xl: '-1.5rem',
-                        xxl: '-1.75rem',
+                        lg: '-1rem',
+                        xl: '1.25rem',
+                        xxl: '1.25rem',
                     },
                     right: {
                         base: '0.5rem',
                         md: '1rem',
-                        lg: '-1.5rem',
-                        xl: '-1.5rem',
-                        xxl: '-1.75rem',
+                        lg: '-1rem',
+                        xl: '1.25rem',
+                        xxl: '1.25rem',
                     }
-                }" class="md:px-11">
+                }" class="md:px-11 lg:px-0">
                 <ProductCard v-for="producto in productosSimilares" :key="producto.id" :product="producto" />
             </CarouselStatic>
         </DefaultSection>

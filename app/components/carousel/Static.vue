@@ -360,9 +360,9 @@ const initialize = async () => {
     setupChildrenClasses()
     updateArrows()
 
-    setTimeout(() => {
-        updateArrows()
-    }, 100)
+    // Múltiples actualizaciones para asegurar que las dimensiones estén correctas
+    setTimeout(() => updateArrows(), 100)
+    setTimeout(() => updateArrows(), 300)
 }
 
 onMounted(() => {
@@ -386,6 +386,7 @@ onMounted(() => {
                 if (entry.target === container.value) {
                     updateContainerWidth()
                     setupChildrenClasses()
+                    updateArrows()
                 }
             }
         })
