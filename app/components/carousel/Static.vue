@@ -88,6 +88,7 @@ const isAtEnd = ref(false)
 const isDragging = ref(false)
 const containerWidth = ref(0)
 const currentBreakpoint = ref('base')
+const forceUpdate = ref(0)
 
 let startX = 0
 let startY = 0
@@ -96,8 +97,29 @@ let resizeObserver = null
 let isDragHorizontal = false
 let hasScrollStarted = false
 
-const showLeftArrow = computed(() => props.showArrows && !isAtStart.value)
-const showRightArrow = computed(() => props.showArrows && !isAtEnd.value)
+const showLeftArrow = computed(() => {
+    if (!props.showArrows) return false
+    forceUpdate.value
+    return !isAtStart.value
+})
+
+const showRightArrow = computed(() => {
+    if (!props.showArrows) return false
+    forceUpdate.value
+
+    if (!container.value) return false
+
+    const { scrollLeft, scrollWidth, clientWidth } = container.value
+
+    // Si no hay contenido suficiente para hacer scroll, no mostrar flecha
+    if (scrollWidth <= clientWidth) {
+        return false
+    }
+
+    // Si hay contenido para scroll y no estamos al final, mostrar flecha
+    const tolerance = 2
+    return scrollLeft < scrollWidth - clientWidth - tolerance
+})
 
 const slidesVisible = computed(() => {
     const value = props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
@@ -170,6 +192,7 @@ const updateArrows = () => {
 
     isAtStart.value = scrollLeft <= tolerance
     isAtEnd.value = scrollLeft >= scrollWidth - clientWidth - tolerance
+    forceUpdate.value++
 }
 
 const scrollLeft = () => {
@@ -285,6 +308,11 @@ const setupChildrenClasses = () => {
             child.style.flexShrink = '0'
             child.style.minWidth = `${slideWidth}px`
         })
+
+        // Forzar actualización de flechas después de configurar dimensiones
+        nextTick(() => {
+            forceUpdate.value++
+        })
     })
 }
 
@@ -330,6 +358,7 @@ const initialize = async () => {
     updateBreakpoint()
     updateContainerWidth()
     setupChildrenClasses()
+    updateArrows()
 
     setTimeout(() => {
         updateArrows()

@@ -1,13 +1,12 @@
 <template>
-    <DefaultSection class="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
-        <div class="max-w-[100vw] lg:hidden">
-            <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 1.3 }" :show-arrows="true">
-                <div v-for="(media, index) in todosLosMedias" :key="index"
-                    class="max-h-52 bg-gray-100 rounded-xl overflow-hidden">
+    <DefaultSection class="flex flex-col gap-6">
+        <div class="max-w-[100vw] lg:hidden md:pl-11">
+            <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="true">
+                <div v-for="(media, index) in todosLosMedias" :key="index" class="bg-gray-100 overflow-hidden">
                     <div v-if="media.es_video" class="relative w-full h-full">
                         <iframe :src="getYouTubeEmbedUrl(media.url || media.storage_path || media.link)"
-                            :title="`${producto.titulo} video ${index + 1}`"
-                            class="h-full max-h-52 w-full absolute inset-0" frameborder="0" allowfullscreen
+                            :title="`${producto.titulo} video ${index + 1}`" class="w-full absolute inset-0 rounded-xl"
+                            frameborder="0" allowfullscreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             loading="lazy">
                         </iframe>
@@ -16,7 +15,7 @@
                         </div>
                     </div>
                     <NuxtImg v-else :src="getImageUrl(media.storage_path)" :alt="`${producto.titulo} ${index + 1}`"
-                        class="h-full max-h-52 object-cover" />
+                        class="w-full rounded-xl object-cover" />
                 </div>
             </CarouselStatic>
         </div>
@@ -46,7 +45,7 @@
             </div>
         </div>
 
-        <div class="w-full flex flex-col gap-6 px-5">
+        <div class="w-full flex flex-col gap-6 px-5 md:px-11">
             <div class="w-full flex flex-col gap-2">
                 <div v-if="producto.oferta" class="w-max bg-secondary rounded-[4px] text-light pt-1.5 px-2 pb-1">
                     <p class="text-xs font-medium">{{ producto.oferta }}</p>
@@ -68,7 +67,15 @@
             </NuxtLink>
 
             <div v-if="datosDinamicos && Object.keys(datosDinamicos).length > 0" class="flex flex-col gap-2">
-                <HeadingH2 class="!text-left">DETALLES TÉCNICOS</HeadingH2>
+                <div class="md:flex md:justify-between md:items-center">
+                    <HeadingH2 class="!text-left">DETALLES TÉCNICOS</HeadingH2>
+                    <div v-if="producto.ficha_tecnica" class="hidden md:block">
+                        <button @click="descargarFichaTecnica" class="flex items-center gap-2.5 text-primary font-bold">
+                            <Icon name="tabler:download" class="w-5 h-5 flex-shrink-0 -mt-1" />
+                            Descargar ficha técnica
+                        </button>
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 gap-2">
                     <div v-for="(valor, campo) in datosDinamicos" :key="campo"
                         class="flex justify-between border-b border-gray-dark py-3">
@@ -82,7 +89,7 @@
                 </div>
             </div>
 
-            <div v-if="producto.ficha_tecnica">
+            <div v-if="producto.ficha_tecnica" class="md:hidden">
                 <button @click="descargarFichaTecnica" class="flex items-center gap-2.5 text-primary font-bold">
                     <Icon name="tabler:download" class="w-5 h-5 flex-shrink-0 -mt-1" />
                     Descargar ficha técnica
@@ -112,7 +119,6 @@ const getCurrencySymbol = (producto) => {
 
 const imagenPrincipalActual = ref(null)
 
-// Configurar imagen/video principal
 watchEffect(() => {
     if (props.producto) {
         let mediaPrincipal = null

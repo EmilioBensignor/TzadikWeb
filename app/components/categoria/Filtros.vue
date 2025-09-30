@@ -352,7 +352,6 @@ const aplicarFiltros = async () => {
         en_oferta: filtrosSeleccionados.oferta.length > 0
     }
 
-    // Aplicar subcategorías si hay alguna seleccionada
     if (filtrosSeleccionados.subcategorias.length > 0) {
         const subcategoriasIds = subcategorias.value
             .filter(sub => filtrosSeleccionados.subcategorias.includes(sub.nombre))

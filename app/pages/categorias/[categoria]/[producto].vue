@@ -1,6 +1,7 @@
 <template>
     <DefaultMain class="gap-6">
-        <nav class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 mx-auto">
+        <nav
+            class="w-full max-w-[1200px] flex flex-wrap items-end gap-2 text-sm font-semibold pt-8 px-5 md:px-11 mx-auto">
             <ul class="flex items-center gap-2">
                 <li>
                     <NuxtLink :to="ROUTE_NAMES.HOME" class="text-gray-dark">Inicio</NuxtLink>
@@ -35,14 +36,15 @@
                 :getYouTubeThumbnail="getYouTubeThumbnail" :formatearTexto="formatearTexto"
                 :descargarFichaTecnica="descargarFichaTecnica" :cambiarImagenPrincipal="cambiarImagenPrincipal" />
         </div>
-        <DefaultSection class="px-5">
+        <DefaultSection class="px-5 md:px-11">
             <div class="w-full flex flex-col gap-4 bg-gray-mid rounded-lg p-3">
                 <div class="flex gap-3">
                     <NuxtImg src="/images/servicios/Mantenimiento.svg" alt="Mantenimiento Servicios Tzadik"
                         class="w-8 h-8 object-contain flex-shrink-0" />
                     <div class="flex flex-col gap-1">
                         <HeadingH3 class="text-primary">RENDIMIENTO ASEGURADO</HeadingH3>
-                        <p class="text-xs font-bold">Contamos con técnicos expertos y repuestos oficiales para tu
+                        <p class="text-xs md:text-sm font-bold">Contamos con técnicos expertos y repuestos oficiales
+                            para tu
                             equipo.</p>
                     </div>
                 </div>
@@ -51,7 +53,8 @@
                         class="w-8 h-8 object-contain flex-shrink-0" />
                     <div class="flex flex-col gap-1">
                         <HeadingH3 class="text-primary">TRASLADAMOS TU MAQUINARIA</HeadingH3>
-                        <p class="text-xs font-bold">Nos encargamos de llevarte tu maquinaria con nuestro camión
+                        <p class="text-xs md:text-sm font-bold">Nos encargamos de llevarte tu maquinaria con nuestro
+                            camión
                             especializado</p>
                     </div>
                 </div>
@@ -64,8 +67,31 @@
                 <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin" />
             </div>
 
-            <CarouselStatic v-else :slides-per-view="{ base: 1.3, sm: 2.3, md: 3.3, lg: 4, xl: 4, xxl: 4 }"
-                :gap="{ base: 12, md: 12, lg: 16, xl: 16, xxl: 16 }" :show-arrows="true">
+            <CarouselStatic v-else :slides-per-view="{ base: 1.3, sm: 2.3, md: 3, lg: 4, xl: 4, xxl: 4 }"
+                :gap="{ base: 12, md: 12, lg: 16, xl: 16, xxl: 16 }" :button-position="{
+                    top: {
+                        base: '20%',
+                        md: '30%',
+                        lg: '35%',
+                        xl: '35%',
+                        xxl: '35%',
+                    },
+                    transform: 'translateY(0)',
+                    left: {
+                        base: '0.5rem',
+                        md: '1rem',
+                        lg: '-1.5rem',
+                        xl: '-1.5rem',
+                        xxl: '-1.75rem',
+                    },
+                    right: {
+                        base: '0.5rem',
+                        md: '1rem',
+                        lg: '-1.5rem',
+                        xl: '-1.5rem',
+                        xxl: '-1.75rem',
+                    }
+                }" class="md:px-11">
                 <ProductCard v-for="producto in productosSimilares" :key="producto.id" :product="producto" />
             </CarouselStatic>
         </DefaultSection>
@@ -125,7 +151,6 @@ const buscarProducto = async () => {
 
         imagenPrincipalActual.value = mediaPrincipal
 
-        // Obtener productos similares después de cargar el producto
         await obtenerProductosSimilares()
     }
 }
@@ -242,33 +267,26 @@ const cambiarImagenPrincipal = (imagen) => {
     imagenPrincipalActual.value = { ...imagen, es_video: false }
 }
 
-// Función para obtener productos similares
 const obtenerProductosSimilares = async () => {
     if (!categoria.value || !producto.value) return
 
     try {
         loadingSimilares.value = true
 
-        // Obtener productos de la misma categoría (excluyendo el producto actual)
         const productosCategoria = productos.value.filter(prod =>
             prod.categoria_id === categoria.value.id && prod.id !== producto.value.id
         )
 
-        // Ordenar: primero destacados, luego con oferta, luego por fecha
         const productosOrdenados = productosCategoria.sort((a, b) => {
-            // Primero productos destacados
             if (a.destacado && !b.destacado) return -1
             if (!a.destacado && b.destacado) return 1
 
-            // Luego productos con oferta
             if (a.oferta && !b.oferta) return -1
             if (!a.oferta && b.oferta) return 1
 
-            // Finalmente por fecha (más recientes primero)
             return new Date(b.created_at) - new Date(a.created_at)
         })
 
-        // Tomar máximo 8 productos
         productosSimilares.value = productosOrdenados.slice(0, 8)
 
     } catch (error) {
