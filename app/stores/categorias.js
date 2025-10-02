@@ -1,14 +1,12 @@
 import { defineStore } from 'pinia'
 
 export const useCategoriasStore = defineStore('categorias', () => {
-  // Estado
   const categorias = ref([])
   const subcategorias = ref([])
   const categoriaCampos = ref([])
   const loading = ref(false)
   const error = ref(null)
 
-  // Getters
   const getCategoriaById = computed(() => (id) => {
     return categorias.value.find(cat => cat.id === id)
   })
@@ -21,7 +19,6 @@ export const useCategoriasStore = defineStore('categorias', () => {
     return categoriaCampos.value.filter(campo => campo.categoria_id === categoriaId)
   })
 
-  // Actions
   const fetchCategorias = async () => {
     try {
       loading.value = true
@@ -359,19 +356,16 @@ export const useCategoriasStore = defineStore('categorias', () => {
   }
 
   return {
-    // Estado
     categorias,
     subcategorias,
     categoriaCampos,
     loading,
     error,
 
-    // Getters
     getCategoriaById,
     getSubcategoriasPorCategoria,
     getCamposPorCategoria,
 
-    // Actions
     fetchCategorias,
     fetchSubcategorias,
     fetchCategoriaCampos,

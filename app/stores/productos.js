@@ -78,7 +78,6 @@ export const useProductosStore = defineStore('productos', () => {
             }
 
             if (filters.value.marca && filters.value.marca.length > 0) {
-                // La marca podría estar en datos_dinamicos
                 const marcaConditions = filters.value.marca.map(marca =>
                     `datos_dinamicos->>marca.ilike.%${marca}%`
                 )
@@ -100,7 +99,6 @@ export const useProductosStore = defineStore('productos', () => {
             }
 
             if (filters.value.en_oferta) {
-                // Productos en oferta: destacados O que tengan texto en el campo oferta
                 query = query.or('destacado.eq.true,oferta.not.is.null')
             }
 

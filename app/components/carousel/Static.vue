@@ -111,12 +111,10 @@ const showRightArrow = computed(() => {
 
     const { scrollLeft, scrollWidth, clientWidth } = container.value
 
-    // Si no hay contenido suficiente para hacer scroll, no mostrar flecha
     if (scrollWidth <= clientWidth) {
         return false
     }
 
-    // Si hay contenido para scroll y no estamos al final, mostrar flecha
     const tolerance = 2
     return scrollLeft < scrollWidth - clientWidth - tolerance
 })
@@ -309,7 +307,6 @@ const setupChildrenClasses = () => {
             child.style.minWidth = `${slideWidth}px`
         })
 
-        // Forzar actualización de flechas después de configurar dimensiones
         nextTick(() => {
             forceUpdate.value++
         })
@@ -360,7 +357,6 @@ const initialize = async () => {
     setupChildrenClasses()
     updateArrows()
 
-    // Múltiples actualizaciones para asegurar que las dimensiones estén correctas
     setTimeout(() => updateArrows(), 100)
     setTimeout(() => updateArrows(), 300)
 }

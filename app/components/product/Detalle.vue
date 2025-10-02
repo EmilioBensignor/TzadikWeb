@@ -90,10 +90,24 @@
                     class="text-xs lg:text-base font-semibold"></p>
             </div>
 
-            <div class="flex items-center gap-2">
-                <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{ formatCurrency(producto.precio) }}
-                </p>
-                <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
+            <div>
+                <div v-if="producto.precio_descuento" class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2">
+                        <p class="font-teko text-xl md:text-[1.375rem] lg:text-2xl xxl:text-[1.75rem] font-medium line-through">{{
+                            formatCurrency(producto.precio) }}</p>
+                        <p class="text-[0.625rem] lg:text-xs xxl:text-sm font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
+                            formatCurrency(producto.precio_descuento) }}</p>
+                        <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
+                    </div>
+                </div>
+                <div v-else class="flex items-center gap-2">
+                    <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
+                        formatCurrency(producto.precio) }}</p>
+                    <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
+                </div>
             </div>
             <NuxtLink :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank"
                 class="w-max h-12 flex justify-center items-center gap-2.5 bg-whatsapp text-light font-bold rounded-full shadow-lg px-8">

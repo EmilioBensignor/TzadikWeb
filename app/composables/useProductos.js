@@ -12,18 +12,14 @@ export const useProductos = () => {
   const currentPage = computed(() => productosStore.currentPage)
   const totalCount = computed(() => productosStore.totalCount)
   const filters = computed(() => productosStore.filters)
-  // Getters
   const getProductoById = (id) => productosStore.getProductoById(id)
   const getProductosByCategoria = (categoriaId) => productosStore.getProductosByCategoria(categoriaId)
   const getImagenesByProducto = (productoId) => productosStore.getImagenesByProducto(productoId)
   const getCurrencySymbol = (producto) => productosStore.getCurrencySymbol(producto)
 
-  // Función para buscar productos con filtros avanzados
   const searchProductos = async (searchParams = {}) => {
-    // Resetear filtros
     productosStore.clearFilters()
 
-    // Aplicar nuevos filtros
     Object.entries(searchParams).forEach(([key, value]) => {
       if (key === 'datos_dinamicos') {
         Object.entries(value).forEach(([campo, valor]) => {
@@ -34,11 +30,9 @@ export const useProductos = () => {
       }
     })
 
-    // Ejecutar búsqueda
     await productosStore.fetchProductos({ includeImages: true })
   }
 
-  // Función para obtener productos populares/destacados
   const getFeaturedProductos = async (limit = 8) => {
     try {
       const { data, error } = await useSupabaseClient()
@@ -61,7 +55,6 @@ export const useProductos = () => {
     }
   }
 
-  // Función para obtener productos relacionados
   const getRelatedProductos = async (productoId, categoriaId, limit = 4) => {
     try {
       const { data, error } = await useSupabaseClient()
@@ -85,7 +78,6 @@ export const useProductos = () => {
     }
   }
 
-  // Función para formatear datos dinámicos para mostrar
   const formatDynamicData = (producto, campos) => {
     if (!producto.datos_dinamicos || !campos) return {}
 
@@ -94,7 +86,6 @@ export const useProductos = () => {
     campos.forEach(campo => {
       const value = producto.datos_dinamicos[campo.nombre_campo]
       if (value !== undefined && value !== null && value !== '') {
-        // Formateo básico sin dependencia externa
         let formattedValue = value
 
         switch (campo.tipo) {
@@ -125,19 +116,17 @@ export const useProductos = () => {
     return formatted
   }
 
-  // Función para generar slug básico
   const generateSlug = (titulo) => {
     return titulo
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remover acentos
-      .replace(/[^a-z0-9\s-]/g, '') // Solo letras, números, espacios y guiones
-      .replace(/\s+/g, '-') // Espacios a guiones
-      .replace(/-+/g, '-') // Múltiples guiones a uno
-      .trim('-') // Remover guiones al inicio/final
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim('-')
   }
 
-  // Función para generar slug único verificando duplicados
   const generateUniqueSlug = async (titulo, excludeId = null) => {
     const baseSlug = generateSlug(titulo)
     let slug = baseSlug
@@ -171,7 +160,6 @@ export const useProductos = () => {
 
 
   return {
-    // Estado reactivo
     productos,
     ofertas,
     currentProduct,
@@ -182,13 +170,11 @@ export const useProductos = () => {
     totalCount,
     filters,
 
-    // Getters
     getProductoById,
     getProductosByCategoria,
     getImagenesByProducto,
     getCurrencySymbol,
 
-    // Search & filtering
     searchProductos,
     setFilter: productosStore.setFilter,
     setDynamicFilter: productosStore.setDynamicFilter,
@@ -196,14 +182,12 @@ export const useProductos = () => {
     setSorting: productosStore.setSorting,
     setPage: productosStore.setPage,
 
-    // Data fetching
     fetchProductos: productosStore.fetchProductos,
     fetchProductoById: productosStore.fetchProductoById,
     fetchOfertas: productosStore.fetchOfertas,
     getFeaturedProductos,
     getRelatedProductos,
 
-    // Utilities
     formatDynamicData,
     generateSlug,
     generateUniqueSlug,

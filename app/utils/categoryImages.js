@@ -5,7 +5,6 @@ export const categoryImageMapping = {
     desktop: '/images/categorias/Tractores/Tractores-Hanomag-Tzadik-Desktop.jpg',
     xl: '/images/categorias/Tractores/Tractores-Hanomag-Tzadik-Desktop-XL.jpg'
   }
-  // Agregar más categorías aquí cuando tengas las imágenes
 }
 
 export const getCategoryImages = (categoryName) => {
