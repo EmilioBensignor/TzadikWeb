@@ -65,7 +65,10 @@ const route = useRoute()
 const isDrawerOpen = ref(false)
 const showContactForm = ref(false)
 
-const isHomePage = computed(() => route.name === 'index')
+const isHomePage = computed(() => {
+    const specialPages = ['index', 'servicios', 'marcas', 'quienes-somos']
+    return specialPages.includes(route.name)
+})
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
