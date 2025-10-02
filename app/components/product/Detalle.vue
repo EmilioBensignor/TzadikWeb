@@ -113,13 +113,13 @@
                 </div>
                 <div class="grid grid-cols-1 gap-2">
                     <div v-for="(valor, campo) in datosDinamicos" :key="campo"
-                        class="flex justify-between border-b border-gray-dark py-3 lg:py-4">
+                        class="flex justify-between gap-2 border-b border-gray-dark py-3 lg:py-4">
                         <span class="text-xs lg:text-base font-bold">{{ campo }}:</span>
-                        <span class="text-xs lg:text-base font-medium">{{ valor }}</span>
+                        <span class="text-right text-xs lg:text-base font-medium">{{ valor }}</span>
                     </div>
                     <div v-if="producto.condicion" class="flex justify-between py-3 lg:py-4">
                         <span class="text-xs lg:text-base font-bold">Condición:</span>
-                        <span class="text-xs lg:text-base font-medium">{{ producto.condicion }}</span>
+                        <span class="text-right text-xs lg:text-base font-medium">{{ producto.condicion }}</span>
                     </div>
                 </div>
             </div>
