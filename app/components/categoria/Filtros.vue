@@ -113,7 +113,8 @@
                 <div v-else-if="!loading && productosFiltrados.length === 0" class="px-5 md:px-0">
                     <div
                         class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-dark rounded-[9px] text-light p-3 md:p-5 lg:p-6 xxl:p-8">
-                        <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu búsqueda.</p>
+                        <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu
+                            búsqueda.</p>
                         <ButtonPrimary @click="limpiarFiltros">Limpiar filtros</ButtonPrimary>
                         <p class="text-xs lg:text-sm xxl:text-base font-bold">O <NuxtLink
                                 :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank" class="underline">ponete
@@ -125,20 +126,17 @@
 
                 <template v-else>
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product"
-                            class="fade-up" />
+                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
                     </div>
 
                     <CategoriaContacto v-if="mostrarBannerContacto" class="my-3 fade-up" />
 
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product"
-                            class="fade-up" />
+                        <ProductCard v-for="product in siguientesProductos" :key="product.id" :product="product" />
                     </div>
 
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product"
-                            class="fade-up" />
+                        <ProductCard v-for="product in productosAdicionales" :key="product.id" :product="product" />
                     </div>
 
                     <ButtonPrimary v-if="mostrarBotonCargarMas" @click="cargarMasProductos" class="self-center">

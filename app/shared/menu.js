@@ -2,10 +2,6 @@ import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
 
 const paginas = [
     {
-        name: "Productos",
-        route: ROUTE_NAMES.PRODUCTOS
-    },
-    {
         name: "Servicios",
         route: ROUTE_NAMES.SERVICIOS
     },

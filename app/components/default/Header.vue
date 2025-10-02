@@ -36,25 +36,11 @@
                 </NuxtLink>
                 <nav class="hidden lg:block">
                     <ul class="flex items-center gap-1.5 xxl:gap-6">
-                        <li>
-                            <NuxtLink to="#"
+                        <li v-for="(pagina, index) in paginas" :key="index">
+                            <NuxtLink :to="pagina.route"
                                 class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
                                 @click="closeDrawer">
-                                Servicios
-                            </NuxtLink>
-                        </li>
-                        <li>
-                            <NuxtLink to="#"
-                                class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
-                                @click="closeDrawer">
-                                Marcas
-                            </NuxtLink>
-                        </li>
-                        <li>
-                            <NuxtLink to="#"
-                                class="h-12 text-dark hover:text-primary text-[1.125rem] font-medium px-6 transition-colors duration-300"
-                                @click="closeDrawer">
-                                Quienes Somos
+                                {{ pagina.name }}
                             </NuxtLink>
                         </li>
                         <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos
@@ -73,7 +59,7 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
-import { redes } from '~/shared/menu';
+import { redes, paginas } from '~/shared/menu';
 
 const route = useRoute()
 const isDrawerOpen = ref(false)

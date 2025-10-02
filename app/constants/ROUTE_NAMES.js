@@ -1,7 +1,7 @@
 export const ROUTE_NAMES = {
     HOME: "/",
     CATEGORIAS: "/categorias",
-    SERVICIOS: "#",
+    SERVICIOS: "/servicios",
     MARCAS: "#",
     QUIENES_SOMOS: "#",
     REDES: {

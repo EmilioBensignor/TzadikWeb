@@ -56,18 +56,14 @@ export const useProductosStore = defineStore('productos', () => {
             let selectQuery = `
                 *,
                 categorias(id, nombre, icon),
-                subcategorias(id, nombre)
+                subcategorias(id, nombre),
+                producto_imagenes(storage_path, es_principal, orden)
             `
-
-            if (options.includeImages) {
-                selectQuery += `,
-                producto_imagenes(storage_path, es_principal)`
-            }
-
 
             let query = supabase
                 .from('productos')
                 .select(selectQuery, { count: 'exact' })
+                .eq('activo', true)
 
             if (filters.value.categoria_id) {
                 query = query.eq('categoria_id', filters.value.categoria_id)
