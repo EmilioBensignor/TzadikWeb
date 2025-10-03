@@ -16,12 +16,12 @@
             <p>{{ producto?.titulo }}</p>
         </nav>
 
-        <div v-if="loading" class="flex flex-col items-center justify-center py-12 px-5">
+        <div v-if="loadingProducto" class="flex flex-col items-center justify-center py-12 px-5">
             <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin mb-4" />
             <p class="text-gray-600 text-center">Cargando producto...</p>
         </div>
 
-        <div v-else-if="error || !producto" class="flex flex-col items-center justify-center py-12 px-5">
+        <div v-else-if="!producto" class="flex flex-col items-center justify-center py-12 px-5">
             <Icon name="tabler:package-off" class="w-16 h-16 text-gray-400 mb-4" />
             <p class="text-lg font-semibold text-gray-600 mb-2">Producto no encontrado</p>
             <p class="text-gray-500 text-center mb-4">El producto que buscas no existe o fue eliminado</p>
@@ -112,12 +112,14 @@ const { getVideoUrl } = useStorage()
 
 const productosSimilares = ref([])
 const loadingSimilares = ref(false)
+const loadingProducto = ref(true)
 
 const producto = ref(null)
 const categoria = ref(null)
 const imagenPrincipalActual = ref(null)
 
 const buscarProducto = async () => {
+    loadingProducto.value = true
     const productoSlug = route.params.producto
     const categoriaSlug = route.params.categoria
 
@@ -155,6 +157,8 @@ const buscarProducto = async () => {
 
         await obtenerProductosSimilares()
     }
+
+    loadingProducto.value = false
 }
 
 const imagenPrincipal = computed(() => {

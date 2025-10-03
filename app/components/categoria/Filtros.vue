@@ -105,12 +105,12 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
-                <div v-if="loading" class="flex flex-col items-center justify-center py-12 px-5">
+                <div v-if="cargandoInicial || loading" class="flex flex-col items-center justify-center py-12 px-5">
                     <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin mb-4" />
                     <p class="text-gray-600 text-center">Cargando productos...</p>
                 </div>
 
-                <div v-else-if="!loading && productosFiltrados.length === 0" class="px-5 md:px-0">
+                <div v-else-if="!cargandoInicial && !loading && productosFiltrados.length === 0" class="px-5 md:px-0">
                     <div
                         class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-dark rounded-[9px] text-light p-3 md:p-5 lg:p-6 xxl:p-8">
                         <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu
@@ -156,6 +156,7 @@ const route = useRoute()
 const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
 const { productos, searchProductos, clearFilters, loading } = useProductos()
 const productosStore = useProductosStore()
+const cargandoInicial = ref(true)
 
 const categoriaActual = computed(() => {
     return categorias.value.find(cat => cat.nombre === route.params.categoria)
@@ -408,11 +409,13 @@ onMounted(async () => {
 
 watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
     if (nuevaCategoriaId) {
+        cargandoInicial.value = true
         limpiarFiltros()
         const originalPageSize = productosStore.pageSize
         productosStore.pageSize = 1000
         await searchProductos({ categoria_id: nuevaCategoriaId })
         productosStore.pageSize = originalPageSize
+        cargandoInicial.value = false
     }
 }, { immediate: true })
 
