@@ -5,7 +5,7 @@
             <Icon name="tabler:chevron-right" class="w-5 h-5 text-primary" />
             <p>{{ categoria?.nombre }}</p>
         </div>
-        <div class="w-full max-w-[1200px] relative mx-auto fade-up">
+        <div class="w-full max-w-[1200px] relative mx-auto ">
             <picture v-if="categoryImages" class="w-full object-cover overflow-hidden">
                 <source media="(min-width: 1440px)" :srcset="categoryImages.xl">
                 <source media="(min-width: 1080px)" :srcset="categoryImages.desktop">

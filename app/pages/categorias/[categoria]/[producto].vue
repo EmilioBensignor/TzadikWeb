@@ -33,7 +33,7 @@
 
         <div v-else class="w-full max-w-[1200px] mx-auto">
             <ProductDetalle :producto="producto" :getImageUrl="getImageUrl" :getYouTubeEmbedUrl="getYouTubeEmbedUrl"
-                :getYouTubeThumbnail="getYouTubeThumbnail" :formatearTexto="formatearTexto"
+                :getYouTubeThumbnail="getYouTubeThumbnail" :esYouTubeShort="esYouTubeShort" :formatearTexto="formatearTexto"
                 :descargarFichaTecnica="descargarFichaTecnica" :cambiarImagenPrincipal="cambiarImagenPrincipal" />
         </div>
         <DefaultSection class="lg:hidden px-5 md:px-11">
@@ -214,9 +214,19 @@ const datosDinamicos = computed(() => {
     return formatted
 })
 
+const esYouTubeShort = (url) => {
+    if (!url) return false
+    return url.includes('/shorts/')
+}
+
 const getYouTubeVideoId = (url) => {
     if (!url) return null
 
+    // Soporte para shorts: youtube.com/shorts/VIDEO_ID
+    const shortsMatch = url.match(/\/shorts\/([a-zA-Z0-9_-]{11})/)
+    if (shortsMatch) return shortsMatch[1]
+
+    // Regex original para videos normales
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
     const match = url.match(regExp)
     return (match && match[7].length === 11) ? match[7] : null

@@ -4,12 +4,12 @@
         <div
             class="lg:w-1/2 flex flex-col justify-between items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
             <div class="flex flex-col items-center lg:items-start text-center gap-2 lg:gap-6">
-                <HeadingH1 class="flex md:block xxl:flex flex-col lg:text-left fade-up">
+                <HeadingH1 class="flex md:block xxl:flex flex-col lg:text-left ">
                     MÁS QUE CLIENTES,
                     <span class="font-teko">SOCIOS EN EL CAMINO</span>
                 </HeadingH1>
-                <p class="text-xs md:text-sm lg:text-xl fade-up">Mira lo que nuestros clientes dicen sobre nosotros.</p>
-                <div class="flex lg:flex-col items-center lg:items-start gap-2 text-sm lg:text-xl font-medium fade-up">
+                <p class="text-xs md:text-sm lg:text-xl ">Mira lo que nuestros clientes dicen sobre nosotros.</p>
+                <div class="flex lg:flex-col items-center lg:items-start gap-2 text-sm lg:text-xl font-medium ">
                     <p>Excelente</p>
                     <div class="flex items-center gap-1 lg:gap-2">
                         <p class="lg:hidden">4.8</p>
@@ -51,7 +51,7 @@
         </div>
         <div class="w-screen lg:w-1/2 relative">
             <CarouselStatic :slides-per-view="{ base: 1.4, sm: 2.5, md: 3.5, lg: 1.8, xl: 1.8, xxl: 2.5 }"
-                :gap="{ base: 12, lg: 16, xl: 16, xxl: 16 }" :show-arrows="false" ref="carousel" class="fade-up">
+                :gap="{ base: 12, lg: 16, xl: 16, xxl: 16 }" :show-arrows="false" ref="carousel" class="">
                 <ReviewCard v-for="review in reviews" :key="review.id" :review="review"
                     class="first:md:ml-11 last:md:mr-11" />
             </CarouselStatic>

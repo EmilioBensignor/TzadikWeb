@@ -1,18 +1,17 @@
 <template>
     <DefaultSection class="flex flex-col lg:flex-row-reverse lg:items-start gap-6 lg:gap-4 xxl:gap-8 lg:px-20 xxl:px-0">
         <div class="max-w-[100vw] lg:hidden md:pl-11 lg:pl-0">
-            <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="true">
-                <div v-for="(media, index) in todosLosMedias" :key="index" class="bg-gray-100 overflow-hidden">
-                    <div v-if="media.es_video" class="relative w-full h-full">
+            <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="false">
+                <div v-for="(media, index) in todosLosMedias" :key="index"
+                    class="bg-gray-100 overflow-hidden rounded-xl">
+                    <div v-if="media.es_video" class="w-full aspect-[4/3] pb-2.5">
                         <iframe :src="getYouTubeEmbedUrl(media.url || media.storage_path || media.link)"
                             :title="`${producto.titulo} video ${index + 1}`"
-                            class="w-full h-full absolute inset-0 rounded-xl" frameborder="0" allowfullscreen
+                            class="w-full h-full rounded-xl bg-black"
+                            frameborder="0" allowfullscreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             loading="lazy">
                         </iframe>
-                        <div class="absolute inset-0 bg-gray-200 flex items-center justify-center" style="z-index: -1;">
-                            <Icon name="tabler:video" class="w-12 h-12 text-gray-400" />
-                        </div>
                     </div>
                     <NuxtImg v-else :src="getImageUrl(media.storage_path)" :alt="`${producto.titulo} ${index + 1}`"
                         class="w-full rounded-xl object-cover" />
@@ -21,21 +20,26 @@
         </div>
 
         <div class="lg:w-1/2 hidden lg:flex flex-col gap-4 lg:gap-6">
-            <div class="w-full h-[25rem] overflow-hidden px-4 relative">
+            <div class="w-full h-[25rem] overflow-hidden relative flex items-center justify-center bg-black rounded-xl">
                 <iframe v-if="esPrincipalVideo" :src="imagenPrincipal" :title="`${producto.titulo} video`"
-                    class="w-full h-full rounded-xl" frameborder="0" allowfullscreen
+                    :class="[
+                        'rounded-xl',
+                        esVideoPrincipalShort ? 'h-full w-auto' : 'w-full h-full'
+                    ]"
+                    class="object-cover"
+                    frameborder="0" allowfullscreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
                 </iframe>
                 <NuxtImg v-else :src="imagenPrincipal" :alt="producto.titulo"
                     class="w-full h-full object-cover rounded-xl" />
 
                 <button v-if="todosLosMedias.length > 1" @click="navegarMedia('prev')"
-                    class="w-10 h-10 flex items-center justify-center absolute z-10 left-0 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
+                    class="w-10 h-10 flex items-center justify-center absolute z-10 left-1 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
                     <Icon name="tabler:chevron-left" class="w-7 h-7" />
                 </button>
 
                 <button v-if="todosLosMedias.length > 1" @click="navegarMedia('next')"
-                    class="w-10 h-10 flex items-center justify-center absolute z-10 right-0 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
+                    class="w-10 h-10 flex items-center justify-center absolute z-10 right-1 top-1/2 -translate-y-1/2 bg-primary rounded-full shadow-lg text-light">
                     <Icon name="tabler:chevron-right" class="w-7 h-7" />
                 </button>
             </div>
@@ -157,6 +161,7 @@ const props = defineProps({
     getImageUrl: { type: Function, required: true },
     getYouTubeEmbedUrl: { type: Function, required: true },
     getYouTubeThumbnail: { type: Function, required: true },
+    esYouTubeShort: { type: Function, required: true },
     formatearTexto: { type: Function, required: true },
     descargarFichaTecnica: { type: Function, required: true },
     cambiarImagenPrincipal: { type: Function, required: true }
@@ -200,6 +205,12 @@ const imagenPrincipal = computed(() => {
 
 const esPrincipalVideo = computed(() => {
     return imagenPrincipalActual.value?.es_video || false
+})
+
+const esVideoPrincipalShort = computed(() => {
+    if (!imagenPrincipalActual.value?.es_video) return false
+    const url = imagenPrincipalActual.value.url || imagenPrincipalActual.value.storage_path || imagenPrincipalActual.value.link
+    return props.esYouTubeShort(url)
 })
 
 const todosLosMedias = computed(() => {
