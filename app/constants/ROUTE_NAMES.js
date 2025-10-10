@@ -11,6 +11,6 @@ export const ROUTE_NAMES = {
         YOUTUBE: "https://www.youtube.com/@tzadik.argentina",
     },
     WHATSAPP: "5493624620042",
-    MAIL: "contacto@tzadik.com.ar",
+    MAIL: "contacto.tzadik@gmail.com",
     UBICACION: "Ruta N 11 - Km 1006.2 Resistencia, Chaco",
 };

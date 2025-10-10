@@ -19,7 +19,7 @@ const contacto = [
     {
         icon: "brand-whatsapp",
         route: `https://wa.me/${ROUTE_NAMES.WHATSAPP.replace(/\s/g, '')}`,
-        text: ROUTE_NAMES.WHATSAPP,
+        text: "3624620042",
     },
     {
         icon: "mail",
