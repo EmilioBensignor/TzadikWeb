@@ -31,7 +31,7 @@
                         <p class="md:text-left text-sm md:text-base font-semibold">Redes Sociales</p>
                         <ul class="flex justify-center md:justify-start items-center gap-2">
                             <li v-for="(red, index) in redes" :key="index">
-                                <NuxtLink :to="red.route">
+                                <NuxtLink target="_blank" :to="red.route">
                                     <NuxtImg :src="`/images/redes/${red.name}-Blanco.svg`" :alt="red.name"
                                         class="w-full h-5 md:h-6 object-contain" />
                                 </NuxtLink>
