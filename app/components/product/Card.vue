@@ -10,7 +10,7 @@
                 <p class="text-xs md:text-sm">{{ product.descripcion_corta }}</p>
             </div>
             <div>
-                <div v-if="product.precio_descuento" class="flex flex-col gap-1">
+                <div v-if="tieneDescuento" class="flex flex-col gap-1">
                     <div class="flex items-end gap-2">
                         <p class="font-teko text-sm md:text-base xxl:text-xl font-medium !leading-none line-through">{{
                             formatCurrency(product.precio) }}</p>
@@ -24,7 +24,7 @@
                 </div>
                 <div v-else class="flex items-end gap-2">
                     <p class="font-teko text-2xl xxl:text-[1.75rem] font-semibold !leading-none">{{
-                        formatCurrency(product.precio) }}</p>
+                        formatCurrency(product.precio_descuento || product.precio) }}</p>
                     <p class="text-sm font-medium mb-0.5">{{ getCurrencySymbol(product) }}</p>
                 </div>
             </div>
@@ -57,5 +57,10 @@ const productUrl = computed(() => {
     const categoriaSlug = generateSlug(props.product.categorias?.nombre || 'categoria')
     const productoSlug = generateSlug(props.product.titulo)
     return `/categorias/${categoriaSlug}/${productoSlug}`
+})
+
+const tieneDescuento = computed(() => {
+    if (!props.product.precio_descuento) return false
+    return props.product.precio_descuento < props.product.precio
 })
 </script>

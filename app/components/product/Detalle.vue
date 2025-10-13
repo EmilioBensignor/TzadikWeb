@@ -95,7 +95,7 @@
             </div>
 
             <div>
-                <div v-if="producto.precio_descuento" class="flex flex-col gap-1">
+                <div v-if="tieneDescuento" class="flex flex-col gap-1">
                     <div class="flex items-center gap-2">
                         <p class="font-teko text-xl md:text-[1.375rem] lg:text-2xl xxl:text-[1.75rem] font-medium line-through">{{
                             formatCurrency(producto.precio) }}</p>
@@ -109,7 +109,7 @@
                 </div>
                 <div v-else class="flex items-center gap-2">
                     <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
-                        formatCurrency(producto.precio) }}</p>
+                        formatCurrency(producto.precio_descuento || producto.precio) }}</p>
                     <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
                 </div>
             </div>
@@ -292,4 +292,9 @@ const navegarMedia = (direccion) => {
 
     imagenPrincipalActual.value = todosLosMedias.value[nuevoIndice]
 }
+
+const tieneDescuento = computed(() => {
+    if (!props.producto.precio_descuento) return false
+    return props.producto.precio_descuento < props.producto.precio
+})
 </script>
