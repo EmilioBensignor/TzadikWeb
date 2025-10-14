@@ -135,7 +135,8 @@ const buscarProducto = async () => {
 
     await fetchProductos({
         categoria_id: categoria.value.id,
-        includeImages: true
+        includeImages: true,
+        noPagination: true
     })
 
     producto.value = productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)

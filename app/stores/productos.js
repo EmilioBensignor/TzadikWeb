@@ -124,7 +124,8 @@ export const useProductosStore = defineStore('productos', () => {
 
             query = query.order(sortBy.value, { ascending: sortOrder.value === 'asc' })
 
-            if (!options.categoria_id) {
+            const debeDesactivarPaginacion = options.noPagination && options.categoria_id
+            if (!debeDesactivarPaginacion) {
                 const from = (currentPage.value - 1) * pageSize.value
                 const to = from + pageSize.value - 1
                 query = query.range(from, to)
