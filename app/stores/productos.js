@@ -65,7 +65,6 @@ export const useProductosStore = defineStore('productos', () => {
                 .select(selectQuery, { count: 'exact' })
                 .eq('activo', true)
 
-            // Si se pasa categoria_id directamente en options, usarlo (para cargar todos los productos)
             if (options.categoria_id) {
                 query = query.eq('categoria_id', options.categoria_id)
             } else if (filters.value.categoria_id) {
@@ -125,7 +124,6 @@ export const useProductosStore = defineStore('productos', () => {
 
             query = query.order(sortBy.value, { ascending: sortOrder.value === 'asc' })
 
-            // Solo aplicar paginación si NO se está cargando toda una categoría
             if (!options.categoria_id) {
                 const from = (currentPage.value - 1) * pageSize.value
                 const to = from + pageSize.value - 1

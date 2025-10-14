@@ -1,6 +1,6 @@
 <template>
     <DefaultSection class="flex flex-col lg:flex-row-reverse lg:items-start gap-6 lg:gap-4 xxl:gap-8 lg:px-20 xxl:px-0">
-        <div class="max-w-[100vw] lg:hidden md:pl-11 lg:pl-0">
+        <div class="w-full max-w-[100vw] lg:hidden md:pl-11 lg:pl-0">
             <CarouselStatic :slides-per-view="{ base: 1.3, sm: 1.3, md: 2.2 }" :show-arrows="false">
                 <div v-for="(media, index) in todosLosMedias" :key="index"
                     class="bg-gray-100 overflow-hidden rounded-xl">
