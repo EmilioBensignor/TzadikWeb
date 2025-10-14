@@ -4,11 +4,11 @@
             <div
                 class="flex md:grid md:grid-cols-2 xxl:grid-cols-4 md:justify-items-center flex-col gap-5 md:gap-8 lg:gap-12">
                 <ButtonPrimary :to="ROUTE_NAMES.HOME"
-                    class="w-56 lg:w-60 flex justify-center items-center gap-1.5 lg:text-lg font-medium lg:px-6">
+                    class="w-64 lg:w-72 flex justify-center items-center gap-1.5 lg:gap-2 lg:text-lg font-medium lg:px-6">
                     Nuestra Web
                 </ButtonPrimary>
                 <ButtonPrimary v-for="(link, index) in links" :key="index" :to="link.link" target="_blank"
-                    class="w-56 lg:w-60 flex justify-center items-center gap-1.5 lg:text-lg font-medium lg:px-6">
+                    class="w-64 lg:w-72 flex justify-center items-center gap-1.5 lg:gap-2 lg:text-lg font-medium lg:px-6">
                     <Icon v-if="link.icon" :name="`tabler:${link.icon}`" class="w-4 h-4 text-light mb-0.5" />
                     {{ link.title }}
                 </ButtonPrimary>
@@ -32,32 +32,33 @@ const links = [
     },
     {
         title: "Repuestos / Posventa",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/5493625184133",
     },
     {
         title: "Resistencia",
-        icon: "map-pin",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/5493624130496",
     },
     {
         title: "Posadas",
-        icon: "map-pin",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/54376465152",
     },
     {
         title: "Corrientes",
-        icon: "map-pin",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/54376422950",
     },
     {
         title: "Sáenz Peña",
-        icon: "map-pin",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/5493644222208",
     },
     {
         title: "Villa Angela",
-        icon: "map-pin",
-        link: "",
+        icon: "phone",
+        link: "https://wa.me/54373544973",
     },
 ];
 </script>
