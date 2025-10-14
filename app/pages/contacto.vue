@@ -43,12 +43,12 @@ const links = [
     {
         title: "Posadas",
         icon: "phone",
-        link: "https://wa.me/549376465152",
+        link: "https://wa.me/5493764651520",
     },
     {
         title: "Corrientes",
         icon: "phone",
-        link: "https://wa.me/549376422950",
+        link: "https://wa.me/5493764229506",
     },
     {
         title: "Sáenz Peña",
@@ -58,7 +58,7 @@ const links = [
     {
         title: "Villa Angela",
         icon: "phone",
-        link: "https://wa.me/549373544973",
+        link: "https://wa.me/5493735449730",
     },
 ];
 </script>
