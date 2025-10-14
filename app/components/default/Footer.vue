@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="flex justify-center bg-primary text-center text-light text-xs lg:text-sm p-3">
-            <p>© Tzadik {{ new Date().getFullYear() }}. Todos los derechos reservados</p>
+            <p>© Peripeteia {{ new Date().getFullYear() }}. Todos los derechos reservados</p>
         </div>
     </footer>
 </template>

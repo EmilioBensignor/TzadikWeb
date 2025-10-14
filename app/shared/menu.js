@@ -7,7 +7,7 @@ const paginas = [
     },
     {
         name: "Marcas",
-        route: ROUTE_NAMES.MARCAS
+        route: `${ROUTE_NAMES.MARCAS}/michigan`
     },
     {
         name: "Quienes Somos",
