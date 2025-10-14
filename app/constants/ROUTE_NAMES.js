@@ -4,6 +4,7 @@ export const ROUTE_NAMES = {
     SERVICIOS: "/servicios",
     MARCAS: "/marcas",
     QUIENES_SOMOS: "/quienes-somos",
+    CONTACTO: "/contacto",
     REDES: {
         INSTAGRAM: "https://www.instagram.com/tzadik.argentina/",
         FACEBOOK: "https://www.facebook.com/tzadik.argentina/",
