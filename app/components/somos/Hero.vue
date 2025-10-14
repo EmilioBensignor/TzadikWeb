@@ -13,12 +13,13 @@
         </picture>
         <div
             class="w-full h-full flex flex-col items-center justify-center lg:justify-start gap-3 lg:gap-4 absolute text-light p-5 lg:pt-20 xxl:pt-[7.5rem]">
-            <HeadingH1 class="md:max-w-[27.75rem] lg:max-w-full">
+            <HeadingH1 class="max-w-[30rem] md:max-w-[33rem] lg:max-w-[41.25rem] xxl:max-w-[50rem]">
                 NUESTRA MAQUINARIA REPRESENTA EL COMPROMISO Y LA EXCELENCIA DE TZADIK
             </HeadingH1>
             <p
-                class="md:max-w-[27.75rem] lg:max-w-[46.75rem] xxl:max-w-[42rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
-                Trabajamos cada día para brindar soluciones integrales que potencien el rendimiento y la vida útil de tu equipo vial y agropecuario.
+                class="max-w-[30rem] md:max-w-[33rem] lg:max-w-[41.25rem] xxl:max-w-[50rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
+                Trabajamos cada día para brindar soluciones integrales que potencien el rendimiento y la vida útil de tu
+                equipo vial y agropecuario.
             </p>
         </div>
     </DefaultSection>

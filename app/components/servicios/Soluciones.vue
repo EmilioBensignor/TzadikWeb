@@ -1,28 +1,28 @@
 <template>
-    <DefaultSection class="py-8 lg:pt-20 lg:pb-0 px-5 lg:px-32">
-        <div class="flex flex-col gap-4 xxl:gap-8">
+    <DefaultSection class="py-8 md:pt-12 lg:pt-16 md:pb-16 lg:pb-0 xxl:pt-20 px-5 md:px-11 lg:px-20">
+        <div class="flex flex-col gap-4 lg:gap-8">
             <HeadingH2>SOLUCIONES COMPLETAS PARA TU EQUIPO</HeadingH2>
 
-            <div class="hidden lg:block">
-                <div class="flex gap-8">
-                    <div class="w-1/2 pb-20">
+            <div class="hidden md:block">
+                <div class="max-w-[1200px] flex">
+                    <div class="w-1/2">
                         <div v-for="(solucion, index) in soluciones" :key="index" :id="`solucion-${index}`"
-                            class="min-h-[60vh] flex items-center transition-opacity duration-300"
+                            class="flex items-center transition-opacity duration-300"
                             :class="{ 'opacity-30': activeIndex !== index }">
-                            <div class="flex flex-col items-start gap-4">
-                                <HeadingH3 class="text-[2rem] text-primary">{{ solucion.title }}</HeadingH3>
-                                <p class="text-start text-sm font-medium">{{ solucion.text }}</p>
+                            <div class="min-h-[20rem] lg:min-h-[24rem] flex flex-col justify-center items-start gap-3 lg:gap-4 py-8 lg:py-12 xxl:py-14 pr-6 lg:pr-8">
+                                <HeadingH3 class="md:!text-2xl lg:!text-[1.75rem] xxl:!text-[2rem] text-primary">{{ solucion.title }}</HeadingH3>
+                                <p class="text-start text-xs md:text-sm font-medium">{{ solucion.text }}</p>
                                 <ButtonPrimary :to="solucion.action">{{ solucion.cta }}</ButtonPrimary>
                             </div>
                         </div>
                     </div>
 
                     <div class="w-1/2 relative">
-                        <div class="sticky top-[138px] flex items-center justify-center" style="height: calc(75vh - 138px);">
-                            <div class="relative w-full aspect-video">
+                        <div class="min-h-[20rem] lg:min-h-[24rem] sticky top-64 flex items-center justify-center">
+                            <div class="relative w-full aspect-video mb-20 lg:mb-12 xxl:-mb-12">
                                 <NuxtImg v-for="(solucion, index) in soluciones" :key="index"
                                     :src="`/images/servicios/${solucion.img}-Tzadik.webp`" :alt="solucion.title"
-                                    class="absolute top-0 left-0 w-full h-full rounded-[4px] shadow-md shadow-black/25 object-cover transition-all duration-500"
+                                    class="h-[17.5rem] absolute top-0 left-0 w-full rounded-[4px] shadow-md shadow-black/30 object-cover transition-all duration-500"
                                     :class="activeIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-95'" />
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="lg:hidden flex flex-col gap-7">
+            <div class="md:hidden flex flex-col gap-7">
                 <div v-for="(solucion, index) in soluciones" :key="index"
                     class="flex flex-col items-center gap-3">
                     <NuxtImg :src="`/images/servicios/${solucion.img}-Tzadik.webp`" :alt="solucion.title"
@@ -107,7 +107,7 @@ const setupIntersectionObserver = () => {
 let observer = null;
 
 onMounted(() => {
-    if (window.innerWidth >= 1024) {
+    if (window.innerWidth >= 768) {
         observer = setupIntersectionObserver();
     }
 });

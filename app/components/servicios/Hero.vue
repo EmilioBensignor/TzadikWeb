@@ -11,11 +11,11 @@
         </picture>
         <div
             class="w-full h-full flex flex-col items-center justify-center lg:justify-start gap-3 lg:gap-4 absolute text-light p-5 lg:pt-20 xxl:pt-[7.5rem]">
-            <HeadingH1 class="md:max-w-[27.75rem] lg:max-w-full">
+            <HeadingH1 class="md:max-w-full">
                 SERVICIOS INTEGRALES PARA TU MAQUINARIA
             </HeadingH1>
             <p
-                class="md:max-w-[27.75rem] lg:max-w-[46.75rem] xxl:max-w-[42rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
+                class="md:max-w-[29rem] lg:max-w-[46.75rem] xxl:max-w-[45rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
                 En Tzadik ofrecemos servicios especializados que garantizan el máximo rendimiento y cuidado de tu maquinaria vial y agrícola.
             </p>
         </div>
