@@ -40,12 +40,16 @@
                         xxl: '-1.75rem',
                     }
                 }" class="pl-1 ">
-                <div v-for="(marca, index) in marcas" :key="index"
-                    class="h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4">
-                    <NuxtImg :src="`/images/marcas/${marca.nombre}.webp`" :alt="marca.nombre" :class="[
-                        'w-full max-h-10 md:max-h-12 object-contain',
-                        index === marcas.length - 1 ? 'lg:!max-h-8' : ''
-                    ]" />
+                <div v-for="(marca, index) in marcasOrdenadas" :key="index" :class="[
+                    'h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center lg:bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4',
+                    index === 0 && marcaActual ? 'border-3 border-primary' : ''
+                ]">
+                    <NuxtLink :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
+                        <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre" :class="[
+                            'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
+                            index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
+                        ]" />
+                    </NuxtLink>
                 </div>
             </CarouselStatic>
             <ButtonPrimary class="lg:hidden">Conocé más detalles</ButtonPrimary>
@@ -54,7 +58,33 @@
 </template>
 
 <script setup>
+import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
 import marcas from '~/shared/marcas';
+
+const props = defineProps({
+    marcaActual: {
+        type: String,
+        default: null
+    }
+});
+
+const marcasOrdenadas = computed(() => {
+    if (!props.marcaActual) {
+        return marcas;
+    }
+
+    const currentIndex = marcas.findIndex(m => m.slug === props.marcaActual);
+    if (currentIndex === -1) {
+        return marcas;
+    }
+
+    // Poner la marca actual primero
+    return [
+        marcas[currentIndex],
+        ...marcas.slice(0, currentIndex),
+        ...marcas.slice(currentIndex + 1)
+    ];
+});
 
 useFadeUp()
 </script>

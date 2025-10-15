@@ -15,19 +15,9 @@
 
                     <nav>
                         <ul class="flex flex-col gap-8">
-                            <li>
-                                <NuxtLink to="#" class="block text-dark text-base font-medium" @click="closeDrawer">
-                                    Servicios
-                                </NuxtLink>
-                            </li>
-                            <li>
-                                <NuxtLink to="#" class="block text-dark text-base font-medium" @click="closeDrawer">
-                                    Marcas
-                                </NuxtLink>
-                            </li>
-                            <li>
-                                <NuxtLink to="#" class="block text-dark text-base font-medium" @click="closeDrawer">
-                                    Quienes Somos
+                            <li v-for="(pagina, index) in paginas" :key="index">
+                                <NuxtLink :to="pagina.route" class="block text-dark text-base font-medium" @click="closeDrawer">
+                                    {{ pagina.name }}
                                 </NuxtLink>
                             </li>
                         </ul>
@@ -49,7 +39,7 @@
 </template>
 
 <script setup>
-import { redes } from '~/shared/menu';
+import { redes, paginas } from '~/shared/menu';
 
 defineProps({
     isOpen: {

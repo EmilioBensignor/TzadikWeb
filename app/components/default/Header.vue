@@ -66,7 +66,7 @@ const isDrawerOpen = ref(false)
 const showContactForm = ref(false)
 
 const isSpecialPage = computed(() => {
-    const specialPages = ['index', 'servicios', 'marcas', 'quienes-somos']
+    const specialPages = ['index', 'servicios', 'marcas', 'quienes-somos', 'marcas-nombre']
     return specialPages.includes(route.name)
 })
 

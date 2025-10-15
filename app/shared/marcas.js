@@ -2,7 +2,8 @@ const marcas = [
     {
         nombre: "Hanomag",
         slug: "hanomag",
-        img: "/images/marcas/hanomag.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Maquinaria agrícola de alta calidad" },
             { icono: "mdi:shield-check", texto: "Garantía y respaldo técnico" },
@@ -12,17 +13,21 @@ const marcas = [
     {
         nombre: "Michigan",
         slug: "michigan",
-        img: "/images/marcas/michigan.jpg",
+        img: "Michigan-Pala-Cargadora",
+        alt: "Michigan Pala Cargadora",
         caracteristicas: [
-            { icono: "mdi:check-circle", texto: "Tecnología de precisión" },
-            { icono: "mdi:shield-check", texto: "Durabilidad comprobada" },
-            { icono: "mdi:cog", texto: "Repuestos originales disponibles" }
+            { icono: "Siglo", texto: "Más de un siglo de trayectoria en maquinaria vial y agrícola" },
+            { icono: "Mundo", texto: "Reconocimiento histórico internacional por su origen estadounidense e innovaciones pioneras." },
+            { icono: "Valorada", texto: "Valorada por empresas constructoras y agroindustriales argentinas." },
+            { icono: "Repuestos", texto: "Amplia disponibilidad de repuestos y soporte técnico inmediato." },
+            { icono: "Equipos-Maquinaria", texto: "Equipos robustos y potentes para obra y campo" }
         ]
     },
     {
         nombre: "Husqvarna",
         slug: "husqvarna",
-        img: "/images/marcas/husqvarna.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Líder mundial en equipos forestales" },
             { icono: "mdi:shield-check", texto: "Innovación constante" },
@@ -32,7 +37,8 @@ const marcas = [
     {
         nombre: "Agrochery",
         slug: "agrochery",
-        img: "/images/marcas/agrochery.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Equipos de alta performance" },
             { icono: "mdi:shield-check", texto: "Adaptabilidad al terreno" },
@@ -42,7 +48,8 @@ const marcas = [
     {
         nombre: "Fema",
         slug: "fema",
-        img: "/images/marcas/fema.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Calidad industrial argentina" },
             { icono: "mdi:shield-check", texto: "Robustez y confiabilidad" },
@@ -52,7 +59,8 @@ const marcas = [
     {
         nombre: "Grosspal",
         slug: "grosspal",
-        img: "/images/marcas/grosspal.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Equipamiento de primera línea" },
             { icono: "mdi:shield-check", texto: "Tecnología europea" },
@@ -62,7 +70,8 @@ const marcas = [
     {
         nombre: "Luqstoff",
         slug: "luqstoff",
-        img: "/images/marcas/luqstoff.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Soluciones agrícolas integrales" },
             { icono: "mdi:shield-check", texto: "Resistencia y durabilidad" },
@@ -72,7 +81,8 @@ const marcas = [
     {
         nombre: "Montecor",
         slug: "montecor",
-        img: "/images/marcas/montecor.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Experiencia nacional" },
             { icono: "mdi:shield-check", texto: "Productos probados en campo" },
@@ -82,7 +92,8 @@ const marcas = [
     {
         nombre: "Yomel",
         slug: "yomel",
-        img: "/images/marcas/yomel.jpg",
+        img: "",
+        alt: "",
         caracteristicas: [
             { icono: "mdi:check-circle", texto: "Innovación tecnológica" },
             { icono: "mdi:shield-check", texto: "Construcción robusta" },
