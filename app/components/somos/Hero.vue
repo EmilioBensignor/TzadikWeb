@@ -2,12 +2,12 @@
     <DefaultSection class="relative">
         <picture class="w-full">
             <source media="(min-width: 1440px)"
-                srcset="/images/servicios/hero/Tzadik-Servicios-Integrales-Maquinaria-DesktopXL.webp">
+                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-DesktopXL.webp">
             <source media="(min-width: 1080px)"
-                srcset="/images/servicios/hero/Tzadik-Servicios-Integrales-Maquinaria-Desktop.webp">
+                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Desktop.webp">
             <source media="(min-width: 768px)"
-                srcset="/images/servicios/hero/Tzadik-Servicios-Integrales-Maquinaria-Tablet.webp">
-            <img src="/images/servicios/hero/Tzadik-Servicios-Integrales-Maquinaria-Mobile.webp"
+                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Tablet.webp">
+            <img src="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Mobile.webp"
                 alt="Tzadik Servicios Integrales Maquinaria"
                 class="w-full h-[28rem] md:h-80 lg:h-[25.5rem] xxl:h-[33.25rem] object-cover object-left">
         </picture>
