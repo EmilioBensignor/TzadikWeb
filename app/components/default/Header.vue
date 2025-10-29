@@ -34,7 +34,7 @@
                     <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
                         class="w-28 md:w-32 lg:w-44 h-6 md:h-7 lg:h-10 object-contain" />
                 </NuxtLink>
-                <nav class="hidden lg:block">
+                <nav class="hidden lg:flex items-center gap-1.5 xxl:gap-6">
                     <ul class="flex items-center gap-1.5 xxl:gap-6">
                         <li v-for="(pagina, index) in paginas" :key="index">
                             <NuxtLink :to="pagina.route"
@@ -43,9 +43,9 @@
                                 {{ pagina.name }}
                             </NuxtLink>
                         </li>
-                        <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos
-                        </ButtonPrimary>
                     </ul>
+                    <ButtonPrimary :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank">Contactanos
+                    </ButtonPrimary>
                 </nav>
             </div>
         </div>
