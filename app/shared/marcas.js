@@ -5,11 +5,11 @@ const marcas = [
         img: "",
         alt: "Hanomag palas autoelevadores tractores",
         caracteristicas: [
-            { icono: "", texto: "Casi 150 años de historia en maquinaria pesada" },
-            { icono: "", texto: "Ingeniería alemana con presencia local en Argentina desde los años 50" },
-            { icono: "", texto: "Producción nacional y red de más de 78 concesionarios" },
-            { icono: "", texto: "Reconocida por su robustez, trayectoria e innovación técnica" },
-            { icono: "", texto: "Portafolio moderno de palas, autoelevadores y tractores" }
+            { icono: "papiro", texto: "Casi 150 años de historia en maquinaria pesada" },
+            { icono: "argentina", texto: "Ingeniería alemana con presencia local en Argentina desde los años 50" },
+            { icono: "fabrica", texto: "Producción nacional y red de más de 78 concesionarios" },
+            { icono: "herramienta", texto: "Reconocida por su robustez, trayectoria e innovación técnica" },
+            { icono: "pala-cargadora", texto: "Portafolio moderno de palas, autoelevadores y tractores" }
         ]
     },
     {
@@ -31,11 +31,11 @@ const marcas = [
         img: "",
         alt: "Husqvarna motosierras cortadoras césped",
         caracteristicas: [
-            { icono: "", texto: "Herencia sueca desde 1689, originalmente fábrica de armas reales" },
-            { icono: "", texto: "Más de 325 años de evolución en motos, herramientas y jardín" },
-            { icono: "", texto: "Líder mundial en motosierras, cortadoras de césped y desmalezadoras" },
-            { icono: "", texto: "Presente en todo el país con soporte y distribuidores oficiales" },
-            { icono: "", texto: "Pionera en tecnología inteligente y robótica aplicada al jardín" }
+            { icono: "fabrica", texto: "Herencia sueca desde 1689, originalmente fábrica de armas reales" },
+            { icono: "arbol", texto: "Más de 325 años de evolución en motos, herramientas y jardín" },
+            { icono: "evolucion", texto: "Líder mundial en motosierras, cortadoras de césped y desmalezadoras" },
+            { icono: "ubicacion", texto: "Presente en todo el país con soporte y distribuidores oficiales" },
+            { icono: "robot", texto: "Pionera en tecnología inteligente y robótica aplicada al jardín" }
         ]
     },
     {
@@ -44,11 +44,11 @@ const marcas = [
         img: "",
         alt: "AgroChery tractores potentes agrícolas",
         caracteristicas: [
-            { icono: "", texto: "Nacida de Chery y potenciada por Zoomlion, gigante de maquinaria china" },
-            { icono: "", texto: "Línea de tractores de 25 a 245 HP para múltiples tareas agrícolas" },
-            { icono: "", texto: "Operación en Argentina desde 2017" },
-            { icono: "", texto: "Más de 4.000 unidades vendidas, reflejo de su rápida expansión" },
-            { icono: "", texto: "Alta tecnología Zoomlion, diseño moderno y servicio postventa local" }
+            { icono: "mundo", texto: "Nacida de Chery y potenciada por Zoomlion, gigante de maquinaria china" },
+            { icono: "tractor", texto: "Línea de tractores de 25 a 245 HP para múltiples tareas agrícolas" },
+            { icono: "argentina", texto: "Operación en Argentina desde 2017" },
+            { icono: "evolucion", texto: "Más de 4.000 unidades vendidas, reflejo de su rápida expansión" },
+            { icono: "herramienta", texto: "Alta tecnología Zoomlion, diseño moderno y servicio postventa local" }
         ]
     },
     {
@@ -57,11 +57,11 @@ const marcas = [
         img: "",
         alt: "Fema equipos robustos locales",
         caracteristicas: [
-            { icono: "", texto: "Marca argentina con sello industrial y equipos robustos" },
-            { icono: "", texto: "Ofrece autoelevadores, minicargadoras, compresores y herramientas" },
-            { icono: "", texto: "Fuerte soporte técnico y repuestos disponibles en todo el país" },
-            { icono: "", texto: "Reconocida por calidad local e integración de tecnología global" },
-            { icono: "", texto: "Soluciones completas para pymes, municipios y agroindustria" }
+            { icono: "argentina", texto: "Marca argentina con sello industrial y equipos robustos" },
+            { icono: "caja-herramientas", texto: "Ofrece autoelevadores, minicargadoras, compresores y herramientas" },
+            { icono: "herramienta", texto: "Fuerte soporte técnico y repuestos disponibles en todo el país" },
+            { icono: "mundo", texto: "Reconocida por calidad local e integración de tecnología global" },
+            { icono: "grua", texto: "Soluciones completas para pymes, municipios y agroindustria" }
         ]
     },
     {
@@ -70,11 +70,11 @@ const marcas = [
         img: "",
         alt: "Grosspal maquinaria agrícola profesional",
         caracteristicas: [
-            { icono: "", texto: "Más de 60 años fabricando maquinaria agrícola y vial" },
-            { icono: "", texto: "Amplio catálogo de palas, acoplados, tolvas, fertilizadoras y más" },
-            { icono: "", texto: "Pionera en el primer recolector de cereal argentino" },
-            { icono: "", texto: "Exporta a países de Sudamérica, África y Europa" },
-            { icono: "", texto: "Equipos de gran resistencia y soporte técnico asegurado" }
+            { icono: "calendario", texto: "Más de 60 años fabricando maquinaria agrícola y vial" },
+            { icono: "rueda", texto: "Amplio catálogo de palas, acoplados, tolvas, fertilizadoras y más" },
+            { icono: "cereal", texto: "Pionera en el primer recolector de cereal argentino" },
+            { icono: "barco", texto: "Exporta a países de Sudamérica, África y Europa" },
+            { icono: "herramienta", texto: "Equipos de gran resistencia y soporte técnico asegurado" }
         ]
     },
     {
@@ -83,11 +83,11 @@ const marcas = [
         img: "",
         alt: "Luqstoff herramientas equipos modernos",
         caracteristicas: [
-            { icono: "", texto: "Marca joven con rápida expansión" },
-            { icono: "", texto: "Portafolio de más de 3000 productos entre herramientas, generadores y más" },
-            { icono: "", texto: "Catálogo amplio con productos como soldadoras, hidrolavadoras y compresores" },
-            { icono: "", texto: "Soporte técnico certificado" },
-            { icono: "", texto: "Innovadora en logística, marketing y expansión digital" }
+            { icono: "evolucion", texto: "Marca joven con rápida expansión" },
+            { icono: "herramienta", texto: "Portafolio de más de 3000 productos entre herramientas, generadores y más" },
+            { icono: "caja-herramientas", texto: "Catálogo amplio con productos como soldadoras, hidrolavadoras y compresores" },
+            { icono: "soporte", texto: "Soporte técnico certificado" },
+            { icono: "pacto", texto: "Innovadora en logística, marketing y expansión digital" }
         ]
     },
     {
@@ -96,11 +96,11 @@ const marcas = [
         img: "",
         alt: "Montecor equipos agroganadería innovadores",
         caracteristicas: [
-            { icono: "", texto: "Empresa cordobesa con 50 años de historia en agroganadería" },
-            { icono: "", texto: "N°1 en mixers para alimentación animal en Argentina" },
-            { icono: "", texto: "También produce tolvas, moledoras, compostadores y más" },
-            { icono: "", texto: "Líder en innovación con pesajes de precisión y diseño modular" },
-            { icono: "", texto: "Exporta a América, África y Oceanía con fuerte servicio local" }
+            { icono: "argentina", texto: "Empresa cordobesa con 50 años de historia en agroganadería" },
+            { icono: "vaca", texto: "N°1 en mixers para alimentación animal en Argentina" },
+            { icono: "tractor", texto: "También produce tolvas, moledoras, compostadores y más" },
+            { icono: "herramienta", texto: "Líder en innovación con pesajes de precisión y diseño modular" },
+            { icono: "mundo", texto: "Exporta a América, África y Oceanía con fuerte servicio local" }
         ]
     },
     {
@@ -109,11 +109,11 @@ const marcas = [
         img: "",
         alt: "Yomel implementos agrícolas sostenibles",
         caracteristicas: [
-            { icono: "", texto: "50 años fabricando implementos agrícolas en 9 de Julio" },
-            { icono: "", texto: "Más de 120 modelos: enfardadoras, segadoras, pulverizadores, etc." },
-            { icono: "", texto: "Planta industrial abastecida en 70% con energía solar" },
-            { icono: "", texto: "Exporta a más de 20 países en América, Europa y África" },
-            { icono: "", texto: "Calidad artesanal con procesos industriales y mejora continua" }
+            { icono: "herramienta", texto: "50 años fabricando implementos agrícolas en 9 de Julio" },
+            { icono: "cereal", texto: "Más de 120 modelos: enfardadoras, segadoras, pulverizadores, etc." },
+            { icono: "sol", texto: "Planta industrial abastecida en 70% con energía solar" },
+            { icono: "mundo", texto: "Exporta a más de 20 países en América, Europa y África" },
+            { icono: "fabrica", texto: "Calidad artesanal con procesos industriales y mejora continua" }
         ]
     }
 ];
