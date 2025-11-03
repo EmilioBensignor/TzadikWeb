@@ -82,15 +82,15 @@
                             base: '0.5rem',
                             md: '1rem',
                             lg: '-1rem',
-                            xl: '1.25rem',
-                            xxl: '1.25rem',
+                            xl: '-1rem',
+                            xxl: '-1rem',
                         },
                         right: {
                             base: '0.5rem',
                             md: '1rem',
                             lg: '-1rem',
-                            xl: '1.25rem',
-                            xxl: '1.25rem',
+                            xl: '-1rem',
+                            xxl: '-1rem',
                         }
                     }" class="md:px-11 lg:px-0">
                     <ProductCard v-for="producto in productosSimilares" :key="producto.id" :product="producto" />
@@ -227,11 +227,9 @@ const esYouTubeShort = (url) => {
 const getYouTubeVideoId = (url) => {
     if (!url) return null
 
-    // Soporte para shorts: youtube.com/shorts/VIDEO_ID
     const shortsMatch = url.match(/\/shorts\/([a-zA-Z0-9_-]{11})/)
     if (shortsMatch) return shortsMatch[1]
 
-    // Regex original para videos normales
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
     const match = url.match(regExp)
     return (match && match[7].length === 11) ? match[7] : null

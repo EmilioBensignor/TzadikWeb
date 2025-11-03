@@ -2,7 +2,7 @@
     <div class="relative w-full" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
             class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light hover:bg-primaryHover text-primary hover:text-light shadow-md rounded-full transition-colors duration-300"
-            :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior">
+            :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior producto">
             <Icon name="material-symbols:chevron-left-rounded" size="3rem" />
         </button>
 
@@ -18,7 +18,7 @@
 
         <button v-if="showRightArrow" @click="scrollRight"
             class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light hover:bg-primaryHover text-primary hover:text-light shadow-md rounded-full transition-colors duration-300"
-            :style="rightButtonStyle" :disabled="isAtEnd" aria-label="Siguiente">
+            :style="rightButtonStyle" :disabled="isAtEnd" aria-label="Siguiente producto">
             <Icon name="material-symbols:chevron-right-rounded" size="3rem" />
         </button>
     </div>

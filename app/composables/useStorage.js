@@ -104,7 +104,7 @@ export const useStorage = () => {
         .from('productos-imagenes')
         .upload(filePath, file, {
           cacheControl: '3600',
-          upsert: true // Permitir sobreescribir si ya existe
+          upsert: true
         })
       
       if (uploadError) throw uploadError
@@ -152,7 +152,7 @@ export const useStorage = () => {
       
       const uploadPromises = files.map(async (file, index) => {
         uploadProgress.value = Math.round((index / files.length) * 100)
-        const isPrincipal = index === 0 // Primera imagen es principal
+        const isPrincipal = index === 0
         return await uploadProductoImagenSeoFriendly(file, productSlug, index + 1, isPrincipal)
       })
       

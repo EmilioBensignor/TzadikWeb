@@ -9,6 +9,4 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
-useFadeUp()
-
 </script>

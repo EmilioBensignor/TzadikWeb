@@ -55,7 +55,7 @@
                         <li v-for="(caracteristica, index) in marca.caracteristicas" :key="index"
                             class="flex items-center gap-3 md:gap-4">
                             <NuxtImg :src="`/images/marcas/caracteristicas/${caracteristica.icono}.svg`"
-                                :alt="caracteristica.texto" class="w-8 h-8 flex-shrink-0 object-contain" />
+                                :alt="`Caracteristica ${marca.alt}`" class="w-8 h-8 flex-shrink-0 object-contain" />
                             <span class="text-xs md:text-sm font-medium">{{ caracteristica.texto }}</span>
                         </li>
                     </ul>

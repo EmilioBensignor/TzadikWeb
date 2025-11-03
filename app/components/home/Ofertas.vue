@@ -13,7 +13,6 @@
 
 <script setup>
 const { ofertas, fetchOfertas } = useProductos()
-useFadeUp()
 
 await fetchOfertas()
 </script>

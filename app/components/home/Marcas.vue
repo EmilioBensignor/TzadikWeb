@@ -78,15 +78,12 @@ const marcasOrdenadas = computed(() => {
         return marcas;
     }
 
-    // Poner la marca actual primero
     return [
         marcas[currentIndex],
         ...marcas.slice(0, currentIndex),
         ...marcas.slice(currentIndex + 1)
     ];
 });
-
-useFadeUp()
 </script>
 
 <style scoped>

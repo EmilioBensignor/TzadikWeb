@@ -64,7 +64,6 @@ const animateNumber = (targetValue, index, duration = 2000) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Easing function para un efecto más suave
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const currentValue = Math.round(startValue + (numericValue - startValue) * easeOutQuart);
 
@@ -89,7 +88,6 @@ onMounted(() => {
                 if (entry.isIntersecting && !hasAnimated.value) {
                     hasAnimated.value = true;
                     datos.forEach((dato, index) => {
-                        // Pequeño delay escalonado para cada número
                         setTimeout(() => {
                             animateNumber(dato.numero, index);
                         }, index * 100);
@@ -98,7 +96,7 @@ onMounted(() => {
             });
         },
         {
-            threshold: 0.3, // Se activa cuando el 30% del elemento es visible
+            threshold: 0.3,
         }
     );
 
