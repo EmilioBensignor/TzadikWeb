@@ -13,7 +13,7 @@
                 <img :src="categoryImages.mobile" :alt="`${categoria?.nombre} - Tzadik`"
                     class="w-full h-full md:rounded-xl md:shadow md:shadow-black/30 object-cover" />
             </picture>
-            <div class="w-full h-full absolute top-0 p-5 md:p-10 lg:p-12">
+            <div class="w-full h-full sr-only absolute top-0 p-5 md:p-10 lg:p-12">
                 <HeadingH1 class="!text-left text-light uppercase">{{ categoria?.nombre }}</HeadingH1>
             </div>
         </div>
