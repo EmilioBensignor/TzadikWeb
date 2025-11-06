@@ -2,7 +2,7 @@ const marcas = [
     {
         nombre: "Hanomag",
         slug: "hanomag",
-        img: "",
+        img: "Hanomag-Tractores-Palas-Autoelevadores",
         alt: "Hanomag palas autoelevadores tractores",
         caracteristicas: [
             { icono: "papiro", texto: "Casi 150 años de historia en maquinaria pesada" },
@@ -15,7 +15,7 @@ const marcas = [
     {
         nombre: "Michigan",
         slug: "michigan",
-        img: "Michigan-Pala-Cargadora",
+        img: "Michigan-Equipos-Obra-Agricola",
         alt: "Michigan equipos robustos obra agrícola",
         caracteristicas: [
             { icono: "Siglo", texto: "Más de un siglo de trayectoria en maquinaria vial y agrícola" },
@@ -28,7 +28,7 @@ const marcas = [
     {
         nombre: "Husqvarna",
         slug: "husqvarna",
-        img: "",
+        img: "Husqvarna-Motosierras-Cortadoras-Cesped",
         alt: "Husqvarna motosierras cortadoras césped",
         caracteristicas: [
             { icono: "fabrica", texto: "Herencia sueca desde 1689, originalmente fábrica de armas reales" },
@@ -41,7 +41,7 @@ const marcas = [
     {
         nombre: "AgroChery",
         slug: "agrochery",
-        img: "",
+        img: "AgroChery-Tractores-Agricolas",
         alt: "AgroChery tractores potentes agrícolas",
         caracteristicas: [
             { icono: "mundo", texto: "Nacida de Chery y potenciada por Zoomlion, gigante de maquinaria china" },
@@ -54,7 +54,7 @@ const marcas = [
     {
         nombre: "Fema",
         slug: "fema",
-        img: "",
+        img: "Fema-Autoelevadores-Minicargadoras-Compresores",
         alt: "Fema equipos robustos locales",
         caracteristicas: [
             { icono: "argentina", texto: "Marca argentina con sello industrial y equipos robustos" },
@@ -67,7 +67,7 @@ const marcas = [
     {
         nombre: "Grosspal",
         slug: "grosspal",
-        img: "",
+        img: "Grosspal-Maquinaria-Agricola-Vial",
         alt: "Grosspal maquinaria agrícola profesional",
         caracteristicas: [
             { icono: "calendario", texto: "Más de 60 años fabricando maquinaria agrícola y vial" },
@@ -80,7 +80,7 @@ const marcas = [
     {
         nombre: "Luqstoff",
         slug: "luqstoff",
-        img: "",
+        img: "Luqstoff-Herramientas-Generadores-Equipos",
         alt: "Luqstoff herramientas equipos modernos",
         caracteristicas: [
             { icono: "evolucion", texto: "Marca joven con rápida expansión" },
@@ -93,7 +93,7 @@ const marcas = [
     {
         nombre: "Montecor",
         slug: "montecor",
-        img: "",
+        img: "Montecor-Equipos-Agroganaderia",
         alt: "Montecor equipos agroganadería innovadores",
         caracteristicas: [
             { icono: "argentina", texto: "Empresa cordobesa con 50 años de historia en agroganadería" },
@@ -106,7 +106,7 @@ const marcas = [
     {
         nombre: "Yomel",
         slug: "yomel",
-        img: "",
+        img: "Yomel-Implementos-Agricolas-Sostenibles",
         alt: "Yomel implementos agrícolas sostenibles",
         caracteristicas: [
             { icono: "herramienta", texto: "50 años fabricando implementos agrícolas en 9 de Julio" },

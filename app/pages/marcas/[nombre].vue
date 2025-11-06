@@ -50,7 +50,7 @@
                     :alt="`${marca.nombre} Tractores, Palas Cargadoras, Logistica, Maquinaria Agricola`"
                     class="h-11 md:h-12 lg:h-14 xxl:h-16" />
                 <div class="lg:w-full flex flex-col md:flex-row md:items-stretch gap-8 md:gap-5 lg:gap-4 xxl:gap-8">
-                    <NuxtImg :src="`/images/marcas/${marca.img}.png`" :alt="marca.alt" class="md:w-1/2 rounded-xl object-cover" />
+                    <NuxtImg :src="`/images/marcas/${marca.img}.webp`" :alt="marca.alt" class="md:w-1/2 rounded-xl object-cover" />
                     <ul class="md:w-1/2 flex flex-col md:justify-between gap-4 lg:gap-5 xxl:gap-6">
                         <li v-for="(caracteristica, index) in marca.caracteristicas" :key="index"
                             class="flex items-center gap-3 md:gap-4">
