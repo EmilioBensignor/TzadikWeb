@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     }
   },
   site: {
-    url: 'https://tzadik.com',
+    url: 'https://tzadik.com.ar',
     name: 'Tzadik',
     description: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento',
     defaultLocale: 'es'

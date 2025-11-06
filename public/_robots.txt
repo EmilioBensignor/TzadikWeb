@@ -1,2 +1,9 @@
 User-Agent: *
-Disallow:
+Allow: /
+Allow: /_nuxt/
+Allow: /api/
+Disallow: /admin/
+Disallow: /.nuxt/
+
+# Sitemap
+Sitemap: https://tzadik.com.ar/sitemap.xml
