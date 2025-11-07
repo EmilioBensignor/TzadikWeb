@@ -2,13 +2,11 @@
     <DefaultSection class="relative">
         <picture class="w-full">
             <source media="(min-width: 1440px)"
-                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-DesktopXL.webp">
-            <source media="(min-width: 1080px)"
-                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Desktop.webp">
-            <source media="(min-width: 768px)"
-                srcset="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Tablet.webp">
-            <img src="/images/somos/Tzadik-Compromiso-Excelencia-Maquinaria-Mobile.webp"
-                alt="Tzadik Servicios Integrales Maquinaria"
+                srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-DesktopXL.webp">
+            <source media="(min-width: 1080px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Desktop.webp">
+            <source media="(min-width: 768px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Tablet.webp">
+            <img src="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Mobile.webp"
+                alt="Tzadik Maquinaria Agricola Vial"
                 class="w-full h-[28rem] md:h-80 lg:h-[25.5rem] xxl:h-[33.25rem] object-cover object-left">
         </picture>
         <div
