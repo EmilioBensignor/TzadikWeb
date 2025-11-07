@@ -77,19 +77,21 @@ const ogImage = computed(() => {
     return `${config.public.siteUrl}/images/Logo-Tzadik.svg`
 })
 
-useSeoMeta({
+useHead({
     title: pageTitle,
-    description: pageDescription,
-    ogTitle: pageTitle,
-    ogDescription: pageDescription,
-    ogImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
-    ogUrl: pageUrl,
-    ogType: 'website',
-    ogImageWidth: 1200,
-    ogImageHeight: 630,
-    twitterTitle: pageTitle,
-    twitterDescription: pageDescription,
-    twitterImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
-    twitterCard: 'summary_large_image'
+    meta: [
+        { name: 'description', content: pageDescription },
+        { property: 'og:title', content: pageTitle },
+        { property: 'og:description', content: pageDescription },
+        { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: pageUrl },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:title', content: pageTitle },
+        { name: 'twitter:description', content: pageDescription },
+        { name: 'twitter:image', content: ogImage },
+        { name: 'twitter:card', content: 'summary_large_image' }
+    ]
 })
 </script>

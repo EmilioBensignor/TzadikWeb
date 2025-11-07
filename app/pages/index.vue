@@ -12,19 +12,28 @@
 </template>
 
 <script setup>
-useSeoMeta({
-    title: 'Tzadik - Maquinaria Agrícola y Víal',
-    description: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento',
-    ogTitle: 'Tzadik - Maquinaria Agrícola y Víal',
-    ogDescription: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento',
-    ogImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
-    ogUrl: 'https://tzadik.com.ar',
-    ogType: 'website',
-    ogImageWidth: 1200,
-    ogImageHeight: 630,
-    twitterTitle: 'Tzadik - Maquinaria Agrícola y Víal',
-    twitterDescription: 'Maquinaria agrícola y víal para maximizar tu productividad',
-    twitterImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
-    twitterCard: 'summary_large_image'
+const config = useRuntimeConfig()
+
+const title = 'Tzadik - Maquinaria Agrícola y Víal'
+const description = 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento'
+const ogImage = `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+const ogUrl = `${config.public.siteUrl}`
+
+useHead({
+    title: title,
+    meta: [
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: ogUrl },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: ogImage },
+        { name: 'twitter:card', content: 'summary_large_image' }
+    ]
 })
 </script>

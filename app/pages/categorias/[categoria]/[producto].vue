@@ -218,20 +218,22 @@ const ogImage = computed(() => {
     return getImageUrl(imagenPrincipal.storage_path)
 })
 
-useSeoMeta({
+useHead({
     title: pageTitle,
-    description: pageDescription,
-    ogTitle: pageTitle,
-    ogDescription: pageDescription,
-    ogImage: ogImage,
-    ogUrl: pageUrl,
-    ogType: 'product',
-    ogImageWidth: 1200,
-    ogImageHeight: 630,
-    twitterTitle: pageTitle,
-    twitterDescription: pageDescription,
-    twitterImage: ogImage,
-    twitterCard: 'summary_large_image'
+    meta: [
+        { name: 'description', content: pageDescription },
+        { property: 'og:title', content: pageTitle },
+        { property: 'og:description', content: pageDescription },
+        { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: pageUrl },
+        { property: 'og:type', content: 'product' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:title', content: pageTitle },
+        { name: 'twitter:description', content: pageDescription },
+        { name: 'twitter:image', content: ogImage },
+        { name: 'twitter:card', content: 'summary_large_image' }
+    ]
 })
 
 onMounted(() => {
