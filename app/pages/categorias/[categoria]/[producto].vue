@@ -33,8 +33,9 @@
 
         <div v-else class="w-full max-w-[1200px] mx-auto">
             <ProductDetalle :producto="producto" :getImageUrl="getImageUrl" :getYouTubeEmbedUrl="getYouTubeEmbedUrl"
-                :getYouTubeThumbnail="getYouTubeThumbnail" :esYouTubeShort="esYouTubeShort" :formatearTexto="formatearTexto"
-                :descargarFichaTecnica="descargarFichaTecnica" :cambiarImagenPrincipal="cambiarImagenPrincipal" />
+                :getYouTubeThumbnail="getYouTubeThumbnail" :esYouTubeShort="esYouTubeShort"
+                :formatearTexto="formatearTexto" :descargarFichaTecnica="descargarFichaTecnica"
+                :cambiarImagenPrincipal="cambiarImagenPrincipal" />
         </div>
         <DefaultSection class="lg:hidden px-5 md:px-11">
             <div class="w-full flex flex-col gap-4 bg-gray-mid rounded-lg p-3">
@@ -106,6 +107,7 @@ import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
 import { formatCurrency } from '@/utils/formatCurrency'
 
 const route = useRoute()
+const config = useRuntimeConfig()
 const { categorias, fetchCategorias } = useCategorias()
 const { productos, fetchProductos, getImageUrl, getCurrencySymbol, generateSlug, loading, error } = useProductos()
 const { getVideoUrl } = useStorage()
@@ -130,6 +132,7 @@ const buscarProducto = async () => {
     categoria.value = categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
 
     if (!categoria.value) {
+        loadingProducto.value = false
         return
     }
 
@@ -161,6 +164,67 @@ const buscarProducto = async () => {
 
     loadingProducto.value = false
 }
+
+await buscarProducto()
+
+const pageTitle = computed(() =>
+    producto.value ? `${producto.value.titulo} - Tzadik` : 'Producto - Tzadik'
+)
+
+const pageDescription = computed(() =>
+    producto.value
+        ? (producto.value.descripcion_corta || `${producto.value.titulo} - Maquinaria agrícola en Tzadik`)
+        : 'Maquinaria agrícola y víal de calidad en Tzadik'
+)
+
+const pageUrl = computed(() =>
+    `${config.public.siteUrl}/categorias/${route.params.categoria}/${route.params.producto}`
+)
+
+const ogImage = computed(() => {
+    const imagenPrincipal = producto.value?.producto_imagenes?.find(img => img.es_principal)
+    if (imagenPrincipal?.storage_path) {
+        return getImageUrl(imagenPrincipal.storage_path)
+    }
+
+    const primeraImagen = producto.value?.producto_imagenes?.[0]
+    if (primeraImagen?.storage_path) {
+        return getImageUrl(primeraImagen.storage_path)
+    }
+
+    if (producto.value?.videos?.length > 0) {
+        const videoUrl = producto.value.videos[0].url || producto.value.videos[0].storage_path || producto.value.videos[0].link
+        const thumbnail = getYouTubeThumbnail(videoUrl)
+        if (thumbnail !== '/images/placeholder-product.jpg') {
+            return thumbnail
+        }
+    }
+
+    const productoConImagen = productosSimilares.value.find(p =>
+        p.producto_imagenes?.length > 0
+    )
+    if (productoConImagen?.producto_imagenes?.[0]?.storage_path) {
+        return getImageUrl(productoConImagen.producto_imagenes[0].storage_path)
+    }
+
+    return `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+})
+
+useSeoMeta({
+    title: pageTitle,
+    description: pageDescription,
+    ogTitle: pageTitle,
+    ogDescription: pageDescription,
+    ogImage: ogImage,
+    ogUrl: pageUrl,
+    ogType: 'product',
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    twitterTitle: pageTitle,
+    twitterDescription: pageDescription,
+    twitterImage: ogImage,
+    twitterCard: 'summary_large_image'
+})
 
 const imagenPrincipal = computed(() => {
     if (!imagenPrincipalActual.value) {
@@ -310,22 +374,4 @@ const obtenerProductosSimilares = async () => {
         loadingSimilares.value = false
     }
 }
-
-const { setPageMeta } = useOgMeta()
-
-watch(() => producto.value, () => {
-    if (producto.value) {
-        setPageMeta({
-            title: producto.value.titulo,
-            description: producto.value.descripcion_corta || `${producto.value.titulo} - Maquinaria agrícola en Tzadik`,
-            image: '/og-image-fallback.jpg',
-            url: `https://tzadik.com.ar/categorias/${route.params.categoria}/${route.params.producto}`,
-            type: 'product'
-        })
-    }
-})
-
-onMounted(async () => {
-    await buscarProducto()
-})
 </script>

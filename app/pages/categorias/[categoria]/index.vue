@@ -1,6 +1,7 @@
 <template>
     <DefaultMain class="md:!gap-8 md:px-11 lg:px-20 xxl:px-0 pb-6 md:pb-12 lg:pb-16">
-        <div class="w-full max-w-[1200px] flex items-end gap-2 text-sm font-semibold p-5 pb-3 md:pt-8 md:pb-0 md:px-0 mx-auto">
+        <div
+            class="w-full max-w-[1200px] flex items-end gap-2 text-sm font-semibold p-5 pb-3 md:pt-8 md:pb-0 md:px-0 mx-auto">
             <NuxtLink :to="ROUTE_NAMES.HOME" class="text-gray-dark">Inicio</NuxtLink>
             <Icon name="tabler:chevron-right" class="w-5 h-5 text-primary" />
             <p>{{ categoria?.nombre }}</p>
@@ -26,32 +27,69 @@ import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
 import { getCategoryImages, getCategoryImageByBreakpoint } from '~/utils/categoryImages'
 
 const route = useRoute()
+const config = useRuntimeConfig()
 const { categorias, fetchCategorias, loading, error } = useCategorias()
-const { setPageMeta } = useOgMeta()
+const { productos, fetchProductos, getImageUrl } = useProductos()
+
+if (categorias.value.length === 0) {
+    await fetchCategorias()
+}
 
 const categoria = computed(() => {
     return categorias.value.find(cat => cat.nombre === route.params.categoria)
 })
 
+if (categoria.value) {
+    await fetchProductos({
+        categoria_id: categoria.value.id,
+        includeImages: true,
+        limit: 5
+    })
+}
+
 const categoryImages = computed(() => {
     return categoria.value ? getCategoryImages(categoria.value.nombre) : null
 })
 
-watch(() => categoria.value, () => {
-    if (categoria.value) {
-        setPageMeta({
-            title: categoria.value.nombre,
-            description: `Explorar ${categoria.value.nombre} en Tzadik - Maquinaria agrícola y víal de calidad`,
-            image: '/og-image-fallback.jpg',
-            url: `https://tzadik.com.ar/categorias/${route.params.categoria}`,
-            type: 'website'
-        })
-    }
-}, { immediate: true })
+const pageTitle = computed(() =>
+    categoria.value ? `${categoria.value.nombre} - Tzadik` : 'Categorías - Tzadik'
+)
 
-onMounted(async () => {
-    if (categorias.value.length === 0) {
-        await fetchCategorias()
+const pageDescription = computed(() =>
+    categoria.value
+        ? `Explorar ${categoria.value.nombre} en Tzadik - Maquinaria agrícola y víal de calidad`
+        : 'Explora nuestras categorías de maquinaria agrícola y víal'
+)
+
+const pageUrl = computed(() =>
+    `${config.public.siteUrl}/categorias/${route.params.categoria}`
+)
+
+const ogImage = computed(() => {
+    const primerProductoConImagen = productos.value.find(p =>
+        p.producto_imagenes?.length > 0
+    )
+
+    if (primerProductoConImagen?.producto_imagenes?.[0]?.storage_path) {
+        return getImageUrl(primerProductoConImagen.producto_imagenes[0].storage_path)
     }
+
+    return `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+})
+
+useSeoMeta({
+    title: pageTitle,
+    description: pageDescription,
+    ogTitle: pageTitle,
+    ogDescription: pageDescription,
+    ogImage: ogImage,
+    ogUrl: pageUrl,
+    ogType: 'website',
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    twitterTitle: pageTitle,
+    twitterDescription: pageDescription,
+    twitterImage: ogImage,
+    twitterCard: 'summary_large_image'
 })
 </script>
