@@ -211,32 +211,11 @@ const pageUrl = computed(() =>
 )
 
 const ogImage = computed(() => {
-    const imagenPrincipal = producto.value?.producto_imagenes?.find(img => img.es_principal)
-    if (imagenPrincipal?.storage_path) {
-        return getImageUrl(imagenPrincipal.storage_path)
+    if (!producto.value?.producto_imagenes?.length) {
+        return `${config.public.siteUrl}/images/placeholder-product.jpg`
     }
-
-    const primeraImagen = producto.value?.producto_imagenes?.[0]
-    if (primeraImagen?.storage_path) {
-        return getImageUrl(primeraImagen.storage_path)
-    }
-
-    if (producto.value?.videos?.length > 0) {
-        const videoUrl = producto.value.videos[0].url || producto.value.videos[0].storage_path || producto.value.videos[0].link
-        const thumbnail = getYouTubeThumbnail(videoUrl)
-        if (thumbnail !== '/images/placeholder-product.jpg') {
-            return thumbnail
-        }
-    }
-
-    const productoConImagen = productosSimilares.value.find(p =>
-        p.producto_imagenes?.length > 0
-    )
-    if (productoConImagen?.producto_imagenes?.[0]?.storage_path) {
-        return getImageUrl(productoConImagen.producto_imagenes[0].storage_path)
-    }
-
-    return `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+    const imagenPrincipal = producto.value.producto_imagenes.find(img => img.es_principal) || producto.value.producto_imagenes[0]
+    return getImageUrl(imagenPrincipal.storage_path)
 })
 
 useSeoMeta({

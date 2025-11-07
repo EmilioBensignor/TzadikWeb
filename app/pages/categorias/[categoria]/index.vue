@@ -82,14 +82,14 @@ useSeoMeta({
     description: pageDescription,
     ogTitle: pageTitle,
     ogDescription: pageDescription,
-    ogImage: ogImage,
+    ogImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
     ogUrl: pageUrl,
     ogType: 'website',
     ogImageWidth: 1200,
     ogImageHeight: 630,
     twitterTitle: pageTitle,
     twitterDescription: pageDescription,
-    twitterImage: ogImage,
+    twitterImage: 'https://www.tzadik.com.ar/_vercel/image?url=%2Fimages%2FLogo-Tzadik.svg&w=1536&q=100',
     twitterCard: 'summary_large_image'
 })
 </script>
