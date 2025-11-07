@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 export const useProductosStore = defineStore('productos', () => {
+    const config = useRuntimeConfig()
 
     const productos = ref([])
     const ofertas = ref([])
@@ -364,7 +365,6 @@ export const useProductosStore = defineStore('productos', () => {
 
     const getImageUrl = (storagePath) => {
         if (!storagePath) return null
-        const config = useRuntimeConfig()
         return `${config.public.supabase.url}/storage/v1/object/public/productos-imagenes/${storagePath}`
     }
 

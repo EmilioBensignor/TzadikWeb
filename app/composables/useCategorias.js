@@ -1,3 +1,4 @@
+import { computed } from 'vue'
 import { useCategoriasStore } from '~/stores/categorias'
 
 export const useCategorias = () => {

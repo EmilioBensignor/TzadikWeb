@@ -1,7 +1,9 @@
+import { ref } from 'vue'
+
 export const useStorage = () => {
   const supabase = useSupabaseClient()
   const config = useRuntimeConfig()
-  
+
   const uploading = ref(false)
   const uploadProgress = ref(0)
   const error = ref(null)

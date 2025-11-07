@@ -120,52 +120,81 @@ const producto = ref(null)
 const categoria = ref(null)
 const imagenPrincipalActual = ref(null)
 
-const buscarProducto = async () => {
-    loadingProducto.value = true
-    const productoSlug = route.params.producto
-    const categoriaSlug = route.params.categoria
+const obtenerProductosSimilares = async () => {
+    if (!categoria.value || !producto.value) return
 
-    if (categorias.value.length === 0) {
-        await fetchCategorias()
+    try {
+        loadingSimilares.value = true
+
+        const productosCategoria = productos.value.filter(prod =>
+            prod.categoria_id === categoria.value.id && prod.id !== producto.value.id
+        )
+
+        const productosOrdenados = productosCategoria.sort((a, b) => {
+            if (a.destacado && !b.destacado) return -1
+            if (!a.destacado && b.destacado) return 1
+
+            if (a.oferta && !b.oferta) return -1
+            if (!a.oferta && b.oferta) return 1
+
+            return new Date(b.created_at) - new Date(a.created_at)
+        })
+
+        productosSimilares.value = productosOrdenados.slice(0, 8)
+
+    } catch (error) {
+        console.error('Error obteniendo productos similares:', error)
+    } finally {
+        loadingSimilares.value = false
     }
-
-    categoria.value = categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
-
-    if (!categoria.value) {
-        loadingProducto.value = false
-        return
-    }
-
-    await fetchProductos({
-        categoria_id: categoria.value.id,
-        includeImages: true,
-        noPagination: true
-    })
-
-    producto.value = productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)
-
-    if (producto.value) {
-        let mediaPrincipal = null
-
-        if (producto.value.videos?.length > 0) {
-            mediaPrincipal = producto.value.videos[0]
-            mediaPrincipal.es_video = true
-        } else {
-            mediaPrincipal = producto.value.producto_imagenes?.find(img => img.es_principal) || producto.value.producto_imagenes?.[0]
-            if (mediaPrincipal) {
-                mediaPrincipal.es_video = false
-            }
-        }
-
-        imagenPrincipalActual.value = mediaPrincipal
-
-        await obtenerProductosSimilares()
-    }
-
-    loadingProducto.value = false
 }
 
-await buscarProducto()
+const buscarProducto = async () => {
+    loadingProducto.value = true
+    try {
+        const productoSlug = route.params.producto
+        const categoriaSlug = route.params.categoria
+
+        if (categorias.value.length === 0) {
+            await fetchCategorias()
+        }
+
+        categoria.value = categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
+
+        if (!categoria.value) {
+            loadingProducto.value = false
+            return
+        }
+
+        await fetchProductos({
+            categoria_id: categoria.value.id,
+            includeImages: true,
+            noPagination: true
+        })
+
+        producto.value = productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)
+
+        if (producto.value) {
+            let mediaPrincipal = null
+
+            if (producto.value.videos?.length > 0) {
+                mediaPrincipal = producto.value.videos[0]
+                mediaPrincipal.es_video = true
+            } else {
+                mediaPrincipal = producto.value.producto_imagenes?.find(img => img.es_principal) || producto.value.producto_imagenes?.[0]
+                if (mediaPrincipal) {
+                    mediaPrincipal.es_video = false
+                }
+            }
+
+            imagenPrincipalActual.value = mediaPrincipal
+
+            await obtenerProductosSimilares()
+        }
+    } finally {
+        loadingProducto.value = false
+    }
+}
 
 const pageTitle = computed(() =>
     producto.value ? `${producto.value.titulo} - Tzadik` : 'Producto - Tzadik'
@@ -224,6 +253,10 @@ useSeoMeta({
     twitterDescription: pageDescription,
     twitterImage: ogImage,
     twitterCard: 'summary_large_image'
+})
+
+onMounted(() => {
+    buscarProducto()
 })
 
 const imagenPrincipal = computed(() => {
@@ -344,34 +377,5 @@ const descargarFichaTecnica = async () => {
 
 const cambiarImagenPrincipal = (imagen) => {
     imagenPrincipalActual.value = { ...imagen, es_video: false }
-}
-
-const obtenerProductosSimilares = async () => {
-    if (!categoria.value || !producto.value) return
-
-    try {
-        loadingSimilares.value = true
-
-        const productosCategoria = productos.value.filter(prod =>
-            prod.categoria_id === categoria.value.id && prod.id !== producto.value.id
-        )
-
-        const productosOrdenados = productosCategoria.sort((a, b) => {
-            if (a.destacado && !b.destacado) return -1
-            if (!a.destacado && b.destacado) return 1
-
-            if (a.oferta && !b.oferta) return -1
-            if (!a.oferta && b.oferta) return 1
-
-            return new Date(b.created_at) - new Date(a.created_at)
-        })
-
-        productosSimilares.value = productosOrdenados.slice(0, 8)
-
-    } catch (error) {
-        console.error('Error obteniendo productos similares:', error)
-    } finally {
-        loadingSimilares.value = false
-    }
 }
 </script>
