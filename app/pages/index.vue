@@ -14,20 +14,25 @@
 <script setup>
 const config = useRuntimeConfig()
 
+const pageTitle = 'Tzadik - Maquinaria Agrícola y Víal'
+const pageDescription = 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento'
+const ogImage = `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+const pageUrl = config.public.siteUrl
+
 useHead({
-    title: 'Tzadik - Maquinaria Agrícola y Víal',
+    title: pageTitle,
     meta: [
-        { name: 'description', content: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento' },
-        { property: 'og:title', content: 'Tzadik - Maquinaria Agrícola y Víal' },
-        { property: 'og:description', content: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento' },
-        { property: 'og:image', content: `${config.public.siteUrl}/images/Logo-Tzadik.svg` },
-        { property: 'og:url', content: config.public.siteUrl },
+        { name: 'description', content: pageDescription },
+        { property: 'og:title', content: pageTitle },
+        { property: 'og:description', content: pageDescription },
+        { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: pageUrl },
         { property: 'og:type', content: 'website' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
-        { name: 'twitter:title', content: 'Tzadik - Maquinaria Agrícola y Víal' },
-        { name: 'twitter:description', content: 'Maquinaria agrícola y víal para maximizar tu productividad' },
-        { name: 'twitter:image', content: `${config.public.siteUrl}/images/Logo-Tzadik.svg` },
+        { name: 'twitter:title', content: pageTitle },
+        { name: 'twitter:description', content: pageDescription },
+        { name: 'twitter:image', content: ogImage },
         { name: 'twitter:card', content: 'summary_large_image' }
     ]
 })

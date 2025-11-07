@@ -112,12 +112,32 @@ const { categorias, fetchCategorias } = useCategorias()
 const { productos, fetchProductos, getImageUrl, getCurrencySymbol, generateSlug, loading, error } = useProductos()
 const { getVideoUrl } = useStorage()
 
+if (categorias.value.length === 0) {
+    await fetchCategorias()
+}
+
+const categoriaSlug = route.params.categoria
+const productoSlug = route.params.producto
+
+const categoria = computed(() =>
+    categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
+)
+
+if (categoria.value) {
+    await fetchProductos({
+        categoria_id: categoria.value.id,
+        includeImages: true,
+        noPagination: true
+    })
+}
+
+const producto = computed(() =>
+    productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)
+)
+
 const productosSimilares = ref([])
 const loadingSimilares = ref(false)
-const loadingProducto = ref(true)
-
-const producto = ref(null)
-const categoria = ref(null)
+const loadingProducto = ref(false)
 const imagenPrincipalActual = ref(null)
 
 const obtenerProductosSimilares = async () => {
@@ -149,51 +169,23 @@ const obtenerProductosSimilares = async () => {
     }
 }
 
-const buscarProducto = async () => {
-    loadingProducto.value = true
-    try {
-        const productoSlug = route.params.producto
-        const categoriaSlug = route.params.categoria
+const establecerMediaPrincipal = () => {
+    if (!producto.value) return
 
-        if (categorias.value.length === 0) {
-            await fetchCategorias()
+    let mediaPrincipal = null
+
+    if (producto.value.videos?.length > 0) {
+        mediaPrincipal = producto.value.videos[0]
+        mediaPrincipal.es_video = true
+    } else {
+        mediaPrincipal = producto.value.producto_imagenes?.find(img => img.es_principal) || producto.value.producto_imagenes?.[0]
+        if (mediaPrincipal) {
+            mediaPrincipal.es_video = false
         }
-
-        categoria.value = categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
-
-        if (!categoria.value) {
-            loadingProducto.value = false
-            return
-        }
-
-        await fetchProductos({
-            categoria_id: categoria.value.id,
-            includeImages: true,
-            noPagination: true
-        })
-
-        producto.value = productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)
-
-        if (producto.value) {
-            let mediaPrincipal = null
-
-            if (producto.value.videos?.length > 0) {
-                mediaPrincipal = producto.value.videos[0]
-                mediaPrincipal.es_video = true
-            } else {
-                mediaPrincipal = producto.value.producto_imagenes?.find(img => img.es_principal) || producto.value.producto_imagenes?.[0]
-                if (mediaPrincipal) {
-                    mediaPrincipal.es_video = false
-                }
-            }
-
-            imagenPrincipalActual.value = mediaPrincipal
-
-            await obtenerProductosSimilares()
-        }
-    } finally {
-        loadingProducto.value = false
     }
+
+    imagenPrincipalActual.value = mediaPrincipal
+    obtenerProductosSimilares()
 }
 
 const pageTitle = computed(() =>
@@ -218,28 +210,26 @@ const getOgImage = () => {
     return getImageUrl(imagenPrincipal.storage_path)
 }
 
-watch([producto, pageTitle, pageDescription, pageUrl], () => {
-    useHead({
-        title: pageTitle.value,
-        meta: [
-            { name: 'description', content: pageDescription.value },
-            { property: 'og:title', content: pageTitle.value },
-            { property: 'og:description', content: pageDescription.value },
-            { property: 'og:image', content: getOgImage() },
-            { property: 'og:url', content: pageUrl.value },
-            { property: 'og:type', content: 'product' },
-            { property: 'og:image:width', content: '1200' },
-            { property: 'og:image:height', content: '630' },
-            { name: 'twitter:title', content: pageTitle.value },
-            { name: 'twitter:description', content: pageDescription.value },
-            { name: 'twitter:image', content: getOgImage() },
-            { name: 'twitter:card', content: 'summary_large_image' }
-        ]
-    })
-}, { immediate: true })
+useHead({
+    title: pageTitle,
+    meta: [
+        { name: 'description', content: pageDescription },
+        { property: 'og:title', content: pageTitle },
+        { property: 'og:description', content: pageDescription },
+        { property: 'og:image', content: getOgImage() },
+        { property: 'og:url', content: pageUrl },
+        { property: 'og:type', content: 'product' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:title', content: pageTitle },
+        { name: 'twitter:description', content: pageDescription },
+        { name: 'twitter:image', content: getOgImage() },
+        { name: 'twitter:card', content: 'summary_large_image' }
+    ]
+})
 
 onMounted(() => {
-    buscarProducto()
+    establecerMediaPrincipal()
 })
 
 const imagenPrincipal = computed(() => {
