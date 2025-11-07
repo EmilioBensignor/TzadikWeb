@@ -210,31 +210,33 @@ const pageUrl = computed(() =>
     `${config.public.siteUrl}/categorias/${route.params.categoria}/${route.params.producto}`
 )
 
-const ogImage = computed(() => {
+const getOgImage = () => {
     if (!producto.value?.producto_imagenes?.length) {
         return `${config.public.siteUrl}/images/placeholder-product.jpg`
     }
     const imagenPrincipal = producto.value.producto_imagenes.find(img => img.es_principal) || producto.value.producto_imagenes[0]
     return getImageUrl(imagenPrincipal.storage_path)
-})
+}
 
-useHead({
-    title: pageTitle,
-    meta: [
-        { name: 'description', content: pageDescription },
-        { property: 'og:title', content: pageTitle },
-        { property: 'og:description', content: pageDescription },
-        { property: 'og:image', content: ogImage },
-        { property: 'og:url', content: pageUrl },
-        { property: 'og:type', content: 'product' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { name: 'twitter:title', content: pageTitle },
-        { name: 'twitter:description', content: pageDescription },
-        { name: 'twitter:image', content: ogImage },
-        { name: 'twitter:card', content: 'summary_large_image' }
-    ]
-})
+watch([producto, pageTitle, pageDescription, pageUrl], () => {
+    useHead({
+        title: pageTitle.value,
+        meta: [
+            { name: 'description', content: pageDescription.value },
+            { property: 'og:title', content: pageTitle.value },
+            { property: 'og:description', content: pageDescription.value },
+            { property: 'og:image', content: getOgImage() },
+            { property: 'og:url', content: pageUrl.value },
+            { property: 'og:type', content: 'product' },
+            { property: 'og:image:width', content: '1200' },
+            { property: 'og:image:height', content: '630' },
+            { name: 'twitter:title', content: pageTitle.value },
+            { name: 'twitter:description', content: pageDescription.value },
+            { name: 'twitter:image', content: getOgImage() },
+            { name: 'twitter:card', content: 'summary_large_image' }
+        ]
+    })
+}, { immediate: true })
 
 onMounted(() => {
     buscarProducto()
