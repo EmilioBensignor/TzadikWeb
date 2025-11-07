@@ -12,6 +12,8 @@
 </template>
 
 <script setup>
+await Promise.resolve()
+
 const pageTitle = computed(() => 'Tzadik - Maquinaria Agrícola y Víal')
 
 const pageDescription = computed(() =>
