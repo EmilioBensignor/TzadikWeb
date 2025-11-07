@@ -311,21 +311,43 @@ const obtenerProductosSimilares = async () => {
     }
 }
 
-onMounted(async () => {
-    await buscarProducto()
-})
+const { setPageMeta } = useOgMeta()
+
+const actualizarMetaTagsProducto = () => {
+    if (producto.value) {
+        let imagenProducto = '/og-image.jpg'
+
+        if (imagenPrincipalActual.value?.es_video) {
+            imagenProducto = getYouTubeThumbnail(imagenPrincipalActual.value.url || imagenPrincipalActual.value.storage_path || imagenPrincipalActual.value.link)
+        } else if (imagenPrincipalActual.value?.storage_path) {
+            imagenProducto = getImageUrl(imagenPrincipalActual.value.storage_path)
+        }
+
+        setPageMeta({
+            title: producto.value.titulo,
+            description: producto.value.descripcion_corta || `${producto.value.titulo} - Maquinaria agrícola en Tzadik`,
+            image: imagenProducto,
+            url: `https://tzadik.com.ar/categorias/${route.params.categoria}/${route.params.producto}`,
+            type: 'product'
+        })
+    }
+}
 
 watch(() => route.params, async () => {
     await buscarProducto()
+    actualizarMetaTagsProducto()
 }, { immediate: false })
 
-useHead({
-    title: computed(() => producto.value ? `${producto.value.titulo} - Tzadik` : 'Producto - Tzadik'),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => producto.value?.descripcion_corta || 'Producto en Tzadik')
-        }
-    ]
+watch(() => producto.value, () => {
+    actualizarMetaTagsProducto()
+})
+
+watch(() => imagenPrincipalActual.value, () => {
+    actualizarMetaTagsProducto()
+})
+
+onMounted(async () => {
+    await buscarProducto()
+    actualizarMetaTagsProducto()
 })
 </script>

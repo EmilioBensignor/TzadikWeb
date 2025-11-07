@@ -17,7 +17,18 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#ffffff' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: 'https://tzadik.com.ar' },
+        { property: 'og:title', content: 'Tzadik - Maquinaria Agrícola y Víal' },
+        { property: 'og:description', content: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento' },
+        { property: 'og:image', content: 'https://tzadik.com.ar/og-image-fallback.jpg' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Tzadik - Maquinaria Agrícola y Víal' },
+        { name: 'twitter:description', content: 'Maquinaria agrícola y víal para maximizar tu productividad' },
+        { name: 'twitter:image', content: 'https://tzadik.com.ar/og-image-fallback.jpg' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
