@@ -78,14 +78,13 @@ const actualizarMetaTags = async () => {
     }
 }
 
+watch(() => categoria.value, async () => {
+    await actualizarMetaTags()
+}, { immediate: true })
+
 onMounted(async () => {
     if (categorias.value.length === 0) {
         await fetchCategorias()
     }
-    await actualizarMetaTags()
-})
-
-watch(() => categoria.value, async () => {
-    await actualizarMetaTags()
 })
 </script>

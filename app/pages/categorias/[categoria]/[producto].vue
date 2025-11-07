@@ -314,8 +314,8 @@ const obtenerProductosSimilares = async () => {
 const { setPageMeta } = useOgMeta()
 
 const actualizarMetaTagsProducto = () => {
-    if (producto.value) {
-        let imagenProducto = '/og-image.jpg'
+    if (producto.value && imagenPrincipalActual.value) {
+        let imagenProducto = '/og-image-fallback.jpg'
 
         if (imagenPrincipalActual.value?.es_video) {
             imagenProducto = getYouTubeThumbnail(imagenPrincipalActual.value.url || imagenPrincipalActual.value.storage_path || imagenPrincipalActual.value.link)
@@ -333,14 +333,9 @@ const actualizarMetaTagsProducto = () => {
     }
 }
 
-watch(() => route.params, async () => {
-    await buscarProducto()
-    actualizarMetaTagsProducto()
-}, { immediate: false })
-
 watch(() => producto.value, () => {
     actualizarMetaTagsProducto()
-})
+}, { immediate: true })
 
 watch(() => imagenPrincipalActual.value, () => {
     actualizarMetaTagsProducto()
@@ -348,6 +343,5 @@ watch(() => imagenPrincipalActual.value, () => {
 
 onMounted(async () => {
     await buscarProducto()
-    actualizarMetaTagsProducto()
 })
 </script>
