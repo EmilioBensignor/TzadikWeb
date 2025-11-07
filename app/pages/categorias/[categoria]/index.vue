@@ -28,7 +28,6 @@ import { getCategoryImages, getCategoryImageByBreakpoint } from '~/utils/categor
 const route = useRoute()
 const { categorias, fetchCategorias, loading, error } = useCategorias()
 const { setPageMeta } = useOgMeta()
-const { productos, fetchProductos, getImageUrl } = useProductos()
 
 const categoria = computed(() => {
     return categorias.value.find(cat => cat.nombre === route.params.categoria)
@@ -38,48 +37,16 @@ const categoryImages = computed(() => {
     return categoria.value ? getCategoryImages(categoria.value.nombre) : null
 })
 
-const obtenerProductoAleatorio = () => {
-    if (!categoria.value) return null
-
-    const productosCategoria = productos.value.filter(prod => prod.categoria_id === categoria.value.id)
-
-    if (productosCategoria.length === 0) return null
-
-    const indiceAleatorio = Math.floor(Math.random() * productosCategoria.length)
-    return productosCategoria[indiceAleatorio]
-}
-
-const actualizarMetaTags = async () => {
+watch(() => categoria.value, () => {
     if (categoria.value) {
-        let imagenUrl = '/og-image-fallback.jpg'
-
-        if (categoria.value && productos.value.filter(p => p.categoria_id === categoria.value.id).length === 0) {
-            await fetchProductos({
-                categoria_id: categoria.value.id,
-                includeImages: true,
-                noPagination: true
-            })
-        }
-
-        const productoAleatorio = obtenerProductoAleatorio()
-
-        if (productoAleatorio?.producto_imagenes?.length > 0) {
-            const imagenPrincipal = productoAleatorio.producto_imagenes.find(img => img.es_principal) || productoAleatorio.producto_imagenes[0]
-            imagenUrl = getImageUrl(imagenPrincipal.storage_path)
-        }
-
         setPageMeta({
             title: categoria.value.nombre,
             description: `Explorar ${categoria.value.nombre} en Tzadik - Maquinaria agrícola y víal de calidad`,
-            image: imagenUrl,
+            image: '/og-image-fallback.jpg',
             url: `https://tzadik.com.ar/categorias/${route.params.categoria}`,
             type: 'website'
         })
     }
-}
-
-watch(() => categoria.value, async () => {
-    await actualizarMetaTags()
 }, { immediate: true })
 
 onMounted(async () => {

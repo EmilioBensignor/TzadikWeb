@@ -313,32 +313,16 @@ const obtenerProductosSimilares = async () => {
 
 const { setPageMeta } = useOgMeta()
 
-const actualizarMetaTagsProducto = () => {
-    if (producto.value && imagenPrincipalActual.value) {
-        let imagenProducto = '/og-image-fallback.jpg'
-
-        if (imagenPrincipalActual.value?.es_video) {
-            imagenProducto = getYouTubeThumbnail(imagenPrincipalActual.value.url || imagenPrincipalActual.value.storage_path || imagenPrincipalActual.value.link)
-        } else if (imagenPrincipalActual.value?.storage_path) {
-            imagenProducto = getImageUrl(imagenPrincipalActual.value.storage_path)
-        }
-
+watch(() => producto.value, () => {
+    if (producto.value) {
         setPageMeta({
             title: producto.value.titulo,
             description: producto.value.descripcion_corta || `${producto.value.titulo} - Maquinaria agrícola en Tzadik`,
-            image: imagenProducto,
+            image: '/og-image-fallback.jpg',
             url: `https://tzadik.com.ar/categorias/${route.params.categoria}/${route.params.producto}`,
             type: 'product'
         })
     }
-}
-
-watch(() => producto.value, () => {
-    actualizarMetaTagsProducto()
-}, { immediate: true })
-
-watch(() => imagenPrincipalActual.value, () => {
-    actualizarMetaTagsProducto()
 })
 
 onMounted(async () => {

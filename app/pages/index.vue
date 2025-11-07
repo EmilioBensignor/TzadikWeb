@@ -14,13 +14,11 @@
 <script setup>
 const { setPageMeta } = useOgMeta()
 
-onMounted(() => {
-    setPageMeta({
-        title: 'Tzadik - Maquinaria Agrícola y Víal',
-        description: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento',
-        image: '/images/Logo-Tzadik.svg',
-        url: 'https://tzadik.com.ar',
-        type: 'website'
-    })
+setPageMeta({
+    title: 'Tzadik - Maquinaria Agrícola y Víal',
+    description: 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento',
+    image: '/images/Logo-Tzadik.svg',
+    url: 'https://tzadik.com.ar',
+    type: 'website'
 })
 </script>
