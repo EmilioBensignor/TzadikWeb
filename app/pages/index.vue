@@ -14,15 +14,10 @@
 <script setup>
 const config = useRuntimeConfig()
 
-const pageTitle = computed(() => 'Tzadik - Maquinaria Agrícola y Víal')
-
-const pageDescription = computed(() =>
-    'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento'
-)
-
-const pageUrl = computed(() => config.public.siteUrl)
-
-const ogImage = computed(() => `${config.public.siteUrl}/images/Logo-Tzadik.svg`)
+const pageTitle = 'Tzadik - Maquinaria Agrícola y Víal'
+const pageDescription = 'Maquinaria agrícola y víal para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento'
+const pageUrl = config.public.siteUrl
+const ogImage = `${config.public.siteUrl}/images/Logo-Tzadik.svg`
 
 useHead({
     title: pageTitle,
