@@ -6,8 +6,7 @@
                     class="bg-gray-100 overflow-hidden rounded-xl">
                     <div v-if="media.es_video" class="w-full aspect-[4/3] pb-2.5">
                         <iframe :src="getYouTubeEmbedUrl(media.url || media.storage_path || media.link)"
-                            :title="`${producto.titulo} video ${index + 1}`"
-                            class="w-full h-full rounded-xl bg-black"
+                            :title="`${producto.titulo} video ${index + 1}`" class="w-full h-full rounded-xl bg-black"
                             frameborder="0" allowfullscreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             loading="lazy">
@@ -21,13 +20,10 @@
 
         <div class="lg:w-1/2 hidden lg:flex flex-col gap-4 lg:gap-6">
             <div class="w-full h-[25rem] overflow-hidden relative flex items-center justify-center bg-black rounded-xl">
-                <iframe v-if="esPrincipalVideo" :src="imagenPrincipal" :title="`${producto.titulo} video`"
-                    :class="[
-                        'rounded-xl',
-                        esVideoPrincipalShort ? 'h-full w-auto' : 'w-full h-full'
-                    ]"
-                    class="object-cover"
-                    frameborder="0" allowfullscreen
+                <iframe v-if="esPrincipalVideo" :src="imagenPrincipal" :title="`${producto.titulo} video`" :class="[
+                    'rounded-xl',
+                    esVideoPrincipalShort ? 'h-full w-auto' : 'w-full h-full'
+                ]" class="object-cover" frameborder="0" allowfullscreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
                 </iframe>
                 <NuxtImg v-else :src="imagenPrincipal" :alt="producto.titulo"
@@ -94,24 +90,25 @@
                     class="text-xs lg:text-base font-semibold"></p>
             </div>
 
-            <div>
-                <div v-if="tieneDescuento" class="flex flex-col gap-1">
-                    <div class="flex items-center gap-2">
-                        <p class="font-teko text-xl md:text-[1.375rem] lg:text-2xl xxl:text-[1.75rem] font-medium line-through">{{
+            <div v-if="tieneDescuento" class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                    <p
+                        class="font-teko text-xl md:text-[1.375rem] lg:text-2xl xxl:text-[1.75rem] font-medium line-through">
+                        {{
                             formatCurrency(producto.precio) }}</p>
-                        <p class="text-[0.625rem] lg:text-xs xxl:text-sm font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
-                            formatCurrency(producto.precio_descuento) }}</p>
-                        <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
-                    </div>
+                    <p class="text-[0.625rem] lg:text-xs xxl:text-sm font-semibold mt-2">{{ getCurrencySymbol(producto)
+                        }}</p>
                 </div>
-                <div v-else class="flex items-center gap-2">
+                <div class="flex items-center gap-2">
                     <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
-                        formatCurrency(producto.precio_descuento || producto.precio) }}</p>
+                        formatCurrency(producto.precio_descuento) }}</p>
                     <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
                 </div>
+            </div>
+            <div v-else-if="producto.precio" class="flex items-center gap-2">
+                <p class="font-teko text-[1.625rem] lg:text-[2rem] xxl:text-4xl font-semibold">{{
+                    formatCurrency(producto.precio_descuento || producto.precio) }}</p>
+                <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
             </div>
             <NuxtLink :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank"
                 class="w-max h-12 flex justify-center items-center gap-2.5 bg-whatsapp text-light font-bold rounded-full shadow-lg px-8">

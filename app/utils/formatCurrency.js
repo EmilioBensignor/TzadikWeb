@@ -1,5 +1,5 @@
 export const formatCurrency = (amount) => {
-    if (!amount) return 'Precio a consultar'
+    if (!amount) return ''
     return new Intl.NumberFormat('es-CO', {
         style: 'currency',
         currency: 'COP',
