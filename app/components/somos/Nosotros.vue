@@ -15,7 +15,7 @@
             </div>
             <div class="flex flex-col md:flex-row lg:items-center gap-3 md:gap-5 lg:gap-8">
                 <NuxtImg src="/images/somos/Equipo-Tzadik.webp" alt="Equipo Tzadik"
-                    class="w-full md:w-1/2 h-52 sm:h-64 md:h-auto xxl:h-[27.5rem] md:self-stretch rounded-xl shadow-md shadow-black/30 object-cover" />
+                    class="w-full md:w-1/2 h-52 sm:h-64 md:h-auto md:max-h-96 xxl:h-[27.5rem] md:self-stretch rounded-xl shadow-md shadow-black/30 object-cover" />
                 <div ref="numerosRef" class="md:w-1/2 flex flex-col gap-1.5 md:gap-4 lg:gap-6">
                     <div v-for="(dato, index) in datos" :key="index" class="flex flex-col">
                         <p class="text-5xl lg:text-[3.25rem] font-teko text-primary font-bold">{{ displayValues[index] }}</p>
