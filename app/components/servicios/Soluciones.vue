@@ -46,6 +46,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
 
 const soluciones = [
     {
@@ -53,28 +54,28 @@ const soluciones = [
         title: "MANTENIMIENTO",
         text: "Nuestros técnicos y mecánicos están en constante capacitación para asegurar el máximo rendimiento de su equipo. Con mantenimientos preventivos y correctivos, garantizamos una vida útil más prolongada y menor tiempo de inactividad.",
         cta: "Solicitar mantenimiento",
-        action: "#",
+        action: `https://wa.me/${ROUTE_NAMES.WHATSAPP}`,
     },
     {
         img: "Repuestos-Oficiales-Originales",
         title: "REPUESTOS OFICIALES",
         text: "Trabajamos exclusivamente con repuestos originales y nuevos. Esto garantiza que su maquinaria conserve el rendimiento y la seguridad con la que fue diseñada, evitando fallas y reparaciones innecesarias.",
         cta: "Consultar por repuesto",
-        action: "#",
+        action: `https://wa.me/${ROUTE_NAMES.WHATSAPP}`,
     },
     {
         img: "Camion-Especializado-Traslado",
         title: "CAMIÓN DE TRASLADO",
         text: "Contamos con un camión especializado para el traslado seguro y eficiente de vehículos, maquinarias e implementos de hasta 7 toneladas. Un servicio pensado para brindarle rapidez, seguridad y confianza.",
         cta: "Reservar traslado",
-        action: "#",
+        action: `https://wa.me/${ROUTE_NAMES.WHATSAPP}`,
     },
     {
         img: "Consignaciones-Maquinaria-Reparaciones",
         title: "CONSIGNACIONES",
         text: "¿Queres vender tu maquinaria usada? La recibimos en consignación, realizamos las reparaciones necesarias y la promocionamos en nuestros canales de venta para asegurarle el mejor valor de reventa.",
         cta: "Consignar equipo",
-        action: "#",
+        action: `https://wa.me/${ROUTE_NAMES.WHATSAPP}`,
     },
 ];
 
