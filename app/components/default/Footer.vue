@@ -3,7 +3,9 @@
         <div class="w-full bg-dark">
             <div
                 class="max-w-[1200px] flex flex-col md:flex-row md:justify-between items-center md:items-start gap-6 md:gap-9 text-center text-light py-6 lg:py-12 px-5 md:px-11 lg:px-20 xxl:px-0 mx-auto">
-                <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
+                <NuxtImg src="/images/Logo-Tzadik.svg" alt="Tzadik - Maquinaria agrícola y vial"
+                    width="216" height="48"
+                    loading="lazy" decoding="async"
                     class="w-36 md:w-32 lg:w-[13.5rem] h-8 md:h-7 lg:h-12 object-contain" />
                 <div class="md:w-full md:max-w-[32.5rem] lg:max-w-[38rem] flex flex-col md:justify-between md:flex-row gap-6 lg:gap-24">
                     <div class="flex flex-col gap-3 md:gap-4">
@@ -33,6 +35,8 @@
                             <li v-for="(red, index) in redes" :key="index">
                                 <NuxtLink target="_blank" :to="red.route">
                                     <NuxtImg :src="`/images/redes/${red.name}-Blanco.svg`" :alt="red.name"
+                                        width="24" height="24"
+                                        loading="lazy" decoding="async"
                                         class="w-full h-5 md:h-6 object-contain" />
                                 </NuxtLink>
                             </li>

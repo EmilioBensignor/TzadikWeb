@@ -22,6 +22,9 @@
                             <div class="relative w-full aspect-video mb-20 lg:mb-12 xxl:-mb-12">
                                 <NuxtImg v-for="(solucion, index) in soluciones" :key="index"
                                     :src="`/images/servicios/${solucion.img}-Tzadik.webp`" :alt="solucion.title"
+                                    width="800" height="500"
+                                    sizes="(max-width: 1080px) 50vw, 600px"
+                                    :loading="index === 0 ? 'eager' : 'lazy'" decoding="async"
                                     class="h-[17.5rem] absolute top-0 left-0 w-full rounded-[4px] shadow-md shadow-black/30 object-cover transition-all duration-500"
                                     :class="activeIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-95'" />
                             </div>
@@ -34,6 +37,9 @@
                 <div v-for="(solucion, index) in soluciones" :key="index"
                     class="flex flex-col items-center gap-3">
                     <NuxtImg :src="`/images/servicios/${solucion.img}-Tzadik.webp`" :alt="solucion.title"
+                        width="800" height="500"
+                        sizes="100vw"
+                        loading="lazy" decoding="async"
                         class="rounded-[4px] shadow-md shadow-black/25 object-cover" />
                     <HeadingH3 class="text-xl text-primary">{{ solucion.title }}</HeadingH3>
                     <p class="text-center text-xs font-medium">{{ solucion.text }}</p>

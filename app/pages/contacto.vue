@@ -25,12 +25,11 @@ definePageMeta({
 });
 
 const config = useRuntimeConfig()
-
-const siteUrl = config.public.siteUrl || 'https://tzadik.com.ar'
+const siteUrl = config.public.siteUrl
 
 const title = 'Contacto - Tzadik'
 const description = 'Contacta con nuestras sucursales en Resistencia, Posadas, Corrientes, Sáenz Peña y Villa Ángela. Atención personalizada para maquinaria agrícola y vial.'
-const ogImage = `${siteUrl}/images/Logo-Tzadik.png`
+const ogImage = `${siteUrl}/images/og/Tzadik-OG.jpg`
 
 useSeoMeta({
     title,
@@ -38,6 +37,9 @@ useSeoMeta({
     ogTitle: title,
     ogDescription: description,
     ogImage,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageType: 'image/jpeg',
     ogUrl: `${siteUrl}/contacto`,
     ogType: 'website',
     twitterTitle: title,

@@ -41,6 +41,8 @@
             <div class="w-full flex flex-col gap-4 bg-gray-mid rounded-lg p-3">
                 <div class="flex gap-3">
                     <NuxtImg src="/images/servicios/Mantenimiento.svg" alt="Mantenimiento Servicios Tzadik"
+                        width="32" height="32"
+                        loading="lazy" decoding="async"
                         class="w-8 h-8 object-contain flex-shrink-0" />
                     <div class="flex flex-col gap-1">
                         <HeadingH3 class="text-primary">RENDIMIENTO ASEGURADO</HeadingH3>
@@ -51,6 +53,8 @@
                 </div>
                 <div class="flex gap-3">
                     <NuxtImg src="/images/servicios/Camion-traslados.svg" alt="Camión de Traslados Servicios Tzadik"
+                        width="32" height="32"
+                        loading="lazy" decoding="async"
                         class="w-8 h-8 object-contain flex-shrink-0" />
                     <div class="flex flex-col gap-1">
                         <HeadingH3 class="text-primary">TRASLADAMOS TU MAQUINARIA</HeadingH3>
@@ -202,31 +206,57 @@ const pageUrl = computed(() =>
     `${config.public.siteUrl}/categorias/${route.params.categoria}/${route.params.producto}`
 )
 
-const getOgImage = () => {
+const ogImage = computed(() => {
     if (!producto.value?.producto_imagenes?.length) {
-        return `${config.public.siteUrl}/images/placeholder-product.jpg`
+        return `${config.public.siteUrl}/images/og/Tzadik-OG.jpg`
     }
     const imagenPrincipal = producto.value.producto_imagenes.find(img => img.es_principal) || producto.value.producto_imagenes[0]
     return getImageUrl(imagenPrincipal.storage_path)
-}
-
-useHead({
-    title: pageTitle,
-    meta: [
-        { name: 'description', content: pageDescription },
-        { property: 'og:title', content: pageTitle },
-        { property: 'og:description', content: pageDescription },
-        { property: 'og:image', content: getOgImage() },
-        { property: 'og:url', content: pageUrl },
-        { property: 'og:type', content: 'product' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { name: 'twitter:title', content: pageTitle },
-        { name: 'twitter:description', content: pageDescription },
-        { name: 'twitter:image', content: getOgImage() },
-        { name: 'twitter:card', content: 'summary_large_image' }
-    ]
 })
+
+useSeoMeta({
+    title: pageTitle,
+    description: pageDescription,
+    ogTitle: pageTitle,
+    ogDescription: pageDescription,
+    ogImage,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogUrl: pageUrl,
+    ogType: 'product',
+    twitterTitle: pageTitle,
+    twitterDescription: pageDescription,
+    twitterImage: ogImage,
+    twitterCard: 'summary_large_image'
+})
+
+useSchemaOrg([
+    defineBreadcrumb({
+        itemListElement: [
+            { name: 'Inicio', item: '/' },
+            { name: () => categoria.value?.nombre || 'Categoría', item: () => `${config.public.siteUrl}/categorias/${route.params.categoria}` },
+            { name: () => producto.value?.titulo || 'Producto', item: pageUrl.value }
+        ]
+    }),
+    defineProduct({
+        name: () => producto.value?.titulo,
+        description: () => producto.value?.descripcion_corta || producto.value?.descripcion_larga,
+        image: ogImage,
+        sku: () => producto.value?.id ? String(producto.value.id) : undefined,
+        category: () => categoria.value?.nombre,
+        brand: () => producto.value?.datos_dinamicos?.marca,
+        offers: () => {
+            const precio = producto.value?.precio_descuento || producto.value?.precio
+            if (!precio) return undefined
+            return {
+                price: precio,
+                priceCurrency: producto.value?.moneda ? 'USD' : 'ARS',
+                availability: 'https://schema.org/InStock',
+                url: pageUrl.value
+            }
+        }
+    })
+])
 
 onMounted(() => {
     establecerMediaPrincipal()

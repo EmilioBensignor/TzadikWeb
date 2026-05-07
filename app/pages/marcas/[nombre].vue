@@ -32,30 +32,47 @@
                 index === 0 ? 'border-[3px] md:border-[6px] border-primary' : ''
             ]">
                 <NuxtLink v-if="index !== 0" :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
-                    <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre" :class="[
+                    <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                        width="200" height="80"
+                        sizes="(max-width: 768px) 30vw, 180px"
+                        loading="lazy" decoding="async"
+                        :class="[
+                            'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
+                            index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
+                        ]" />
+                </NuxtLink>
+                <NuxtImg v-else :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                    width="200" height="80"
+                    sizes="(max-width: 768px) 30vw, 180px"
+                    fetchpriority="high" decoding="async"
+                    :class="[
                         'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
                         index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
                     ]" />
-                </NuxtLink>
-                <NuxtImg v-else :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre" :class="[
-                    'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
-                    index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
-                ]" />
             </div>
         </CarouselStatic>
         <div v-if="marca" class="w-full max-w-[1200px] mx-auto">
             <DefaultSection class="flex flex-col items-center !gap-10 pt-7 md:pt-9 lg:pt-0 px-5 md:px-11 xxl:!px-0">
                 <h1 class="sr-only">{{ marca.nombre }}</h1>
                 <NuxtImg :src="`/images/marcas/${marca.slug}.webp`"
-                    :alt="`${marca.nombre} Tractores, Palas Cargadoras, Logistica, Maquinaria Agricola`"
+                    :alt="`${marca.nombre} - Tractores, palas cargadoras y maquinaria agrícola`"
+                    width="240" height="64"
+                    fetchpriority="high" decoding="async"
                     class="h-11 md:h-12 lg:h-14 xxl:h-16" />
                 <div class="lg:w-full flex flex-col md:flex-row md:items-stretch gap-8 md:gap-5 lg:gap-4 xxl:gap-8">
-                    <NuxtImg :src="`/images/marcas/${marca.img}.webp`" :alt="marca.alt" class="md:w-1/2 rounded-xl object-cover" />
+                    <NuxtImg :src="`/images/marcas/${marca.img}.webp`" :alt="marca.alt"
+                        width="600" height="400"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        loading="lazy" decoding="async"
+                        class="md:w-1/2 rounded-xl object-cover" />
                     <ul class="md:w-1/2 flex flex-col md:justify-between gap-4 lg:gap-5 xxl:gap-6">
                         <li v-for="(caracteristica, index) in marca.caracteristicas" :key="index"
                             class="flex items-center gap-3 md:gap-4">
                             <NuxtImg :src="`/images/marcas/caracteristicas/${caracteristica.icono}.svg`"
-                                :alt="`Caracteristica ${marca.alt}`" class="w-8 h-8 flex-shrink-0 object-contain" />
+                                :alt="`Característica ${marca.alt}`"
+                                width="32" height="32"
+                                loading="lazy" decoding="async"
+                                class="w-8 h-8 flex-shrink-0 object-contain" />
                             <span class="text-xs md:text-sm font-medium">{{ caracteristica.texto }}</span>
                         </li>
                     </ul>
@@ -141,7 +158,10 @@ const marcasOrdenadas = computed(() => {
 });
 
 const obtenerProductosMarca = async () => {
-    if (!marca.value) return;
+    if (!marca.value) {
+        productosMarca.value = [];
+        return;
+    }
 
     try {
         loadingProductos.value = true;
@@ -174,11 +194,11 @@ const obtenerProductosMarca = async () => {
     }
 };
 
-onMounted(async () => {
-    await obtenerProductosMarca();
-});
-
-watch(() => route.params.nombre, async () => {
-    await obtenerProductosMarca();
-}, { immediate: false });
+// SSR: corre durante la renderización del servidor. `watch` por route.params
+// hace que se reejecute al navegar entre marcas sin un full reload.
+await useAsyncData(
+    () => `marca-productos-${route.params.nombre}`,
+    () => obtenerProductosMarca(),
+    { watch: [() => route.params.nombre] }
+);
 </script>

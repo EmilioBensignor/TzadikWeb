@@ -9,7 +9,10 @@
         </div>
         <div class="lg:w-1/2 xxl:w-[28.375rem] flex md:grid lg:flex md:grid-cols-2 flex-col gap-4 lg:gap-6 px-5 md:px-3 lg:px-0">
             <div v-for="(servicio, index) in servicios" :key="index" class="flex gap-4 ">
-                <NuxtImg :src="`/images/servicios/${servicio.icono}.svg`" :alt="servicio.titulo" class="w-7 md:w-8 h-7 md:h-8 object-contain flex-shrink-0" />
+                <NuxtImg :src="`/images/servicios/${servicio.icono}.svg`" :alt="servicio.titulo"
+                    width="32" height="32"
+                    loading="lazy" decoding="async"
+                    class="w-7 md:w-8 h-7 md:h-8 object-contain flex-shrink-0" />
                 <div class="flex flex-col gap-1 lg:gap-1.5">
                     <HeadingH3 class="text-primary">{{ servicio.titulo }}</HeadingH3>
                     <p class="text-xs lg:text-sm">{{ servicio.texto }}</p>

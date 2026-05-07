@@ -1,5 +1,5 @@
 <template>
-    <DefaultSection
+    <DefaultSection v-if="loading || reviews.length > 0"
         class="xxl:max-w-[1200px] lg:flex-row xxl:justify-between xxl:!gap-8 relative pb-8 md:pb-12 lg:pb-0 lg:pl-20 xxl:px-0 mx-auto">
         <div
             class="lg:w-1/2 flex flex-col justify-between items-center lg:items-start text-center gap-2 lg:gap-6 px-5 lg:px-0">
@@ -50,7 +50,15 @@
             </div>
         </div>
         <div class="w-screen lg:w-1/2 relative">
-            <CarouselStatic :slides-per-view="{ base: 1.4, sm: 2.5, md: 3.5, lg: 1.8, xl: 1.8, xxl: 2.5 }"
+            <div v-if="loading && reviews.length === 0" class="flex gap-4 px-5 lg:px-0 overflow-hidden">
+                <div v-for="n in 3" :key="n" class="w-64 lg:w-72 flex-shrink-0 flex flex-col gap-3 rounded-xl bg-gray-mid/40 animate-pulse p-3 lg:p-5">
+                    <div class="w-full h-24 sm:h-28 md:h-32 lg:h-40 rounded-lg bg-gray-mid"></div>
+                    <div class="w-3/4 h-3 rounded bg-gray-mid"></div>
+                    <div class="w-full h-2 rounded bg-gray-mid"></div>
+                    <div class="w-5/6 h-2 rounded bg-gray-mid"></div>
+                </div>
+            </div>
+            <CarouselStatic v-else :slides-per-view="{ base: 1.4, sm: 2.5, md: 3.5, lg: 1.8, xl: 1.8, xxl: 2.5 }"
                 :gap="{ base: 12, lg: 16, xl: 16, xxl: 16 }" :show-arrows="false" ref="carousel" class="">
                 <ReviewCard v-for="review in reviews" :key="review.id" :review="review"
                     class="first:md:ml-11 last:md:mr-11" />
@@ -81,7 +89,10 @@ const handleScrollRight = () => {
     }
 }
 
-onMounted(async () => {
-    await fetchReviews(6)
+// SSR: trae los reviews durante la renderización del servidor para que el HTML
+// llegue al cliente con el contenido (mejor LCP, SEO y sin flash visual).
+await useAsyncData('home-reviews', async () => {
+    if (reviews.value.length === 0) await fetchReviews(6)
+    return true
 })
 </script>

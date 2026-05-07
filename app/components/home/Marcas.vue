@@ -45,10 +45,14 @@
                     index === 0 && marcaActual ? 'border-3 border-primary' : ''
                 ]">
                     <NuxtLink :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
-                        <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre" :class="[
-                            'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
-                            index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
-                        ]" />
+                        <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                            width="200" height="80"
+                            sizes="(max-width: 768px) 30vw, (max-width: 1080px) 20vw, 180px"
+                            loading="lazy" decoding="async"
+                            :class="[
+                                'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
+                                index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
+                            ]" />
                     </NuxtLink>
                 </div>
             </CarouselStatic>

@@ -1,6 +1,11 @@
 <template>
     <div class="review flex flex-col gap-3 rounded-xl p-3 lg:p-5">
-        <NuxtImg :src="imageUrl" :alt="`Opinion de ${review.autor}`" class="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-lg" />
+        <NuxtImg :src="imageUrl" :alt="`Opinión de ${review.autor}`"
+            width="400" height="240"
+            sizes="(max-width: 768px) 70vw, (max-width: 1080px) 50vw, 280px"
+            loading="lazy" decoding="async"
+            @error="onImageError"
+            class="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-lg" />
         <div class="h-full flex flex-col justify-between gap-2.5">
             <p class="font-semibold lg:text-[1.125rem]">{{ review.titulo }}</p>
             <p class="text-xs lg:text-sm">{{ review.comentario }}</p>
@@ -26,9 +31,16 @@ const props = defineProps({
     }
 })
 
+const imageError = ref(false)
+
 const imageUrl = computed(() => {
-    return props.review.img || '/images/placeholder-review.jpg'
+    if (imageError.value || !props.review.img) return '/images/placeholder-review.jpg'
+    return props.review.img
 })
+
+const onImageError = () => {
+    imageError.value = true
+}
 </script>
 
 <style scoped>

@@ -13,12 +13,11 @@
 
 <script setup>
 const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
 
-const siteUrl = config.public.siteUrl || 'https://tzadik.com.ar'
-
-const title = 'Tzadik - Maquinaria agrícola y vial'
-const description = 'Maquinaria agrícola y vial para maximizar tu productividad. Asistencia técnica, repuestos y mantenimiento.'
-const ogImage = `${siteUrl}/images/Logo-Tzadik.png`
+const title = 'Maquinaria agrícola y vial - Tzadik'
+const description = 'Maquinaria agrícola y vial para maximizar tu productividad. Asistencia técnica, repuestos y mantenimiento en NEA.'
+const ogImage = `${siteUrl}/images/og/Tzadik-OG.jpg`
 
 useSeoMeta({
     title,
@@ -26,6 +25,9 @@ useSeoMeta({
     ogTitle: title,
     ogDescription: description,
     ogImage,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageType: 'image/jpeg',
     ogUrl: siteUrl,
     ogType: 'website',
     twitterTitle: title,

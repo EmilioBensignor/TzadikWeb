@@ -6,7 +6,9 @@
             <source media="(min-width: 1080px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Desktop.webp">
             <source media="(min-width: 768px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Tablet.webp">
             <img src="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Mobile.webp"
-                alt="Tzadik Maquinaria Agricola Vial"
+                alt="Tzadik - Maquinaria agrícola y vial"
+                width="1440" height="532"
+                fetchpriority="high" decoding="async"
                 class="w-full h-[28rem] md:h-80 lg:h-[25.5rem] xxl:h-[33.25rem] object-cover object-left">
         </picture>
         <div

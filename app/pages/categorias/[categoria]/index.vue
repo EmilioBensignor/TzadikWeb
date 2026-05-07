@@ -29,14 +29,18 @@ import { getCategoryImages, getCategoryImageByBreakpoint } from '~/utils/categor
 const route = useRoute()
 const config = useRuntimeConfig()
 const { categorias, fetchCategorias, loading, error } = useCategorias()
-const { productos, fetchProductos, getImageUrl } = useProductos()
+const { productos, fetchProductos, getImageUrl, generateSlug } = useProductos()
 
 if (categorias.value.length === 0) {
     await fetchCategorias()
 }
 
+// Soporta tanto el nombre exacto (links viejos) como el slug (sitemap nuevo).
 const categoria = computed(() => {
-    return categorias.value.find(cat => cat.nombre === route.params.categoria)
+    const param = route.params.categoria
+    return categorias.value.find(cat =>
+        cat.nombre === param || generateSlug(cat.nombre) === param
+    )
 })
 
 if (categoria.value) {
@@ -74,24 +78,32 @@ const ogImage = computed(() => {
         return getImageUrl(primerProductoConImagen.producto_imagenes[0].storage_path)
     }
 
-    return `${config.public.siteUrl}/images/Logo-Tzadik.svg`
+    // Fallback: og:image global (jpg 1200x630)
+    return `${config.public.siteUrl}/images/og/Tzadik-OG.jpg`
 })
 
-useHead({
+useSeoMeta({
     title: pageTitle,
-    meta: [
-        { name: 'description', content: pageDescription },
-        { property: 'og:title', content: pageTitle },
-        { property: 'og:description', content: pageDescription },
-        { property: 'og:image', content: ogImage },
-        { property: 'og:url', content: pageUrl },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { name: 'twitter:title', content: pageTitle },
-        { name: 'twitter:description', content: pageDescription },
-        { name: 'twitter:image', content: ogImage },
-        { name: 'twitter:card', content: 'summary_large_image' }
-    ]
+    description: pageDescription,
+    ogTitle: pageTitle,
+    ogDescription: pageDescription,
+    ogImage,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogUrl: pageUrl,
+    ogType: 'website',
+    twitterTitle: pageTitle,
+    twitterDescription: pageDescription,
+    twitterImage: ogImage,
+    twitterCard: 'summary_large_image'
 })
+
+useSchemaOrg([
+    defineBreadcrumb({
+        itemListElement: [
+            { name: 'Inicio', item: '/' },
+            { name: () => categoria.value?.nombre || 'Categoría', item: pageUrl.value }
+        ]
+    })
+])
 </script>

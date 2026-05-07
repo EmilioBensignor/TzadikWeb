@@ -16,6 +16,8 @@
                     <li v-for="(red, index) in redes" :key="index">
                         <NuxtLink target="_blank" :to="red.route" class="no-underline">
                             <NuxtImg :src="`/images/redes/${red.name}-Blanco.svg`" :alt="red.name"
+                                width="24" height="24"
+                                loading="lazy" decoding="async"
                                 class="w-full h-5 md:h-6 object-contain" />
                         </NuxtLink>
                     </li>
@@ -31,7 +33,9 @@
                     <Icon name="tabler:menu-2" class="w-5 md:w-6 h-5 md:h-6 text-primary" />
                 </button>
                 <NuxtLink :to="ROUTE_NAMES.HOME">
-                    <NuxtImg src="/images/Logo-Tzadik.svg" alt="Logo Tzadik"
+                    <NuxtImg src="/images/Logo-Tzadik.svg" alt="Tzadik - Maquinaria agrícola y vial"
+                        width="176" height="40"
+                        fetchpriority="high" decoding="async"
                         class="w-28 md:w-32 lg:w-44 h-6 md:h-7 lg:h-10 object-contain" />
                 </NuxtLink>
                 <nav class="hidden lg:flex items-center gap-1.5 xxl:gap-6">

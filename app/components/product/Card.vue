@@ -1,6 +1,12 @@
 <template>
     <NuxtLink :to="productUrl" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl">
-        <NuxtImg :src="imageUrl" :alt="product.titulo" class="w-full h-48 lg:h-52 object-cover rounded-t-xl" />
+        <NuxtImg :src="imageUrl" :alt="product.titulo"
+            width="400" height="300"
+            sizes="(max-width: 768px) 70vw, (max-width: 1080px) 33vw, 300px"
+            loading="lazy" decoding="async"
+            placeholder
+            @error="onImageError"
+            class="w-full h-48 lg:h-52 object-cover rounded-t-xl" />
         <p v-if="product.oferta"
             class="absolute top-3 left-3 bg-secondary rounded-[4px] text-xs text-light !leading-none primary-shadow pt-1.5 px-2 pb-1">
             {{ product.oferta }}</p>
@@ -44,13 +50,20 @@ const props = defineProps({
 
 const { getImageUrl, getCurrencySymbol, generateSlug } = useProductos()
 
+const imageError = ref(false)
+
 const imageUrl = computed(() => {
+    if (imageError.value) return '/images/placeholder-product.jpg'
     if (!props.product?.producto_imagenes || props.product.producto_imagenes.length === 0) {
         return '/images/placeholder-product.jpg'
     }
     const imagenPrincipal = props.product.producto_imagenes.find(img => img.es_principal) || props.product.producto_imagenes[0]
     return imagenPrincipal ? getImageUrl(imagenPrincipal.storage_path) : '/images/placeholder-product.jpg'
 })
+
+const onImageError = () => {
+    imageError.value = true
+}
 
 const productUrl = computed(() => {
     if (!props.product) return '#'
