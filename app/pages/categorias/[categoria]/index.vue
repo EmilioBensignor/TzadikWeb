@@ -35,7 +35,6 @@ if (categorias.value.length === 0) {
     await fetchCategorias()
 }
 
-// Soporta tanto el nombre exacto (links viejos) como el slug (sitemap nuevo).
 const categoria = computed(() => {
     const param = route.params.categoria
     return categorias.value.find(cat =>
@@ -78,7 +77,6 @@ const ogImage = computed(() => {
         return getImageUrl(primerProductoConImagen.producto_imagenes[0].storage_path)
     }
 
-    // Fallback: og:image global (jpg 1200x630)
     return `${config.public.siteUrl}/images/og/Tzadik-OG.jpg`
 })
 

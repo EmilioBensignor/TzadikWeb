@@ -194,8 +194,6 @@ const obtenerProductosMarca = async () => {
     }
 };
 
-// SSR: corre durante la renderización del servidor. `watch` por route.params
-// hace que se reejecute al navegar entre marcas sin un full reload.
 await useAsyncData(
     () => `marca-productos-${route.params.nombre}`,
     () => obtenerProductosMarca(),

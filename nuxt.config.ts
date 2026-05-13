@@ -12,9 +12,6 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'es'
       },
-      // %s se reemplaza por el title de cada página (vía useSeoMeta).
-      // Si la página no setea title, se renderiza solo "Tzadik - Maquinaria agrícola y vial"
-      // (configurado vía site.name + site.description en @nuxtjs/seo).
       titleTemplate: '%s',
       meta: [
         { name: 'format-detection', content: 'telephone=no' },
@@ -28,7 +25,6 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', href: '/images/Logo-Tzadik.svg' },
-        // Preconnect a Supabase Storage para acortar TTFB de imágenes de productos
         { rel: 'preconnect', href: 'https://bueiuoskfgmfakhfzrqf.supabase.co', crossorigin: '' },
         { rel: 'dns-prefetch', href: 'https://bueiuoskfgmfakhfzrqf.supabase.co' }
       ]
@@ -76,10 +72,8 @@ export default defineNuxtConfig({
     collections: ['tabler']
   },
   image: {
-    // Permite a `<NuxtImg>` optimizar imágenes externas del bucket de Supabase.
-    // En producción Vercel sirve via /_vercel/image con AVIF/WebP automático.
     domains: ['bueiuoskfgmfakhfzrqf.supabase.co'],
-    format: ['avif', 'webp'],
+    format: ['webp'],
     screens: {
       sm: 480,
       md: 768,
@@ -91,8 +85,6 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
-  // Caché HTML en el edge: stale-while-revalidate
-  // Páginas estáticas se rebuildean cada hora, mantienen contenido fresco mientras tanto.
   routeRules: {
     '/': { swr: 3600 },
     '/quienes-somos': { swr: 3600 },

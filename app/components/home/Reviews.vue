@@ -89,8 +89,6 @@ const handleScrollRight = () => {
     }
 }
 
-// SSR: trae los reviews durante la renderización del servidor para que el HTML
-// llegue al cliente con el contenido (mejor LCP, SEO y sin flash visual).
 await useAsyncData('home-reviews', async () => {
     if (reviews.value.length === 0) await fetchReviews(6)
     return true

@@ -1,9 +1,6 @@
 import { serverSupabaseClient } from '#supabase/server'
 import marcas from '~/shared/marcas'
 
-// Genera URLs adicionales para el sitemap a partir de las categorías y productos
-// activos en Supabase y la lista hardcodeada de marcas. @nuxtjs/sitemap consume
-// este endpoint cuando lo configuramos como `source` en nuxt.config.ts.
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event)
 

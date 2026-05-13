@@ -5,8 +5,6 @@
 </template>
 
 <script setup>
-// Schema.org global: 5 sucursales como LocalBusiness independientes (cada una
-// con @id único), asociadas a la Organization declarada en nuxt.config.ts.
 useSchemaOrg([
   defineLocalBusiness({
     '@id': 'https://www.tzadik.com.ar/#sucursal-resistencia',

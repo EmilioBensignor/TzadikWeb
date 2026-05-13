@@ -25,7 +25,6 @@
 <script setup>
 const { ofertas, fetchOfertas, loading } = useProductos()
 
-// SSR: trae las ofertas durante la renderización del servidor.
 await useAsyncData('home-ofertas', async () => {
     if (ofertas.value.length === 0) await fetchOfertas()
     return true

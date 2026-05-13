@@ -18,7 +18,6 @@
 <script setup>
 const { categorias, fetchCategorias } = useCategorias()
 
-// SSR: dedup compartido entre componentes que también necesiten categorías.
 await useAsyncData('categorias-nav', async () => {
     if (categorias.value.length === 0) await fetchCategorias()
     return true
