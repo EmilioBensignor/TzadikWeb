@@ -72,8 +72,8 @@ export default defineNuxtConfig({
     collections: ['tabler']
   },
   image: {
+    provider: 'none',
     domains: ['bueiuoskfgmfakhfzrqf.supabase.co'],
-    format: ['webp'],
     screens: {
       sm: 480,
       md: 768,
