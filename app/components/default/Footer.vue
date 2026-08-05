@@ -45,8 +45,12 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center bg-primary text-center text-light text-xs lg:text-sm p-3">
-            <p>© Peripeteia {{ new Date().getFullYear() }}. Todos los derechos reservados</p>
+        <div
+            class="flex flex-col md:flex-row justify-center items-center gap-1 md:gap-2 bg-primary text-center text-light text-xs lg:text-sm p-3">
+            <p>© Tzadik {{ new Date().getFullYear() }}. Todos los derechos reservados</p>
+            <span class="hidden md:inline">·</span>
+            <NuxtLink to="https://motix.com.ar" target="_blank" rel="noopener">Desarrollado por <span
+                    class="font-semibold">Motix</span></NuxtLink>
         </div>
     </footer>
 </template>
