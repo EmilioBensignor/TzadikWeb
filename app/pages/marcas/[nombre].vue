@@ -32,7 +32,7 @@
                 index === 0 ? 'border-[3px] md:border-[6px] border-primary' : ''
             ]">
                 <NuxtLink v-if="index !== 0" :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
-                    <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                    <NuxtImg :src="`/images/marcas/${marca.logo}`" :alt="marca.nombre"
                         width="200" height="80"
                         sizes="(max-width: 768px) 30vw, 180px"
                         loading="lazy" decoding="async"
@@ -41,7 +41,7 @@
                             index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
                         ]" />
                 </NuxtLink>
-                <NuxtImg v-else :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                <NuxtImg v-else :src="`/images/marcas/${marca.logo}`" :alt="marca.nombre"
                     width="200" height="80"
                     sizes="(max-width: 768px) 30vw, 180px"
                     fetchpriority="high" decoding="async"
@@ -54,13 +54,13 @@
         <div v-if="marca" class="w-full max-w-[1200px] mx-auto">
             <DefaultSection class="flex flex-col items-center !gap-10 pt-7 md:pt-9 lg:pt-0 px-5 md:px-11 xxl:!px-0">
                 <h1 class="sr-only">{{ marca.nombre }}</h1>
-                <NuxtImg :src="`/images/marcas/${marca.slug}.webp`"
+                <NuxtImg :src="`/images/marcas/${marca.logo}`"
                     :alt="`${marca.nombre} - Tractores, palas cargadoras y maquinaria agrícola`"
                     width="240" height="64"
                     fetchpriority="high" decoding="async"
-                    class="h-11 md:h-12 lg:h-14 xxl:h-16" />
+                    class="w-auto h-11 md:h-12 lg:h-14 xxl:h-16 object-contain" />
                 <div class="lg:w-full flex flex-col md:flex-row md:items-stretch gap-8 md:gap-5 lg:gap-4 xxl:gap-8">
-                    <NuxtImg :src="`/images/marcas/${marca.img}.webp`" :alt="marca.alt"
+                    <NuxtImg :src="`/images/marcas/${marca.img}`" :alt="marca.alt"
                         width="600" height="400"
                         sizes="(max-width: 768px) 100vw, 50vw"
                         loading="lazy" decoding="async"
@@ -132,30 +132,19 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
-import marcas from '~/shared/marcas.js';
 
 const route = useRoute();
 const { productos, fetchProductos } = useProductos();
+const { getMarcaBySlug, getMarcasOrdenadas, fetchMarcas } = useMarcas();
 
 const productosMarca = ref([]);
 const loadingProductos = ref(false);
 
-const marca = computed(() => {
-    return marcas.find(m => m.slug === route.params.nombre);
-});
+await useAsyncData('marcas', () => fetchMarcas());
 
-const marcasOrdenadas = computed(() => {
-    const currentIndex = marcas.findIndex(m => m.slug === route.params.nombre);
-    if (currentIndex === -1) {
-        return marcas;
-    }
+const marca = computed(() => getMarcaBySlug(route.params.nombre));
 
-    return [
-        marcas[currentIndex],
-        ...marcas.slice(0, currentIndex),
-        ...marcas.slice(currentIndex + 1)
-    ];
-});
+const marcasOrdenadas = computed(() => getMarcasOrdenadas(route.params.nombre));
 
 const obtenerProductosMarca = async () => {
     if (!marca.value) {
@@ -168,14 +157,11 @@ const obtenerProductosMarca = async () => {
 
         await fetchProductos({
             includeImages: true,
-            noPagination: true
+            noPagination: true,
+            marca_id: marca.value.id
         });
 
-        const productosFiltered = productos.value.filter(prod =>
-            prod.datos_dinamicos?.marca?.toLowerCase() === marca.value.nombre.toLowerCase()
-        );
-
-        const productosOrdenados = productosFiltered.sort((a, b) => {
+        const productosOrdenados = [...productos.value].sort((a, b) => {
             if (a.destacado && !b.destacado) return -1;
             if (!a.destacado && b.destacado) return 1;
 

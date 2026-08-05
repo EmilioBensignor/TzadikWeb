@@ -45,7 +45,7 @@
                     index === 0 && marcaActual ? 'border-3 border-primary' : ''
                 ]">
                     <NuxtLink :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
-                        <NuxtImg :src="`/images/marcas/${marca.slug}.webp`" :alt="marca.nombre"
+                        <NuxtImg :src="`/images/marcas/${marca.logo}`" :alt="marca.nombre"
                             width="200" height="80"
                             sizes="(max-width: 768px) 30vw, (max-width: 1080px) 20vw, 180px"
                             loading="lazy" decoding="async"
@@ -63,7 +63,6 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES';
-import marcas from '~/shared/marcas';
 
 const props = defineProps({
     marcaActual: {
@@ -72,21 +71,13 @@ const props = defineProps({
     }
 });
 
+const { marcasDestacadas, getMarcasOrdenadas, fetchMarcas } = useMarcas();
+
+await useAsyncData('marcas', () => fetchMarcas());
+
 const marcasOrdenadas = computed(() => {
-    if (!props.marcaActual) {
-        return marcas;
-    }
-
-    const currentIndex = marcas.findIndex(m => m.slug === props.marcaActual);
-    if (currentIndex === -1) {
-        return marcas;
-    }
-
-    return [
-        marcas[currentIndex],
-        ...marcas.slice(0, currentIndex),
-        ...marcas.slice(currentIndex + 1)
-    ];
+    if (!props.marcaActual) return marcasDestacadas.value;
+    return getMarcasOrdenadas(props.marcaActual);
 });
 </script>
 

@@ -1,5 +1,4 @@
 import { serverSupabaseClient } from '#supabase/server'
-import marcas from '~/shared/marcas'
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event)
@@ -20,6 +19,7 @@ export default defineEventHandler(async (event) => {
     const { data: categorias } = await supabase
       .from('categorias')
       .select('nombre, updated_at')
+      .eq('activa', true)
       .order('id')
 
     if (categorias) {
@@ -57,12 +57,26 @@ export default defineEventHandler(async (event) => {
     console.error('[sitemap] error consultando Supabase:', err)
   }
 
-  for (const marca of marcas) {
-    urls.push({
-      loc: `/marcas/${marca.slug}`,
-      priority: 0.6,
-      changefreq: 'monthly'
-    })
+  try {
+    const { data: marcas } = await supabase
+      .from('marcas')
+      .select('slug, updated_at')
+      .eq('activa', true)
+      .eq('destacada', true)
+      .order('orden')
+
+    if (marcas) {
+      for (const marca of marcas) {
+        urls.push({
+          loc: `/marcas/${marca.slug}`,
+          lastmod: marca.updated_at || undefined,
+          priority: 0.6,
+          changefreq: 'monthly'
+        })
+      }
+    }
+  } catch (err) {
+    console.error('[sitemap] error consultando marcas:', err)
   }
 
   return urls

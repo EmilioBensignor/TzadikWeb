@@ -1,11 +1,12 @@
 {
-  "name": "nuxt-app",
+  "name": "tzadik-web",
   "type": "module",
+  "packageManager": "pnpm@11.1.2",
   "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "start": "git pull origin main && npm i && nuxt dev --open",
+    "start": "git pull origin main && pnpm install && nuxt dev --open",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -14,7 +15,7 @@
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/icon": "^2.0.0",
     "@nuxt/image": "^1.11.0",
-    "@nuxtjs/seo": "^3.1.0",
+    "@nuxtjs/seo": "^5.3.10",
     "@nuxtjs/supabase": "^1.6.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.11.2",

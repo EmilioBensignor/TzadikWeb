@@ -40,6 +40,7 @@ export default defineNuxtConfig({
     fallbackTitle: false,
     redirectToCanonicalSiteUrl: false
   },
+  ogImage: { enabled: false },
   sitemap: {
     sources: [
       '/api/__sitemap__/urls'

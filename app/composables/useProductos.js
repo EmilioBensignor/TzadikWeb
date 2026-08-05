@@ -91,17 +91,17 @@ export const useProductos = () => {
 
         switch (campo.tipo) {
           case 'currency':
-            formattedValue = new Intl.NumberFormat('es-CO', {
+            formattedValue = new Intl.NumberFormat('es-AR', {
               style: 'currency',
-              currency: 'COP',
+              currency: 'ARS',
               minimumFractionDigits: 0
             }).format(value)
             break
           case 'number':
-            formattedValue = new Intl.NumberFormat('es-CO').format(value)
+            formattedValue = new Intl.NumberFormat('es-AR').format(value)
             break
           case 'date':
-            formattedValue = new Date(value).toLocaleDateString('es-CO')
+            formattedValue = new Date(value).toLocaleDateString('es-AR')
             break
           case 'boolean':
             formattedValue = value ? 'Sí' : 'No'

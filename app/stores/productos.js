@@ -17,7 +17,7 @@ export const useProductosStore = defineStore('productos', () => {
         categoria_id: null,
         subcategoria_ids: [],
         condicion: [],
-        marca: [],
+        marca_ids: [],
         moneda: [],
         en_oferta: false,
         precio_min: null,
@@ -72,6 +72,10 @@ export const useProductosStore = defineStore('productos', () => {
                 query = query.eq('categoria_id', filters.value.categoria_id)
             }
 
+            if (options.marca_id) {
+                query = query.eq('marca_id', options.marca_id)
+            }
+
             if (filters.value.subcategoria_ids && filters.value.subcategoria_ids.length > 0) {
                 query = query.in('subcategoria_id', filters.value.subcategoria_ids)
             }
@@ -80,13 +84,8 @@ export const useProductosStore = defineStore('productos', () => {
                 query = query.in('condicion', filters.value.condicion)
             }
 
-            if (filters.value.marca && filters.value.marca.length > 0) {
-                const marcaConditions = filters.value.marca.map(marca =>
-                    `datos_dinamicos->>marca.ilike.%${marca}%`
-                )
-                if (marcaConditions.length > 0) {
-                    query = query.or(marcaConditions.join(','))
-                }
+            if (filters.value.marca_ids && filters.value.marca_ids.length > 0) {
+                query = query.in('marca_id', filters.value.marca_ids)
             }
 
             if (filters.value.moneda && filters.value.moneda.length > 0) {
@@ -125,7 +124,7 @@ export const useProductosStore = defineStore('productos', () => {
 
             query = query.order(sortBy.value, { ascending: sortOrder.value === 'asc' })
 
-            const debeDesactivarPaginacion = options.noPagination && options.categoria_id
+            const debeDesactivarPaginacion = options.noPagination
             if (!debeDesactivarPaginacion) {
                 const from = (currentPage.value - 1) * pageSize.value
                 const to = from + pageSize.value - 1
@@ -342,7 +341,7 @@ export const useProductosStore = defineStore('productos', () => {
             categoria_id: null,
             subcategoria_ids: [],
             condicion: [],
-            marca: [],
+            marca_ids: [],
             moneda: [],
             en_oferta: false,
             precio_min: null,

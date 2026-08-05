@@ -28,6 +28,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       const { data, error: err } = await supabase
         .from('categorias')
         .select('*')
+        .eq('activa', true)
         .order('id')
 
       if (err) throw err

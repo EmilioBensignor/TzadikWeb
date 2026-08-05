@@ -96,15 +96,15 @@ export const useCategorias = () => {
     
     switch (campo.tipo) {
       case 'currency':
-        return new Intl.NumberFormat('es-CO', {
+        return new Intl.NumberFormat('es-AR', {
           style: 'currency',
-          currency: 'COP',
+          currency: 'ARS',
           minimumFractionDigits: 0
         }).format(value)
       case 'number':
-        return new Intl.NumberFormat('es-CO').format(value)
+        return new Intl.NumberFormat('es-AR').format(value)
       case 'date':
-        return new Date(value).toLocaleDateString('es-CO')
+        return new Date(value).toLocaleDateString('es-AR')
       case 'boolean':
         return value ? 'Sí' : 'No'
       default:

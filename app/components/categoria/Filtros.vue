@@ -62,9 +62,9 @@
                         <div class="flex flex-col gap-2">
                             <p class="text-sm md:text-base font-semibold">Marca</p>
                             <div class="flex flex-col gap-2">
-                                <FormCheckbox v-for="(marca, index) in marcas" :key="index" :id="`marca-${index}`"
-                                    :value="marca.nombre" :checked="filtrosSeleccionados.marcas.includes(marca.nombre)"
-                                    :label="marca.nombre.charAt(0).toUpperCase() + marca.nombre.slice(1)"
+                                <FormCheckbox v-for="marca in marcas" :key="marca.id" :id="`marca-${marca.id}`"
+                                    :value="marca.id" :checked="filtrosSeleccionados.marcas.includes(marca.id)"
+                                    :label="marca.nombre"
                                     @update:checked="toggleMarca(marca, $event)" />
                             </div>
                         </div>
@@ -150,9 +150,9 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
-import marcas from '~/shared/marcas'
 
 const route = useRoute()
+const { marcas, fetchMarcas } = useMarcas()
 const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
 const { productos, searchProductos, clearFilters, loading } = useProductos()
 const productosStore = useProductosStore()
@@ -208,7 +208,9 @@ const filtrosAplicados = computed(() => {
         aplicados.push(...filtrosSeleccionados.condicion)
     }
     if (filtrosSeleccionados.marcas.length > 0) {
-        aplicados.push(...filtrosSeleccionados.marcas.map(m => m.charAt(0).toUpperCase() + m.slice(1)))
+        aplicados.push(...filtrosSeleccionados.marcas
+            .map(id => marcas.value.find(m => m.id === id)?.nombre)
+            .filter(Boolean))
     }
     if (filtrosSeleccionados.moneda.length > 0) {
         aplicados.push(...filtrosSeleccionados.moneda.map(m => m === 'dolares' ? 'Dólares' : 'Pesos Argentinos'))
@@ -306,9 +308,9 @@ const toggleCondicion = async (condicion, checked) => {
 
 const toggleMarca = async (marca, checked) => {
     if (checked) {
-        filtrosSeleccionados.marcas.push(marca.nombre)
+        filtrosSeleccionados.marcas.push(marca.id)
     } else {
-        const index = filtrosSeleccionados.marcas.indexOf(marca.nombre)
+        const index = filtrosSeleccionados.marcas.indexOf(marca.id)
         if (index > -1) {
             filtrosSeleccionados.marcas.splice(index, 1)
         }
@@ -346,7 +348,7 @@ const aplicarFiltros = async () => {
     const searchParams = {
         categoria_id: categoriaActual.value.id,
         condicion: filtrosSeleccionados.condicion,
-        marca: filtrosSeleccionados.marcas,
+        marca_ids: filtrosSeleccionados.marcas,
         moneda: filtrosSeleccionados.moneda,
         en_oferta: filtrosSeleccionados.oferta.length > 0
     }
@@ -405,6 +407,7 @@ onMounted(async () => {
     if (categorias.value.length === 0) {
         await fetchCategorias()
     }
+    await fetchMarcas()
 })
 
 watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
