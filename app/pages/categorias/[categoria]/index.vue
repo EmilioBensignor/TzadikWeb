@@ -36,9 +36,9 @@ if (categorias.value.length === 0) {
 }
 
 const categoria = computed(() => {
-    const param = route.params.categoria
+    const param = decodeParam(route.params.categoria)
     return categorias.value.find(cat =>
-        cat.nombre === param || generateSlug(cat.nombre) === param
+        cat.slug === param || cat.nombre === param || generateSlug(cat.nombre) === param
     )
 })
 
@@ -65,7 +65,7 @@ const pageDescription = computed(() =>
 )
 
 const pageUrl = computed(() =>
-    `${config.public.siteUrl}/categorias/${route.params.categoria}`
+    `${config.public.siteUrl}/categorias/${categoria.value?.slug || decodeParam(route.params.categoria)}`
 )
 
 const ogImage = computed(() => {

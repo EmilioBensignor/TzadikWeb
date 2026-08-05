@@ -96,7 +96,8 @@
             <div
                 class="flex justify-between items-center border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0 ">
                 <div class="flex items-end gap-2 lg:gap-4">
-                    <NuxtImg :src="categoriaActual?.icon" :alt="`Icono de ${categoriaActual?.nombre}`"
+                    <NuxtImg v-if="categoriaActual?.icon" :src="categoriaActual.icon"
+                        :alt="`Icono de ${categoriaActual.nombre}`"
                         class="w-5 md:w-6 lg:w-7 h-5 md:h-6 lg:h-7 object-contain" />
                     <p class="text-xs md:text-base lg:text-xl font-bold">{{ productosFiltrados.length }} Resultados</p>
                 </div>
@@ -154,12 +155,15 @@ import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
 const route = useRoute()
 const { marcas, fetchMarcas } = useMarcas()
 const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
-const { productos, searchProductos, clearFilters, loading } = useProductos()
+const { productos, searchProductos, clearFilters, loading, generateSlug } = useProductos()
 const productosStore = useProductosStore()
 const cargandoInicial = ref(true)
 
 const categoriaActual = computed(() => {
-    return categorias.value.find(cat => cat.nombre === route.params.categoria)
+    const param = decodeParam(route.params.categoria)
+    return categorias.value.find(cat =>
+        cat.slug === param || cat.nombre === param || generateSlug(cat.nombre) === param
+    )
 })
 
 const subcategorias = computed(() => {
@@ -403,20 +407,27 @@ const removerFiltro = async (index) => {
     await aplicarFiltros()
 }
 
-onMounted(async () => {
+await useAsyncData('filtros-datos', async () => {
     if (categorias.value.length === 0) {
         await fetchCategorias()
     }
     await fetchMarcas()
+    return true
 })
 
 watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
-    if (nuevaCategoriaId) {
-        cargandoInicial.value = true
-        limpiarFiltros()
-        const originalPageSize = productosStore.pageSize
-        productosStore.pageSize = 1000
+    if (!nuevaCategoriaId) {
+        cargandoInicial.value = false
+        return
+    }
+
+    cargandoInicial.value = true
+    limpiarFiltros()
+    const originalPageSize = productosStore.pageSize
+    productosStore.pageSize = 1000
+    try {
         await searchProductos({ categoria_id: nuevaCategoriaId })
+    } finally {
         productosStore.pageSize = originalPageSize
         cargandoInicial.value = false
     }

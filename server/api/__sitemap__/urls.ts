@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   try {
     const { data: categorias } = await supabase
       .from('categorias')
-      .select('nombre, updated_at')
+      .select('nombre, slug, updated_at')
       .eq('activa', true)
       .order('id')
 
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       for (const cat of categorias) {
         if (!cat.nombre) continue
         urls.push({
-          loc: `/categorias/${slugify(cat.nombre)}`,
+          loc: `/categorias/${cat.slug || slugify(cat.nombre)}`,
           lastmod: cat.updated_at || undefined,
           priority: 0.8,
           changefreq: 'weekly'
@@ -36,14 +36,14 @@ export default defineEventHandler(async (event) => {
 
     const { data: productos } = await supabase
       .from('productos')
-      .select('titulo, categoria_id, updated_at, categorias(nombre)')
+      .select('titulo, categoria_id, updated_at, categorias(nombre, slug)')
       .eq('activo', true)
 
     if (productos) {
       for (const prod of productos) {
         const categoriaNombre = (prod as any).categorias?.nombre
         if (!categoriaNombre || !prod.titulo) continue
-        const categoriaSlug = slugify(categoriaNombre)
+        const categoriaSlug = (prod as any).categorias?.slug || slugify(categoriaNombre)
         const productoSlug = slugify(prod.titulo)
         urls.push({
           loc: `/categorias/${categoriaSlug}/${productoSlug}`,

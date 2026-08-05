@@ -67,7 +67,8 @@ const onImageError = () => {
 
 const productUrl = computed(() => {
     if (!props.product) return '#'
-    const categoriaSlug = generateSlug(props.product.categorias?.nombre || 'categoria')
+    const categoriaSlug = props.product.categorias?.slug
+        || generateSlug(props.product.categorias?.nombre || 'categoria')
     const productoSlug = generateSlug(props.product.titulo)
     return `/categorias/${categoriaSlug}/${productoSlug}`
 })

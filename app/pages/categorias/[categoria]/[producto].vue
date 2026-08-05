@@ -8,7 +8,7 @@
                 </li>
                 <Icon name="tabler:chevron-right" class="w-5 h-5 text-primary" />
                 <li>
-                    <NuxtLink :to="`/categorias/${categoria?.nombre}`" class="text-gray-dark">{{ categoria?.nombre }}
+                    <NuxtLink :to="`/categorias/${categoria?.slug}`" class="text-gray-dark">{{ categoria?.nombre }}
                     </NuxtLink>
                 </li>
                 <Icon name="tabler:chevron-right" class="w-5 h-5 text-primary" />
@@ -120,11 +120,13 @@ if (categorias.value.length === 0) {
     await fetchCategorias()
 }
 
-const categoriaSlug = route.params.categoria
-const productoSlug = route.params.producto
+const categoriaSlug = decodeParam(route.params.categoria)
+const productoSlug = decodeParam(route.params.producto)
 
 const categoria = computed(() =>
-    categorias.value.find(cat => generateSlug(cat.nombre) === categoriaSlug)
+    categorias.value.find(cat =>
+        cat.slug === categoriaSlug || generateSlug(cat.nombre) === categoriaSlug
+    )
 )
 
 if (categoria.value) {
@@ -203,7 +205,7 @@ const pageDescription = computed(() =>
 )
 
 const pageUrl = computed(() =>
-    `${config.public.siteUrl}/categorias/${route.params.categoria}/${route.params.producto}`
+    `${config.public.siteUrl}/categorias/${categoriaSlug}/${productoSlug}`
 )
 
 const ogImage = computed(() => {
@@ -234,7 +236,7 @@ useSchemaOrg([
     defineBreadcrumb({
         itemListElement: [
             { name: 'Inicio', item: '/' },
-            { name: () => categoria.value?.nombre || 'Categoría', item: () => `${config.public.siteUrl}/categorias/${route.params.categoria}` },
+            { name: () => categoria.value?.nombre || 'Categoría', item: () => `${config.public.siteUrl}/categorias/${categoria.value?.slug || categoriaSlug}` },
             { name: () => producto.value?.titulo || 'Producto', item: pageUrl.value }
         ]
     }),

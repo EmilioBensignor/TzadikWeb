@@ -23,11 +23,11 @@ export const categoryImageMapping = {
     desktop: '/images/categorias/Maquinaria-Vial/Maquinaria-Vial-Tzadik-Desktop.webp',
     xl: '/images/categorias/Maquinaria-Vial/Maquinaria-Vial-Tzadik-Desktop-XL.webp'
   },
-  'Maquinaría Agrícola': {
-    mobile: '/images/categorias/Maquinaria-Agricola/Maquinaria-Agricola-Tzadik-Mobile.webp',
-    tablet: '/images/categorias/Maquinaria-Agricola/Maquinaria-Agricola-Tzadik-Tablet.webp',
-    desktop: '/images/categorias/Maquinaria-Agricola/Maquinaria-Agricola-Tzadik-Desktop.webp',
-    xl: '/images/categorias/Maquinaria-Agricola/Maquinaria-Agricola-Tzadik-Desktop-XL.webp'
+  'Off Road': {
+    mobile: '/images/categorias/Off-Road/Off-Road-Tzadik-Mobile.webp',
+    tablet: '/images/categorias/Off-Road/Off-Road-Tzadik-Tablet.webp',
+    desktop: '/images/categorias/Off-Road/Off-Road-Tzadik-Desktop.webp',
+    xl: '/images/categorias/Off-Road/Off-Road-Tzadik-Desktop-XL.webp'
   },
   'Implementos': {
     mobile: '/images/categorias/Implementos/Implementos-Tzadik-Mobile.webp',

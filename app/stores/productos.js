@@ -56,7 +56,7 @@ export const useProductosStore = defineStore('productos', () => {
             const supabase = useSupabaseClient()
             let selectQuery = `
                 *,
-                categorias(id, nombre, icon),
+                categorias(id, nombre, slug, icon),
                 subcategorias(id, nombre),
                 producto_imagenes(storage_path, es_principal, orden)
             `
@@ -157,7 +157,7 @@ export const useProductosStore = defineStore('productos', () => {
                 .from('productos')
                 .select(`
                     *,
-                    categorias(id, nombre, icon),
+                    categorias(id, nombre, slug, icon),
                     subcategorias(id, nombre)
                 `)
                 .eq('id', id)
@@ -397,7 +397,7 @@ export const useProductosStore = defineStore('productos', () => {
                 .from('productos')
                 .select(`
                     *,
-                    categorias(id, nombre, icon),
+                    categorias(id, nombre, slug, icon),
                     producto_imagenes(storage_path, es_principal)
                 `)
                 .eq('destacado', true)

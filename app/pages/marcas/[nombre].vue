@@ -31,24 +31,18 @@
                 'h-16 md:h-[4.75rem] lg:h-28 flex justify-center items-center bg-light rounded-md lg:rounded-xl orange-shadow py-5 px-4',
                 index === 0 ? 'border-[3px] md:border-[6px] border-primary' : ''
             ]">
-                <NuxtLink v-if="index !== 0" :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`">
+                <NuxtLink v-if="index !== 0" :to="`${ROUTE_NAMES.MARCAS}/${marca.slug}`" class="w-full flex justify-center">
                     <NuxtImg :src="`/images/marcas/${marca.logo}`" :alt="marca.nombre"
                         width="200" height="80"
                         sizes="(max-width: 768px) 30vw, 180px"
                         loading="lazy" decoding="async"
-                        :class="[
-                            'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
-                            index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
-                        ]" />
+                        class="w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain" />
                 </NuxtLink>
                 <NuxtImg v-else :src="`/images/marcas/${marca.logo}`" :alt="marca.nombre"
                     width="200" height="80"
                     sizes="(max-width: 768px) 30vw, 180px"
                     fetchpriority="high" decoding="async"
-                    :class="[
-                        'w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain',
-                        index === marcasOrdenadas.length - 1 ? 'lg:!max-h-8' : ''
-                    ]" />
+                    class="w-full max-h-10 md:max-h-12 lg:max-h-16 object-contain" />
             </div>
         </CarouselStatic>
         <div v-if="marca" class="w-full max-w-[1200px] mx-auto">
@@ -140,7 +134,10 @@ const { getMarcaBySlug, getMarcasOrdenadas, fetchMarcas } = useMarcas();
 const productosMarca = ref([]);
 const loadingProductos = ref(false);
 
-await useAsyncData('marcas', () => fetchMarcas());
+await useAsyncData('marcas', async () => {
+    await fetchMarcas();
+    return true;
+});
 
 const marca = computed(() => getMarcaBySlug(route.params.nombre));
 
@@ -182,7 +179,10 @@ const obtenerProductosMarca = async () => {
 
 await useAsyncData(
     () => `marca-productos-${route.params.nombre}`,
-    () => obtenerProductosMarca(),
+    async () => {
+        await obtenerProductosMarca();
+        return true;
+    },
     { watch: [() => route.params.nombre] }
 );
 </script>

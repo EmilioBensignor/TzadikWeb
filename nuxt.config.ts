@@ -69,8 +69,23 @@ export default defineNuxtConfig({
     }
   },
   icon: {
-    provider: 'iconify',
-    collections: ['tabler']
+    provider: 'none',
+    serverBundle: {
+      collections: ['tabler', 'material-symbols']
+    },
+    clientBundle: {
+      scan: true,
+      // Estos se arman en runtime (`tabler:${item.icon}` desde menu.js y contacto.vue),
+      // asi que el escaneo estatico no los detecta.
+      icons: [
+        'tabler:mail',
+        'tabler:phone',
+        'tabler:map-pin',
+        'tabler:brand-whatsapp',
+        'tabler:star',
+        'tabler:star-filled'
+      ]
+    }
   },
   image: {
     provider: 'none',

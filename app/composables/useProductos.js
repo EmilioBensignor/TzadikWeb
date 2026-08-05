@@ -40,7 +40,7 @@ export const useProductos = () => {
         .from('productos')
         .select(`
           *,
-          categorias(id, nombre, icon),
+          categorias(id, nombre, slug, icon),
           producto_imagenes!inner(storage_path, es_principal)
         `)
         .eq('producto_imagenes.es_principal', true)

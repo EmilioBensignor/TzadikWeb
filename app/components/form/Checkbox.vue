@@ -21,7 +21,7 @@ defineProps({
         required: true
     },
     value: {
-        type: String,
+        type: [String, Number],
         default: ''
     },
     label: {
