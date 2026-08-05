@@ -129,8 +129,10 @@ NUXT_PUBLIC_GTAG_ID=      # opcional, G-XXXXXXX de Google Analytics 4
 
 ## Analíticas (Google Analytics 4)
 
-`nuxt-gtag` con el ID en `NUXT_PUBLIC_GTAG_ID`. **Sin esa variable el módulo no inyecta nada**, y solo
-corre en producción, así que navegar en local no ensucia las métricas.
+`nuxt-gtag` con el ID en `NUXT_PUBLIC_GTAG_ID` (propiedad "Tzadik", ID `G-J1K0M804Y0`, creada en agosto 2026).
+**Sin esa variable el módulo no inyecta nada**, y solo corre en producción, así que navegar en local no
+ensucia las métricas. La variable se carga en Vercel → Settings → Environment Variables (solo Production);
+al agregarla hay que hacer **Redeploy** a mano, Vercel no re-despliega solo.
 
 Eventos personalizados ya cableados:
 
