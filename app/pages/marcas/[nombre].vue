@@ -131,7 +131,6 @@ const route = useRoute();
 const { productos, fetchProductos } = useProductos();
 const { getMarcaBySlug, getMarcasOrdenadas, fetchMarcas } = useMarcas();
 
-const productosMarca = ref([]);
 const loadingProductos = ref(false);
 
 await useAsyncData('marcas', async () => {
@@ -144,10 +143,7 @@ const marca = computed(() => getMarcaBySlug(route.params.nombre));
 const marcasOrdenadas = computed(() => getMarcasOrdenadas(route.params.nombre));
 
 const obtenerProductosMarca = async () => {
-    if (!marca.value) {
-        productosMarca.value = [];
-        return;
-    }
+    if (!marca.value) return [];
 
     try {
         loadingProductos.value = true;
@@ -158,7 +154,7 @@ const obtenerProductosMarca = async () => {
             marca_id: marca.value.id
         });
 
-        const productosOrdenados = [...productos.value].sort((a, b) => {
+        return [...productos.value].sort((a, b) => {
             if (a.destacado && !b.destacado) return -1;
             if (!a.destacado && b.destacado) return 1;
 
@@ -168,21 +164,19 @@ const obtenerProductosMarca = async () => {
             return new Date(b.created_at) - new Date(a.created_at);
         });
 
-        productosMarca.value = productosOrdenados;
-
     } catch (error) {
         console.error('Error obteniendo productos de la marca:', error);
+        return [];
     } finally {
         loadingProductos.value = false;
     }
 };
 
-await useAsyncData(
+// El resultado va en useAsyncData y no en un ref local: solo lo que devuelve
+// el handler viaja del servidor al cliente en el payload.
+const { data: productosMarca } = await useAsyncData(
     () => `marca-productos-${route.params.nombre}`,
-    async () => {
-        await obtenerProductosMarca();
-        return true;
-    },
-    { watch: [() => route.params.nombre] }
+    () => obtenerProductosMarca(),
+    { default: () => [], watch: [() => route.params.nombre] }
 );
 </script>
