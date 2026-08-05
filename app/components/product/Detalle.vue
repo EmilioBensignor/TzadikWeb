@@ -111,7 +111,7 @@
                 <p class="text-xs lg:text-base font-semibold mt-2">{{ getCurrencySymbol(producto) }}</p>
             </div>
             <NuxtLink :to="`https://wa.me/${ROUTE_NAMES.WHATSAPP}`" target="_blank"
-                @click="gtag('event', 'contacto_whatsapp', { origen: 'producto', producto: producto?.titulo })"
+                @click="gtag('event', 'contacto_whatsapp', { origen: 'producto', producto: producto?.titulo, transport_type: 'beacon' })"
                 class="w-max h-12 flex justify-center items-center gap-2.5 bg-whatsapp text-light font-bold rounded-full shadow-lg px-8">
                 <Icon name="tabler:brand-whatsapp" class="w-5 h-5 flex-shrink-0 -mt-1" />
                 Consultar ahora
