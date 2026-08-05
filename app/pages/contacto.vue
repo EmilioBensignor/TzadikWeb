@@ -28,7 +28,7 @@ const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl
 
 const title = 'Contacto - Tzadik'
-const description = 'Contacta con nuestras sucursales en Resistencia, Posadas, Corrientes, Sáenz Peña y Villa Ángela. Atención personalizada para maquinaria agrícola y vial.'
+const description = 'Contacta con nuestras sucursales en Resistencia, Posadas, Corrientes, Sáenz Peña y Villa Ángela. Atención personalizada para tractores, maquinaria vial y off road.'
 const ogImage = `${siteUrl}/images/og/Tzadik-OG.jpg`
 
 useSeoMeta({

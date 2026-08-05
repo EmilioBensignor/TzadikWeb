@@ -49,7 +49,7 @@
             <DefaultSection class="flex flex-col items-center !gap-10 pt-7 md:pt-9 lg:pt-0 px-5 md:px-11 xxl:!px-0">
                 <h1 class="sr-only">{{ marca.nombre }}</h1>
                 <NuxtImg :src="`/images/marcas/${marca.logo}`"
-                    :alt="`${marca.nombre} - Tractores, palas cargadoras y maquinaria agrícola`"
+                    :alt="`${marca.nombre} - Tractores, palas cargadoras y maquinaria vial`"
                     width="240" height="64"
                     fetchpriority="high" decoding="async"
                     class="w-auto h-11 md:h-12 lg:h-14 xxl:h-16 object-contain" />

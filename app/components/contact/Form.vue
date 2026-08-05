@@ -104,6 +104,8 @@ const props = defineProps({
     }
 })
 
+const { gtag } = useGtag()
+
 const emit = defineEmits(['close'])
 
 const form = reactive({
@@ -184,6 +186,8 @@ const handleSubmit = () => {
     if (!validateForm()) {
         return
     }
+
+    gtag('event', 'envio_formulario', { origen: 'contacto' })
 
     resetForm()
     clearErrors()

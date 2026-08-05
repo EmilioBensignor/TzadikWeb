@@ -200,8 +200,8 @@ const pageTitle = computed(() =>
 
 const pageDescription = computed(() =>
     producto.value
-        ? (producto.value.descripcion_corta || `${producto.value.titulo} - Maquinaria agrícola en Tzadik`)
-        : 'Maquinaria agrícola y víal de calidad en Tzadik'
+        ? (producto.value.descripcion_corta || `${producto.value.titulo} - Tractores y maquinaria vial en Tzadik`)
+        : 'Tractores, maquinaria vial y off road en Tzadik'
 )
 
 const pageUrl = computed(() =>

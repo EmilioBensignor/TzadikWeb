@@ -4,7 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
 
-  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/seo', '@nuxtjs/supabase'],
+  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/seo', '@nuxtjs/supabase', 'nuxt-gtag'],
+
+  // Google Analytics 4. Sin NUXT_PUBLIC_GTAG_ID el modulo no carga nada.
+  gtag: {
+    id: process.env.NUXT_PUBLIC_GTAG_ID,
+    enabled: Boolean(process.env.NUXT_PUBLIC_GTAG_ID) && process.env.NODE_ENV === 'production'
+  },
+
   app: {
     head: {
       charset: 'utf-8',
@@ -33,7 +40,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://www.tzadik.com.ar',
     name: 'Tzadik',
-    description: 'Maquinaria agrícola y vial para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento.',
+    description: 'Tractores, maquinaria vial y vehículos off road para maximizar tu productividad. Para que tu trabajo no se detenga: asistencia técnica, repuestos y mantenimiento.',
     defaultLocale: 'es'
   },
   seo: {

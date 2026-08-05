@@ -12,7 +12,7 @@ const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl
 
 const title = 'Servicios - Tzadik'
-const description = 'Asistencia técnica especializada, repuestos originales y mantenimiento preventivo para maquinaria agrícola y vial.'
+const description = 'Asistencia técnica especializada, repuestos originales y mantenimiento preventivo para tractores, maquinaria vial y off road.'
 const ogImage = `${siteUrl}/images/og/Tzadik-OG.jpg`
 
 useSeoMeta({

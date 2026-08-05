@@ -18,7 +18,7 @@
             </HeadingH1>
             <p
                 class="max-w-96 md:max-w-[33rem] lg:max-w-[45rem] xxl:max-w-[48rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
-                Descubre las mejores marcas de maquinaria vial y agrícola que ofrecemos para impulsar tu productividad y eficiencia.
+                Descubre las mejores marcas de tractores, maquinaria vial y off road que ofrecemos para impulsar tu productividad y eficiencia.
             </p>
         </div>
     </DefaultSection>

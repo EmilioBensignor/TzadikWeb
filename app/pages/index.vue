@@ -15,8 +15,8 @@
 const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl
 
-const title = 'Maquinaria agrícola y vial - Tzadik'
-const description = 'Maquinaria agrícola y vial para maximizar tu productividad. Asistencia técnica, repuestos y mantenimiento en NEA.'
+const title = 'Tractores, maquinaria vial y off road - Tzadik'
+const description = 'Tractores, maquinaria vial y vehículos off road para maximizar tu productividad. Asistencia técnica, repuestos y mantenimiento en NEA.'
 const ogImage = `${siteUrl}/images/og/Tzadik-OG.jpg`
 
 useSeoMeta({

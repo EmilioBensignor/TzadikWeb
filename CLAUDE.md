@@ -1,6 +1,10 @@
 # Tzadik Web — CLAUDE.md
 
-Web pública de **Tzadik**: maquinaria agrícola y vial. Catálogo de productos por categoría/marca, secciones institucionales y formularios de contacto. Producción: `https://www.tzadik.com.ar` (Vercel).
+Web pública de **Tzadik**: tractores, maquinaria vial y vehículos off road. Catálogo de productos por categoría/marca, secciones institucionales y formularios de contacto. Producción: `https://www.tzadik.com.ar` (Vercel).
+
+**El negocio NO es "maquinaria agrícola"** — el cliente lo corrigió expresamente (agosto 2026): venden
+tractores (lo principal), maquinaria vial y, desde ahora, off road (cuatriciclos y UTV marca Segway).
+No reintroducir "agrícola" en títulos, descripciones ni textos.
 
 ## Stack
 
@@ -118,9 +122,27 @@ Si el build se queda sin memoria: `NODE_OPTIONS="--max-old-space-size=4096" pnpm
 ```
 SUPABASE_URL=
 SUPABASE_KEY=             # anon key
-GOOGLE_MAPS_API_KEY=      # mapa en home (Ubicaciones.vue)
+GOOGLE_MAPS_API_KEY=      # mapa en home (Ubicaciones.vue). Restringida por dominio: falla en localhost, anda en produccion
 NUXT_PUBLIC_SITE_URL=     # opcional, default https://tzadik.com.ar
+NUXT_PUBLIC_GTAG_ID=      # opcional, G-XXXXXXX de Google Analytics 4
 ```
+
+## Analíticas (Google Analytics 4)
+
+`nuxt-gtag` con el ID en `NUXT_PUBLIC_GTAG_ID`. **Sin esa variable el módulo no inyecta nada**, y solo
+corre en producción, así que navegar en local no ensucia las métricas.
+
+Eventos personalizados ya cableados:
+
+| Evento | Dónde | Parámetros |
+|---|---|---|
+| `contacto_whatsapp` | botón flotante y ficha de producto | `origen`, `producto` |
+| `envio_formulario` | formulario de contacto | `origen` |
+
+Para sumar uno nuevo: `const { gtag } = useGtag()` y `gtag('event', 'nombre', { ... })`.
+
+En GA4 los eventos aparecen en Informes → Interacción → Eventos, y conviene marcar `contacto_whatsapp`
+como conversión (Administrar → Eventos → marcar como conversión), que es el objetivo real del sitio.
 
 ## CMS hermano
 

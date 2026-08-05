@@ -60,8 +60,8 @@ const pageTitle = computed(() =>
 
 const pageDescription = computed(() =>
     categoria.value
-        ? `Explorar ${categoria.value.nombre} en Tzadik - Maquinaria agrícola y víal de calidad`
-        : 'Explora nuestras categorías de maquinaria agrícola y víal'
+        ? `Explorar ${categoria.value.nombre} en Tzadik - Tractores, maquinaria vial y off road`
+        : 'Explora nuestras categorías de tractores, maquinaria vial y off road'
 )
 
 const pageUrl = computed(() =>

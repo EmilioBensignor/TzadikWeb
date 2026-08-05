@@ -6,15 +6,15 @@
             <source media="(min-width: 1080px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Desktop.webp">
             <source media="(min-width: 768px)" srcset="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Tablet.webp">
             <img src="/images/home/hero/Tzadik-Maquinaria-Agricola-Vial-Mobile.webp"
-                alt="Tzadik - Maquinaria agrícola y vial"
+                alt="Tzadik - Tractores, maquinaria vial y off road"
                 width="1440" height="532"
                 fetchpriority="high" decoding="async"
                 class="w-full h-[28rem] md:h-80 lg:h-[25.5rem] xxl:h-[33.25rem] object-cover object-left">
         </picture>
         <div
             class="w-full h-full flex flex-col items-center justify-center lg:justify-start gap-3 lg:gap-4 absolute text-light p-5 lg:pt-20 xxl:pt-[7.5rem]">
-            <HeadingH1 class="md:max-w-[27.75rem] lg:max-w-[35rem] xxl:max-w-[42rem]">
-                MAQUINARIA AGRÍCOLA Y VÍAL PARA MAXIMIZAR TU PRODUCTIVIDAD
+            <HeadingH1 class="md:max-w-[34rem] lg:max-w-[46rem] xxl:max-w-[56rem]">
+                TRACTORES, MAQUINARIA VIAL Y OFF ROAD PARA MAXIMIZAR TU PRODUCTIVIDAD
             </HeadingH1>
             <p
                 class="md:max-w-[27.75rem] lg:max-w-[35rem] xxl:max-w-[42rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">

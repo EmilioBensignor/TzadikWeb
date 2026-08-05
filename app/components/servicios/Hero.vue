@@ -16,7 +16,7 @@
             </HeadingH1>
             <p
                 class="md:max-w-[29rem] lg:max-w-[46.75rem] xxl:max-w-[45rem] text-center text-sm md:text-base lg:text-xl xxl:text-2xl font-medium">
-                En Tzadik ofrecemos servicios especializados que garantizan el máximo rendimiento y cuidado de tu maquinaria vial y agrícola.
+                En Tzadik ofrecemos servicios especializados que garantizan el máximo rendimiento y cuidado de tu maquinaria vial y off road.
             </p>
         </div>
     </DefaultSection>
