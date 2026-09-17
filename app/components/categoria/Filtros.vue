@@ -4,37 +4,41 @@
             <div
                 class="flex flex-col gap-3 md:gap-4 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6 ">
                 <p class="lg:text-xl font-bold">Filtros aplicados</p>
-                <div class="flex flex-wrap items-center gap-2">
-                    <span v-for="(filtro, index) in filtrosAplicados" :key="index"
+                <div v-if="filtrosAplicados.length > 0" class="flex flex-wrap items-center gap-2">
+                    <span v-for="filtro in filtrosAplicados" :key="`${filtro.tipo}-${filtro.valor}`"
                         class="flex items-center gap-2 border border-primary rounded-lg text-sm font-medium p-2">
-                        {{ filtro }}
-                        <button v-if="!(index === 0 && categoriaActual?.nombre === filtro)"
-                            @click="removerFiltro(index)"
+                        {{ filtro.label }}
+                        <button @click="removerFiltro(filtro)" :aria-label="`Quitar filtro ${filtro.label}`"
                             class="w-3 h-3 flex justify-center items-center bg-primary rounded-full text-light">
                             <Icon name="tabler:x" class="w-3 h-3" />
                         </button>
                     </span>
                 </div>
-                <button @click="limpiarFiltros" class="self-end text-xs lg:text-base text-primary font-semibold">Limpiar
+                <p v-else class="text-sm text-gray-dark">Sin filtros aplicados</p>
+                <button v-if="filtrosAplicados.length > 0" @click="limpiarFiltros"
+                    class="self-end text-xs lg:text-base text-primary font-semibold">Limpiar
                     filtros</button>
             </div>
             <div
                 class="flex flex-col gap-3 md:gap-5 rounded-xl md:rounded-2xl shadow-md shadow-black/30 p-3 md:p-4 lg:p-6 ">
                 <div class="flex justify-between items-center">
                     <p class="font-bold lg:text-xl">Filtros</p>
-                    <button @click="toggleFiltros"
+                    <button @click="toggleFiltros" aria-label="Mostrar u ocultar filtros"
                         class="w-6 h-6 flex justify-center items-center bg-primary rounded-full shadow-md shadow-black/20 text-light md:hidden">
                         <Icon name="tabler:chevron-down" class="w-5 h-5 transition-transform duration-200"
                             :class="filtrosAbiertos ? 'rotate-180' : ''" />
                     </button>
                 </div>
-                <Transition enter-active-class="transition-all duration-300 ease-out"
-                    enter-from-class="opacity-0 transform -translate-y-2"
-                    enter-to-class="opacity-100 transform translate-y-0"
-                    leave-active-class="transition-all duration-200 ease-in"
-                    leave-from-class="opacity-100 transform translate-y-0"
-                    leave-to-class="opacity-0 transform -translate-y-2">
-                    <div v-if="filtrosAbiertos" class="flex flex-col gap-6">
+                <div class="flex-col gap-6" :class="filtrosAbiertos ? 'flex' : 'hidden md:flex'">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-sm md:text-base font-semibold">Categoría</p>
+                            <div class="flex flex-col gap-2 text-xs">
+                                <FormCheckbox v-for="categoria in categorias" :key="categoria.id"
+                                    :id="`cat-${categoria.id}`" :value="categoria.id"
+                                    :checked="categoriaSeleccionada === categoria.id" :label="categoria.nombre"
+                                    @update:checked="toggleCategoria(categoria.id, $event)" />
+                            </div>
+                        </div>
                         <div v-if="subcategorias.length > 0" class="flex flex-col gap-2">
                             <p class="text-sm md:text-base font-semibold">Subcategoría</p>
                             <div class="flex flex-col gap-2 text-xs">
@@ -88,21 +92,33 @@
                                     @update:checked="toggleOferta('productosOferta', $event)" />
                             </div>
                         </div>
-                    </div>
-                </Transition>
+                </div>
             </div>
         </div>
         <div class="w-full flex flex-col gap-6">
-            <div
-                class="flex justify-between items-center border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0 ">
-                <div class="flex items-end gap-2 lg:gap-4">
-                    <NuxtImg v-if="categoriaActual?.icon" :src="categoriaActual.icon"
-                        :alt="`Icono de ${categoriaActual.nombre}`"
-                        class="w-5 md:w-6 lg:w-7 h-5 md:h-6 lg:h-7 object-contain" />
-                    <p class="text-xs md:text-base lg:text-xl font-bold">{{ productosFiltrados.length }} Resultados</p>
+            <div class="flex flex-col gap-4 border-b border-gray-dark pb-1.5 md:pb-4 md:px-2 mx-5 md:mx-0">
+                <div class="w-full flex items-center gap-2 border border-gray-dark focus-within:border-primary rounded-lg px-3 transition-colors duration-300">
+                    <Icon name="tabler:search" class="w-5 h-5 text-gray-dark flex-shrink-0" />
+                    <input v-model="busqueda" type="search" name="busqueda" id="busqueda"
+                        placeholder="Buscar un producto"
+                        aria-label="Buscar productos"
+                        class="w-full bg-transparent text-sm md:text-base outline-none py-2.5" />
+                    <button v-if="busqueda" @click="busqueda = ''" aria-label="Borrar búsqueda"
+                        class="flex items-center flex-shrink-0">
+                        <Icon name="tabler:x" class="w-4 h-4 text-gray-dark" />
+                    </button>
                 </div>
-                <div class="flex items-center gap-2">
-                    <FormSelect v-model="ordenarPor" :options="opcionesOrdenar" />
+                <div class="flex justify-between items-center">
+                    <div class="flex items-end gap-2 lg:gap-4">
+                        <NuxtImg v-if="categoriaActual?.icon" :src="categoriaActual.icon"
+                            :alt="`Icono de ${categoriaActual.nombre}`"
+                            class="w-5 md:w-6 lg:w-7 h-5 md:h-6 lg:h-7 object-contain" />
+                        <p class="text-xs md:text-base lg:text-xl font-bold">{{ productosFiltrados.length }} Resultados
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <FormSelect v-model="ordenarPor" :options="opcionesOrdenar" />
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col gap-3">
@@ -111,7 +127,7 @@
                     <p class="text-gray-600 text-center">Cargando productos...</p>
                 </div>
 
-                <div v-else-if="!cargandoInicial && !loading && productosFiltrados.length === 0" class="px-5 md:px-0">
+                <div v-else-if="productosFiltrados.length === 0" class="px-5 md:px-0">
                     <div
                         class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-dark rounded-[9px] text-light p-3 md:p-5 lg:p-6 xxl:p-8">
                         <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu
@@ -127,7 +143,8 @@
 
                 <template v-else>
                     <div class="flex sm:grid sm:grid-cols-2 xl:grid-cols-3 flex-col gap-3 md:gap-4 px-5 md:px-0">
-                        <ProductCard v-for="product in primerosProductos" :key="product.id" :product="product" />
+                        <ProductCard v-for="(product, index) in primerosProductos" :key="product.id"
+                            :product="product" :priority="index < 3" />
                     </div>
 
                     <CategoriaContacto v-if="mostrarBannerContacto" class="my-3 " />
@@ -151,31 +168,39 @@
 
 <script setup>
 import { ROUTE_NAMES } from '~/constants/ROUTE_NAMES'
+import { useDebounceFn } from '~/composables/useDebounce'
 
 const route = useRoute()
+const router = useRouter()
 const { marcas, fetchMarcas } = useMarcas()
 const { categorias, fetchCategorias, getSubcategoriasPorCategoria } = useCategorias()
-const { productos, searchProductos, clearFilters, loading, generateSlug } = useProductos()
+const { productos, searchProductos, loading, generateSlug } = useProductos()
 const productosStore = useProductosStore()
-const cargandoInicial = ref(true)
+const cargandoInicial = ref(false)
 
-const categoriaActual = computed(() => {
+const categoriaDeRuta = computed(() => {
     const param = decodeParam(route.params.categoria)
+    if (!param) return null
     return categorias.value.find(cat =>
         cat.slug === param || cat.nombre === param || generateSlug(cat.nombre) === param
-    )
+    ) || null
 })
 
+const categoriaSeleccionada = ref(null)
+
+const categoriaActual = computed(() =>
+    categorias.value.find(cat => cat.id === categoriaSeleccionada.value) || null
+)
+
 const subcategorias = computed(() => {
-    if (!categoriaActual.value?.id) return []
-    return getSubcategoriasPorCategoria(categoriaActual.value.id)
+    if (!categoriaSeleccionada.value) return []
+    return getSubcategoriasPorCategoria(categoriaSeleccionada.value)
 })
 
 const filtrosAbiertos = ref(false)
 
 onMounted(() => {
     const checkScreenSize = () => {
-        filtrosAbiertos.value = window.innerWidth >= 768
         isXXL.value = window.innerWidth >= 1440
         isMD.value = window.innerWidth >= 768
     }
@@ -184,6 +209,7 @@ onMounted(() => {
 })
 const ordenarPor = ref('precio-mayor')
 const productosAdicionalesTotales = ref(0)
+const busqueda = ref(decodeParam(route.query.q) || '')
 
 const opcionesOrdenar = [
     { value: 'precio-mayor', label: 'Precio: mayor a menor' },
@@ -201,26 +227,29 @@ const filtrosSeleccionados = reactive({
 const filtrosAplicados = computed(() => {
     const aplicados = []
 
-    if (categoriaActual.value?.nombre) {
-        aplicados.push(categoriaActual.value.nombre)
+    if (busqueda.value.trim()) {
+        aplicados.push({ tipo: 'busqueda', valor: busqueda.value, label: `"${busqueda.value}"` })
     }
 
-    if (filtrosSeleccionados.subcategorias.length > 0) {
-        aplicados.push(...filtrosSeleccionados.subcategorias)
+    if (categoriaActual.value) {
+        aplicados.push({ tipo: 'categoria', valor: categoriaActual.value.id, label: categoriaActual.value.nombre })
     }
-    if (filtrosSeleccionados.condicion.length > 0) {
-        aplicados.push(...filtrosSeleccionados.condicion)
-    }
-    if (filtrosSeleccionados.marcas.length > 0) {
-        aplicados.push(...filtrosSeleccionados.marcas
-            .map(id => marcas.value.find(m => m.id === id)?.nombre)
-            .filter(Boolean))
-    }
-    if (filtrosSeleccionados.moneda.length > 0) {
-        aplicados.push(...filtrosSeleccionados.moneda.map(m => m === 'dolares' ? 'Dólares' : 'Pesos Argentinos'))
-    }
+
+    filtrosSeleccionados.subcategorias.forEach(nombre => {
+        aplicados.push({ tipo: 'subcategorias', valor: nombre, label: nombre })
+    })
+    filtrosSeleccionados.condicion.forEach(condicion => {
+        aplicados.push({ tipo: 'condicion', valor: condicion, label: condicion })
+    })
+    filtrosSeleccionados.marcas.forEach(id => {
+        const nombre = marcas.value.find(m => m.id === id)?.nombre
+        if (nombre) aplicados.push({ tipo: 'marcas', valor: id, label: nombre })
+    })
+    filtrosSeleccionados.moneda.forEach(moneda => {
+        aplicados.push({ tipo: 'moneda', valor: moneda, label: moneda === 'dolares' ? 'Dólares' : 'Pesos Argentinos' })
+    })
     if (filtrosSeleccionados.oferta.length > 0) {
-        aplicados.push('En oferta')
+        aplicados.push({ tipo: 'oferta', valor: 'productosOferta', label: 'En oferta' })
     }
 
     return aplicados
@@ -237,12 +266,6 @@ const productosAntesBanner = computed(() => {
     if (isXXL.value) return 9
     if (isMD.value) return 6
     return 5
-})
-
-const productosAntesBoton = computed(() => {
-    if (isXXL.value) return 18
-    if (isMD.value) return 12
-    return 10
 })
 
 const productosPorCarga = computed(() => {
@@ -274,8 +297,7 @@ const mostrarBannerContacto = computed(() => {
 })
 
 const mostrarBotonCargarMas = computed(() => {
-    const totalProductos = productosFiltrados.value.length
-    return productosVisibles.value < totalProductos
+    return productosVisibles.value < productosFiltrados.value.length
 })
 
 const cargarMasProductos = () => {
@@ -286,85 +308,72 @@ const toggleFiltros = () => {
     filtrosAbiertos.value = !filtrosAbiertos.value
 }
 
-const toggleSubcategoria = async (subcategoria, checked) => {
+const toggleEnLista = (lista, valor, checked) => {
     if (checked) {
-        filtrosSeleccionados.subcategorias.push(subcategoria)
+        if (!lista.includes(valor)) lista.push(valor)
     } else {
-        const index = filtrosSeleccionados.subcategorias.indexOf(subcategoria)
-        if (index > -1) {
-            filtrosSeleccionados.subcategorias.splice(index, 1)
-        }
+        const index = lista.indexOf(valor)
+        if (index > -1) lista.splice(index, 1)
     }
+}
+
+const toggleCategoria = async (categoriaId, checked) => {
+    categoriaSeleccionada.value = checked ? categoriaId : null
+    filtrosSeleccionados.subcategorias = []
+    await aplicarFiltros()
+}
+
+const toggleSubcategoria = async (subcategoria, checked) => {
+    toggleEnLista(filtrosSeleccionados.subcategorias, subcategoria, checked)
     await aplicarFiltros()
 }
 
 const toggleCondicion = async (condicion, checked) => {
-    if (checked) {
-        filtrosSeleccionados.condicion.push(condicion)
-    } else {
-        const index = filtrosSeleccionados.condicion.indexOf(condicion)
-        if (index > -1) {
-            filtrosSeleccionados.condicion.splice(index, 1)
-        }
-    }
+    toggleEnLista(filtrosSeleccionados.condicion, condicion, checked)
     await aplicarFiltros()
 }
 
 const toggleMarca = async (marca, checked) => {
-    if (checked) {
-        filtrosSeleccionados.marcas.push(marca.id)
-    } else {
-        const index = filtrosSeleccionados.marcas.indexOf(marca.id)
-        if (index > -1) {
-            filtrosSeleccionados.marcas.splice(index, 1)
-        }
-    }
+    toggleEnLista(filtrosSeleccionados.marcas, marca.id, checked)
     await aplicarFiltros()
 }
 
 const toggleMoneda = async (moneda, checked) => {
-    if (checked) {
-        filtrosSeleccionados.moneda.push(moneda)
-    } else {
-        const index = filtrosSeleccionados.moneda.indexOf(moneda)
-        if (index > -1) {
-            filtrosSeleccionados.moneda.splice(index, 1)
-        }
-    }
+    toggleEnLista(filtrosSeleccionados.moneda, moneda, checked)
     await aplicarFiltros()
 }
 
 const toggleOferta = async (oferta, checked) => {
-    if (checked) {
-        filtrosSeleccionados.oferta.push(oferta)
-    } else {
-        const index = filtrosSeleccionados.oferta.indexOf(oferta)
-        if (index > -1) {
-            filtrosSeleccionados.oferta.splice(index, 1)
-        }
-    }
+    toggleEnLista(filtrosSeleccionados.oferta, oferta, checked)
     await aplicarFiltros()
 }
 
 const aplicarFiltros = async () => {
-    if (!categoriaActual.value?.id) return
-
     const searchParams = {
-        categoria_id: categoriaActual.value.id,
         condicion: filtrosSeleccionados.condicion,
         marca_ids: filtrosSeleccionados.marcas,
         moneda: filtrosSeleccionados.moneda,
-        en_oferta: filtrosSeleccionados.oferta.length > 0
+        en_oferta: filtrosSeleccionados.oferta.length > 0,
+        search: busqueda.value.trim()
+    }
+
+    if (categoriaSeleccionada.value) {
+        searchParams.categoria_id = categoriaSeleccionada.value
     }
 
     if (filtrosSeleccionados.subcategorias.length > 0) {
-        const subcategoriasIds = subcategorias.value
+        searchParams.subcategoria_ids = subcategorias.value
             .filter(sub => filtrosSeleccionados.subcategorias.includes(sub.nombre))
             .map(sub => sub.id)
-        searchParams.subcategoria_ids = subcategoriasIds
     }
 
-    await searchProductos(searchParams)
+    const originalPageSize = productosStore.pageSize
+    productosStore.pageSize = 1000
+    try {
+        await searchProductos(searchParams, { soloListado: true })
+    } finally {
+        productosStore.pageSize = originalPageSize
+    }
     productosAdicionalesTotales.value = 0
 }
 
@@ -372,38 +381,26 @@ const limpiarFiltros = async () => {
     Object.keys(filtrosSeleccionados).forEach(key => {
         filtrosSeleccionados[key] = []
     })
+    categoriaSeleccionada.value = null
+    busqueda.value = ''
     productosAdicionalesTotales.value = 0
     await aplicarFiltros()
 }
 
-const removerFiltro = async (index) => {
-    const filtroARemover = filtrosAplicados.value[index]
-
-    if (index === 0 && categoriaActual.value?.nombre === filtroARemover) {
+const removerFiltro = async (filtro) => {
+    if (filtro.tipo === 'busqueda') {
+        busqueda.value = ''
         return
     }
 
-    Object.keys(filtrosSeleccionados).forEach(categoria => {
-        const filtros = filtrosSeleccionados[categoria]
-        const indice = filtros.findIndex(filtro => {
-            if (categoria === 'condicion') {
-                return filtro === filtroARemover
-            }
-            if (categoria === 'moneda') {
-                return (filtro === 'dolares' && filtroARemover === 'Dólares') ||
-                    (filtro === 'pesos' && filtroARemover === 'Pesos Argentinos')
-            }
-            if (categoria === 'oferta') {
-                return filtroARemover === 'En oferta'
-            }
-            return filtro === filtroARemover
-        })
+    if (filtro.tipo === 'categoria') {
+        categoriaSeleccionada.value = null
+        filtrosSeleccionados.subcategorias = []
+        await aplicarFiltros()
+        return
+    }
 
-        if (indice !== -1) {
-            filtros.splice(indice, 1)
-        }
-    })
-
+    toggleEnLista(filtrosSeleccionados[filtro.tipo], filtro.valor, false)
     await aplicarFiltros()
 }
 
@@ -415,30 +412,45 @@ await useAsyncData('filtros-datos', async () => {
     return true
 })
 
-watch(() => categoriaActual.value?.id, async (nuevaCategoriaId) => {
-    if (!nuevaCategoriaId) {
-        cargandoInicial.value = false
-        return
+const buscarConDebounce = useDebounceFn(async () => {
+    await aplicarFiltros()
+}, 350)
+
+watch(busqueda, (valor) => {
+    const q = valor.trim()
+    if (q !== (route.query.q || '')) {
+        const query = { ...route.query }
+        if (q) query.q = q
+        else delete query.q
+        router.replace({ query })
     }
 
+    buscarConDebounce()
+})
+
+const reiniciarDesdeRuta = async (nuevaCategoria) => {
     cargandoInicial.value = true
-    limpiarFiltros()
-    const originalPageSize = productosStore.pageSize
-    productosStore.pageSize = 1000
+    categoriaSeleccionada.value = nuevaCategoria?.id || null
+    Object.keys(filtrosSeleccionados).forEach(key => {
+        filtrosSeleccionados[key] = []
+    })
+    productosAdicionalesTotales.value = 0
     try {
-        await searchProductos({ categoria_id: nuevaCategoriaId })
+        await aplicarFiltros()
     } finally {
-        productosStore.pageSize = originalPageSize
         cargandoInicial.value = false
     }
-}, { immediate: true })
+}
 
-watch(() => ordenarPor.value, async () => {
-    if (ordenarPor.value === 'precio-mayor') {
-        productosStore.setSorting('precio', 'desc')
-    } else if (ordenarPor.value === 'precio-menor') {
-        productosStore.setSorting('precio', 'asc')
-    }
+await useAsyncData(`filtros-productos-${route.params.categoria || 'todos'}`, async () => {
+    await reiniciarDesdeRuta(categoriaDeRuta.value)
+    return productos.value.length
+})
+
+watch(categoriaDeRuta, reiniciarDesdeRuta)
+
+watch(ordenarPor, async () => {
+    productosStore.setSorting('precio', ordenarPor.value === 'precio-menor' ? 'asc' : 'desc')
     await aplicarFiltros()
 })
 </script>

@@ -54,7 +54,15 @@ export const useProductosStore = defineStore('productos', () => {
             error.value = null
 
             const supabase = useSupabaseClient()
-            let selectQuery = `
+            const selectQuery = options.soloListado
+                ? `
+                id, titulo, descripcion_corta, precio, precio_descuento, moneda,
+                oferta, destacado, condicion, created_at,
+                categoria_id, subcategoria_id, marca_id,
+                categorias(id, nombre, slug, icon),
+                producto_imagenes!inner(storage_path, es_principal)
+            `
+                : `
                 *,
                 categorias(id, nombre, slug, icon),
                 subcategorias(id, nombre),
@@ -65,6 +73,10 @@ export const useProductosStore = defineStore('productos', () => {
                 .from('productos')
                 .select(selectQuery, { count: 'exact' })
                 .eq('activo', true)
+
+            if (options.soloListado) {
+                query = query.eq('producto_imagenes.es_principal', true)
+            }
 
             if (options.categoria_id) {
                 query = query.eq('categoria_id', options.categoria_id)
@@ -113,7 +125,10 @@ export const useProductosStore = defineStore('productos', () => {
             }
 
             if (filters.value.search) {
-                query = query.or(`titulo.ilike.%${filters.value.search}%,descripcion_corta.ilike.%${filters.value.search}%`)
+                const termino = filters.value.search.replace(/[,()]/g, ' ').trim()
+                if (termino) {
+                    query = query.or(`titulo.ilike.%${termino}%,descripcion_corta.ilike.%${termino}%,datos_dinamicos->>marca.ilike.%${termino}%`)
+                }
             }
 
             Object.entries(filters.value.datos_dinamicos).forEach(([key, value]) => {
@@ -362,9 +377,20 @@ export const useProductosStore = defineStore('productos', () => {
         currentPage.value = page
     }
 
-    const getImageUrl = (storagePath) => {
+    const getImageUrl = (storagePath, opciones = {}) => {
         if (!storagePath) return null
-        return `${config.public.supabase.url}/storage/v1/object/public/productos-imagenes/${storagePath}`
+
+        const base = `${config.public.supabase.url}/storage/v1`
+        const { width, height, quality = 70, resize = 'cover' } = opciones
+
+        if (!width) {
+            return `${base}/object/public/productos-imagenes/${storagePath}`
+        }
+
+        const params = new URLSearchParams({ width, quality, resize })
+        if (height) params.set('height', height)
+
+        return `${base}/render/image/public/productos-imagenes/${storagePath}?${params}`
     }
 
     const addSubcategoriaFilter = (subcategoriaId) => {

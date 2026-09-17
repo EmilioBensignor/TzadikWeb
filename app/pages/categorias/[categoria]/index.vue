@@ -46,6 +46,7 @@ if (categoria.value) {
     await fetchProductos({
         categoria_id: categoria.value.id,
         includeImages: true,
+        soloListado: true,
         limit: 5
     })
 }
@@ -74,7 +75,7 @@ const ogImage = computed(() => {
     )
 
     if (primerProductoConImagen?.producto_imagenes?.[0]?.storage_path) {
-        return getImageUrl(primerProductoConImagen.producto_imagenes[0].storage_path)
+        return getImageUrl(primerProductoConImagen.producto_imagenes[0].storage_path, { width: 1200, height: 630 })
     }
 
     return `${config.public.siteUrl}/images/og/Tzadik-OG.jpg`

@@ -113,7 +113,7 @@ export default defineNuxtConfig({
     '/quienes-somos': { swr: 3600 },
     '/servicios': { swr: 3600 },
     '/contacto': { swr: 3600 },
-    '/categorias': { redirect: { to: '/', statusCode: 301 } },
+    '/categorias': { swr: 600 },
     '/categorias/**': { swr: 600 },
     '/marcas': { redirect: { to: '/', statusCode: 301 } },
     '/marcas/**': { swr: 600 }

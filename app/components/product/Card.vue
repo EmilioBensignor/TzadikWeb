@@ -1,12 +1,11 @@
 <template>
     <NuxtLink :to="productUrl" class="min-h-[23rem] flex flex-col relative primary-shadow rounded-xl">
-        <NuxtImg :src="imageUrl" :alt="product.titulo"
+        <img :src="imageUrl" :srcset="imageSrcset" :alt="product.titulo"
             width="400" height="300"
             sizes="(max-width: 768px) 70vw, (max-width: 1080px) 33vw, 300px"
-            loading="lazy" decoding="async"
-            placeholder
+            :loading="priority ? 'eager' : 'lazy'" :fetchpriority="priority ? 'high' : 'auto'" decoding="async"
             @error="onImageError"
-            class="w-full h-48 lg:h-52 object-cover rounded-t-xl" />
+            class="w-full h-48 lg:h-52 bg-gray-mid object-cover rounded-t-xl" />
         <p v-if="product.oferta"
             class="absolute top-3 left-3 bg-secondary rounded-[4px] text-xs text-light !leading-none primary-shadow pt-1.5 px-2 pb-1">
             {{ product.oferta }}</p>
@@ -45,6 +44,10 @@ const props = defineProps({
     product: {
         type: Object,
         required: true
+    },
+    priority: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -52,13 +55,22 @@ const { getImageUrl, getCurrencySymbol, generateSlug } = useProductos()
 
 const imageError = ref(false)
 
+const storagePath = computed(() => {
+    if (!props.product?.producto_imagenes?.length) return null
+    const principal = props.product.producto_imagenes.find(img => img.es_principal) || props.product.producto_imagenes[0]
+    return principal?.storage_path || null
+})
+
 const imageUrl = computed(() => {
-    if (imageError.value) return '/images/placeholder-product.jpg'
-    if (!props.product?.producto_imagenes || props.product.producto_imagenes.length === 0) {
-        return '/images/placeholder-product.jpg'
-    }
-    const imagenPrincipal = props.product.producto_imagenes.find(img => img.es_principal) || props.product.producto_imagenes[0]
-    return imagenPrincipal ? getImageUrl(imagenPrincipal.storage_path) : '/images/placeholder-product.jpg'
+    if (imageError.value || !storagePath.value) return '/images/placeholder-product.jpg'
+    return getImageUrl(storagePath.value, { width: 400, height: 300 })
+})
+
+const imageSrcset = computed(() => {
+    if (imageError.value || !storagePath.value) return null
+    return [300, 400, 600, 800]
+        .map(w => `${getImageUrl(storagePath.value, { width: w, height: Math.round(w * 0.75) })} ${w}w`)
+        .join(', ')
 })
 
 const onImageError = () => {

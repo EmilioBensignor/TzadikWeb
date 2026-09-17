@@ -18,7 +18,7 @@ export const useProductos = () => {
   const getImagenesByProducto = (productoId) => productosStore.getImagenesByProducto(productoId)
   const getCurrencySymbol = (producto) => productosStore.getCurrencySymbol(producto)
 
-  const searchProductos = async (searchParams = {}) => {
+  const searchProductos = async (searchParams = {}, options = {}) => {
     productosStore.clearFilters()
 
     Object.entries(searchParams).forEach(([key, value]) => {
@@ -31,7 +31,7 @@ export const useProductos = () => {
       }
     })
 
-    await productosStore.fetchProductos({ includeImages: true })
+    await productosStore.fetchProductos({ includeImages: true, ...options })
   }
 
   const getFeaturedProductos = async (limit = 8) => {

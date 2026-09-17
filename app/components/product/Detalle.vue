@@ -12,7 +12,8 @@
                             loading="lazy">
                         </iframe>
                     </div>
-                    <NuxtImg v-else :src="getImageUrl(media.storage_path)" :alt="`${producto.titulo} ${index + 1}`"
+                    <NuxtImg v-else :src="getImageUrl(media.storage_path, { width: 800, height: 600 })"
+                        :alt="`${producto.titulo} ${index + 1}`" loading="lazy" decoding="async"
                         class="w-full rounded-xl object-cover" />
                 </div>
             </CarouselStatic>
@@ -50,7 +51,8 @@
                             <Icon name="tabler:play" class="w-6 h-6 text-white" />
                         </div>
                     </div>
-                    <NuxtImg v-else :src="getImageUrl(media.storage_path)" :alt="`${producto.titulo} ${index + 2}`"
+                    <NuxtImg v-else :src="getImageUrl(media.storage_path, { width: 200, height: 200 })"
+                        :alt="`${producto.titulo} ${index + 2}`" loading="lazy" decoding="async"
                         class="w-full h-full object-cover" />
                     <div class="absolute inset-0 bg-dark/40"></div>
                 </div>
@@ -200,7 +202,7 @@ const imagenPrincipal = computed(() => {
         return props.getYouTubeEmbedUrl(imagenPrincipalActual.value.url || imagenPrincipalActual.value.storage_path || imagenPrincipalActual.value.link)
     }
 
-    return props.getImageUrl(imagenPrincipalActual.value.storage_path)
+    return props.getImageUrl(imagenPrincipalActual.value.storage_path, { width: 1000, height: 750 })
 })
 
 const esPrincipalVideo = computed(() => {

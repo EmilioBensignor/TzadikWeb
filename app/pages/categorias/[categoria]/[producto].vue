@@ -21,14 +21,16 @@
             <p class="text-gray-600 text-center">Cargando producto...</p>
         </div>
 
-        <div v-else-if="!producto" class="flex flex-col items-center justify-center py-12 px-5">
-            <Icon name="tabler:package-off" class="w-16 h-16 text-gray-400 mb-4" />
-            <p class="text-lg font-semibold text-gray-600 mb-2">Producto no encontrado</p>
-            <p class="text-gray-500 text-center mb-4">El producto que buscas no existe o fue eliminado</p>
-            <NuxtLink :to="ROUTE_NAMES.HOME"
-                class="bg-primary text-light px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
-                Volver al inicio
-            </NuxtLink>
+        <div v-else-if="!producto" class="w-full max-w-[1200px] flex flex-col items-center justify-center text-center gap-2 py-12 px-5 mx-auto">
+            <Icon name="tabler:package-off" class="w-16 h-16 text-gray-dark" />
+            <HeadingH2 class="lg:w-full">PRODUCTO NO DISPONIBLE</HeadingH2>
+            <p class="text-sm md:text-base text-gray-dark">Este producto ya no está publicado. Mirá el resto de
+                {{ categoria?.nombre || 'nuestro catálogo' }} más abajo.</p>
+            <div class="flex flex-wrap justify-center gap-3 pt-4">
+                <ButtonPrimary :to="categoria ? `/categorias/${categoria.slug}` : ROUTE_NAMES.CATEGORIAS">
+                    Ver {{ categoria?.nombre || 'todos los productos' }}
+                </ButtonPrimary>
+            </div>
         </div>
 
         <div v-else class="w-full max-w-[1200px] mx-auto">
@@ -65,9 +67,10 @@
                 </div>
             </div>
         </DefaultSection>
-        <div class="w-full max-w-[1200px] mx-auto">
+        <div v-if="loadingSimilares || productosSimilares.length > 0" class="w-full max-w-[1200px] mx-auto">
             <DefaultSection class="lg:px-20 xxl:px-0 my-8">
-                <HeadingH2 class="lg:w-full lg:text-left">MIRÁ OTROS PRODUCTOS SIMILARES</HeadingH2>
+                <HeadingH2 class="lg:w-full lg:text-left">{{ producto ? 'MIRÁ OTROS PRODUCTOS SIMILARES' :
+                    `OTROS PRODUCTOS DE ${categoria?.nombre?.toUpperCase()}` }}</HeadingH2>
 
                 <div v-if="loadingSimilares" class="flex justify-center py-4">
                     <Icon name="tabler:loader-2" class="w-8 h-8 text-primary animate-spin" />
@@ -147,16 +150,19 @@ const loadingProducto = ref(false)
 const imagenPrincipalActual = ref(null)
 
 const obtenerProductosSimilares = async () => {
-    if (!categoria.value || !producto.value) return
+    if (!categoria.value) {
+        productosSimilares.value = []
+        return
+    }
 
     try {
         loadingSimilares.value = true
 
         const productosCategoria = productos.value.filter(prod =>
-            prod.categoria_id === categoria.value.id && prod.id !== producto.value.id
+            prod.categoria_id === categoria.value.id && prod.id !== producto.value?.id
         )
 
-        const productosOrdenados = productosCategoria.sort((a, b) => {
+        const productosOrdenados = [...productosCategoria].sort((a, b) => {
             if (a.destacado && !b.destacado) return -1
             if (!a.destacado && b.destacado) return 1
 
@@ -191,7 +197,6 @@ const establecerMediaPrincipal = () => {
     }
 
     imagenPrincipalActual.value = mediaPrincipal
-    obtenerProductosSimilares()
 }
 
 const pageTitle = computed(() =>
@@ -213,7 +218,7 @@ const ogImage = computed(() => {
         return `${config.public.siteUrl}/images/og/Tzadik-OG.jpg`
     }
     const imagenPrincipal = producto.value.producto_imagenes.find(img => img.es_principal) || producto.value.producto_imagenes[0]
-    return getImageUrl(imagenPrincipal.storage_path)
+    return getImageUrl(imagenPrincipal.storage_path, { width: 1200, height: 630 })
 })
 
 useSeoMeta({
@@ -239,8 +244,11 @@ useSchemaOrg([
             { name: () => categoria.value?.nombre || 'Categoría', item: () => `${config.public.siteUrl}/categorias/${categoria.value?.slug || categoriaSlug}` },
             { name: () => producto.value?.titulo || 'Producto', item: pageUrl.value }
         ]
-    }),
-    defineProduct({
+    })
+])
+
+if (producto.value) {
+    useSchemaOrg([defineProduct({
         name: () => producto.value?.titulo,
         description: () => producto.value?.descripcion_corta || producto.value?.descripcion_larga,
         image: ogImage,
@@ -257,8 +265,16 @@ useSchemaOrg([
                 url: pageUrl.value
             }
         }
-    })
-])
+    })])
+}
+
+await obtenerProductosSimilares()
+
+if (!producto.value) {
+    useSeoMeta({ robots: 'noindex, follow' })
+    const event = useRequestEvent()
+    if (event) setResponseStatus(event, 404)
+}
 
 onMounted(() => {
     establecerMediaPrincipal()
