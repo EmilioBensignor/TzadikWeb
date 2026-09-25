@@ -247,7 +247,7 @@ useSchemaOrg([
     })
 ])
 
-if (producto.value) {
+if (producto.value?.precio_descuento || producto.value?.precio) {
     useSchemaOrg([defineProduct({
         name: () => producto.value?.titulo,
         description: () => producto.value?.descripcion_corta || producto.value?.descripcion_larga,
@@ -255,16 +255,12 @@ if (producto.value) {
         sku: () => producto.value?.id ? String(producto.value.id) : undefined,
         category: () => categoria.value?.nombre,
         brand: () => producto.value?.datos_dinamicos?.marca,
-        offers: () => {
-            const precio = producto.value?.precio_descuento || producto.value?.precio
-            if (!precio) return undefined
-            return {
-                price: precio,
-                priceCurrency: producto.value?.moneda ? 'USD' : 'ARS',
-                availability: 'https://schema.org/InStock',
-                url: pageUrl.value
-            }
-        }
+        offers: () => ({
+            price: producto.value?.precio_descuento || producto.value?.precio,
+            priceCurrency: producto.value?.moneda ? 'USD' : 'ARS',
+            availability: 'https://schema.org/InStock',
+            url: pageUrl.value
+        })
     })])
 }
 
