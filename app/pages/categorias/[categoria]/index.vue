@@ -35,14 +35,20 @@ if (categorias.value.length === 0) {
     await fetchCategorias()
 }
 
+const categoriaParam = computed(() => decodeParam(route.params.categoria))
+
 const categoria = computed(() => {
-    const param = decodeParam(route.params.categoria)
-    return categorias.value.find(cat =>
-        cat.slug === param || cat.nombre === param || generateSlug(cat.nombre) === param
-    )
+    const slug = generateSlug(categoriaParam.value)
+    return categorias.value.find(cat => cat.slug === slug || generateSlug(cat.nombre) === slug)
 })
 
-if (categoria.value) {
+if (!categoria.value) {
+    throw createError({ statusCode: 404, statusMessage: 'Categoría no encontrada', fatal: true })
+}
+
+if (categoriaParam.value !== categoria.value.slug) {
+    await navigateTo(`/categorias/${categoria.value.slug}`, { redirectCode: 301 })
+} else {
     await fetchProductos({
         categoria_id: categoria.value.id,
         includeImages: true,
@@ -65,9 +71,9 @@ const pageDescription = computed(() =>
         : 'Explora nuestras categorías de tractores, maquinaria vial y off road'
 )
 
-const pageUrl = computed(() =>
-    `${config.public.siteUrl}/categorias/${categoria.value?.slug || decodeParam(route.params.categoria)}`
-)
+const pageUrl = computed(() => `${config.public.siteUrl}/categorias/${categoria.value?.slug}`)
+
+useHead({ link: [{ rel: 'canonical', href: pageUrl }] })
 
 const ogImage = computed(() => {
     const primerProductoConImagen = productos.value.find(p =>

@@ -128,7 +128,7 @@ const productoSlug = decodeParam(route.params.producto)
 
 const categoria = computed(() =>
     categorias.value.find(cat =>
-        cat.slug === categoriaSlug || generateSlug(cat.nombre) === categoriaSlug
+        cat.slug === generateSlug(categoriaSlug) || generateSlug(cat.nombre) === generateSlug(categoriaSlug)
     )
 )
 
@@ -141,8 +141,14 @@ if (categoria.value) {
 }
 
 const producto = computed(() =>
-    productos.value.find(prod => generateSlug(prod.titulo) === productoSlug)
+    productos.value.find(prod => generateSlug(prod.titulo) === generateSlug(productoSlug))
 )
+
+const productoPath = computed(() => `/categorias/${categoria.value?.slug}/${generateSlug(producto.value?.titulo)}`)
+
+if (producto.value && route.path !== productoPath.value) {
+    await navigateTo(productoPath.value, { redirectCode: 301 })
+}
 
 const productosSimilares = ref([])
 const loadingSimilares = ref(false)
@@ -209,9 +215,11 @@ const pageDescription = computed(() =>
         : 'Tractores, maquinaria vial y off road en Tzadik'
 )
 
-const pageUrl = computed(() =>
-    `${config.public.siteUrl}/categorias/${categoriaSlug}/${productoSlug}`
-)
+const pageUrl = computed(() => `${config.public.siteUrl}${productoPath.value}`)
+
+if (producto.value) {
+    useHead({ link: [{ rel: 'canonical', href: pageUrl }] })
+}
 
 const ogImage = computed(() => {
     if (!producto.value?.producto_imagenes?.length) {
